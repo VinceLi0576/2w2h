@@ -80,8 +80,12 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
     """普通段正文：复用 render()，把 H3 变成 details.sub（自动编号 N.k、带 id=sN-k），首个 <p> 提成 p.lead2。
     `260905` 老徐：段头只留 序号·档位·标题，副标（subline）下移进正文第一行；小节要像 0.1／0.2 那样有号。"""
     out, sub, done_lead, k = [], None, not first_is_lead, 0
-    if subline:
-        out.append('<p class="secsub">%s</p>' % inline(subline))
+    # `260905` 老徐：副标 ＋ 结论合成一块「要点」—— 蓝方块当号位、副标当标题行、结论当正文；不带号、不折叠，
+    # 收起所有 N.x 时它就是这段的 TL;DR。首段结论在下面遇到第一个 <p> 时填进来。
+    keypt_title = inline(subline) if subline else ""
+    keypt_slot = None
+    if subline or first_is_lead:
+        out.append(None); keypt_slot = len(out) - 1
     for b in render("\n" + md_body):
         if b.startswith("§§H2§§"):
             continue
@@ -101,7 +105,15 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
             #    ⇒ `<p` 后必须紧跟空白或 `>`。首块不是段落（pre/ul/ol）就不包 lead2，并往 stderr 报 ——
             #    标准要求 `.body` 第一句是结论（p.lead2），段首放代码块本身就违反它。
             if re.match(r'<p(?=[\s>])', b):
-                out.append(re.sub(r'^<p(?=[\s>])[^>]*>', '<p class="lead2">', b, count=1))
+                lead_html = re.sub(r'^<p(?=[\s>])[^>]*>', '<p class="lead2">', b, count=1)
+                lead_html = re.sub(r'(<p class="lead2">)\s*先给结论[：:]\s*', r'\1', lead_html, count=1)   # 「要点」块里这四个字多余
+                if keypt_slot is not None:
+                    out[keypt_slot] = ('<div class="keypt"><span class="tag title">要点</span>'
+                                       + ('<span class="kt">%s</span>' % keypt_title if keypt_title else '')
+                                       + '<div class="kb">%s</div></div>' % lead_html)
+                    keypt_slot = None
+                else:
+                    out.append(lead_html)
                 continue
             if warn:   # 只对挂了档的段报；📎 对照读物那种不挂档的段首是列表很正常
                 _tag = re.match(r'<(\w+)', b)
@@ -113,7 +125,9 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
             sub += b
     if sub:
         out.append(sub + "</div></details>")
-    return "".join(out)
+    if keypt_slot is not None:   # 只有副标、没有结论段 ⇒ 要点块只剩标题行
+        out[keypt_slot] = ('<div class="keypt"><span class="tag title">要点</span><span class="kt">%s</span></div>' % keypt_title) if keypt_title else ""
+    return "".join(x for x in out if x)
 
 
 
@@ -167,7 +181,13 @@ HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
 /* 第 0 段（`260905` 老徐：抬头跟下面的段长一样 —— 0 [标题] 名字 · 0.1 导语 · 0.2 要点 · 右下角 项目 › 文件夹 · 版本） */
 .tag.title{ background:#2563eb; }
-.secsub{ margin:4px 0 10px; font-size:12.5px; color:var(--muted); line-height:1.7; }   /* 段头下移下来的副标 */
+/* 每段开头的「要点」块（`260905` 老徐）：形状同 N.x 小节，左边蓝方块替代数字；不带号、不折叠 */
+.keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:11px 16px 12px; margin:8px 0 9px; }
+.keypt .tag.title{ font-size:10.5px; letter-spacing:1.5px; padding:3px 8px; align-self:center; }
+.keypt .kt{ font-size:12.5px; color:var(--muted); font-weight:600; line-height:1.6; }
+.keypt .kb{ grid-column:1 / -1; }
+.keypt .kb .lead2{ margin:0; }
 details.sec.s0 > summary .ti{ font-size:19px; }
 details.sec.s0 .lead2{ font-weight:500; color:var(--ink-soft); font-size:14.5px; }
 details.sec.s0 .three{ margin:2px 0 0; }
