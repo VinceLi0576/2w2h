@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2w2h 自述</title>
+<!-- 产物 · 源在 自述.md · 生成器 ops/skill/2w2h/_生成自述HTML.py · 🚫 别手改本文件
+     结构照 ~/projects/OPC/格式标准/结构输出标准.md（TL;DR ＋ 黄金圈四档） -->
+<style>
+:root{ --acc:#0f766e; --acc-d:#115e59; --acc-bg:#ecfbf8; --ink:#23262e; --ink-soft:#3d424d;
+  --muted:#6b7180; --line:#e2e0d6; --bg:#faf9f4; --surface:#fffefa; --card:#ffffff;
+  --warn:#b45309; --warn-bg:#fff7ed; --bad:#c2410c; --ok:#15803d; --ok-bg:#f0fdf4;
+  --why:#b45309; --what:#0f766e; --how:#7c3aed; --good:#be185d; --bar:64px; }
+*{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{ margin:0; padding:0 0 80px; font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.78; -webkit-font-smoothing:antialiased; }
+
+.hero{ background:var(--surface); border-bottom:1px solid var(--line); text-align:center; padding:40px 22px 26px; }
+.hero .eyebrow{ display:inline-block; font-size:11.5px; letter-spacing:.5px; color:var(--acc-d); font-weight:700; margin-bottom:11px; }
+.hero h1{ margin:0 auto 9px; font-size:26px; font-weight:800; }
+.hero .lead{ margin:0 auto; max-width:40em; font-size:14.5px; color:var(--ink-soft); }
+.hero a{ color:var(--muted); font-size:13px; text-decoration:none; }
+.hero a:hover{ color:var(--acc); }
+
+.bar{ position:sticky; top:0; z-index:50; background:rgba(255,254,250,.94); backdrop-filter:saturate(180%) blur(10px); border-bottom:1px solid var(--line); }
+.bar .in{ max-width:780px; margin:0 auto; padding:8px 22px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.bar button{ font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:var(--acc-d); background:var(--card); border:1px solid var(--line); border-radius:20px; padding:8px 15px; min-height:44px; cursor:pointer; transition:.15s; }
+.bar button:hover{ background:var(--acc-bg); border-color:var(--acc); }
+.bar button.pri{ background:var(--acc); color:#fff; border-color:var(--acc); }
+.bar button.pri:hover{ background:var(--acc-d); }
+.bar .pos{ margin-left:auto; font-size:12.5px; color:var(--muted); font-weight:600; white-space:nowrap; }
+.bar .pos b{ color:var(--acc-d); font-size:14px; }
+.bar .hint{ font-size:11.5px; color:var(--muted); }
+
+main{ max-width:780px; margin:0 auto; padding:22px 22px 0; }
+p{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+strong{ color:var(--ink); }
+sup{ font-size:10.5px; color:var(--acc); font-weight:700; }
+sup a{ color:inherit; text-decoration:none; display:inline-block; padding:2px 3px; }
+ul,ol{ font-size:14.5px; color:var(--ink-soft); padding-left:22px; }
+li{ margin:6px 0; }
+
+details.sec{ background:var(--card); border:1px solid var(--line); border-radius:13px; margin:0 0 11px; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); box-shadow:0 1px 3px rgba(0,0,0,.05); }
+details.sec > summary{ cursor:pointer; list-style:none; padding:15px 20px; display:flex; align-items:center; gap:11px; flex-wrap:wrap; min-height:52px; }
+details.sec > summary::-webkit-details-marker{ display:none; }
+details.sec > summary::after{ content:"＋"; margin-left:auto; color:var(--muted); font-weight:700; font-size:16px; flex:none; }
+details.sec[open] > summary::after{ content:"－"; }
+details.sec[open] > summary{ border-bottom:1px solid var(--line); background:#fbfaf6; }
+details.sec > summary .num{ flex:none; width:24px; height:24px; border-radius:7px; background:var(--acc-bg); color:var(--acc-d); font-size:12px; font-weight:800; display:grid; place-items:center; }
+details.sec > summary .ti{ font-size:16px; font-weight:800; color:var(--ink); }
+details.sec > summary .sub{ font-size:12.5px; color:var(--muted); font-weight:500; }
+details.sec > .body{ padding:6px 20px 16px; }
+details.sec.cur{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
+details.sec > summary .tag{ flex:none; font-size:10.5px; font-weight:800; letter-spacing:1.5px; color:#fff; border-radius:5px; padding:2px 8px; }
+.tag.why{ background:var(--why); } .tag.what{ background:var(--what); }
+.tag.how{ background:var(--how); } .tag.good{ background:var(--good); }
+
+details.sub{ background:var(--surface); border:1px solid var(--line); border-radius:11px; margin:0 0 9px; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); }
+details.sub > summary{ cursor:pointer; list-style:none; padding:12px 16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-height:48px; }
+details.sub > summary::-webkit-details-marker{ display:none; }
+details.sub > summary::after{ content:"＋"; margin-left:auto; color:var(--muted); font-weight:700; flex:none; }
+details.sub[open] > summary::after{ content:"－"; }
+details.sub[open] > summary{ border-bottom:1px solid var(--line); }
+details.sub > .body{ padding:12px 16px 4px; }
+details.sub .no{ flex:none; font-size:12px; font-weight:800; color:#fff; background:var(--acc); border-radius:5px; padding:2px 8px; }
+details.sub .nm{ font-size:15.5px; font-weight:800; color:var(--ink); }
+details.sub .en{ font-size:11.5px; color:var(--muted); font-weight:600; }
+details.sub.warnsub{ border-left:4px solid var(--warn); } details.sub.warnsub .no{ background:var(--warn); }
+details.sub.road{ border-left:4px solid var(--what); } details.sub.road .no{ background:var(--what); }
+details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ background:#0891b2; }
+
+.three{ counter-reset:t; margin:0; padding:0; list-style:none; }
+.three li{ counter-increment:t; position:relative; padding:0 0 14px 40px; margin:0; font-size:15.5px; font-weight:700; color:var(--ink); line-height:1.72; }
+.three li:last-child{ padding-bottom:2px; }
+.three li::before{ content:counter(t); position:absolute; left:0; top:3px; width:25px; height:25px; border-radius:50%; background:var(--acc); color:#fff; font-size:12.5px; font-weight:800; display:grid; place-items:center; }
+.three li em{ font-style:normal; font-weight:500; font-size:13.3px; color:var(--ink-soft); display:block; line-height:1.76; margin-top:3px; }
+
+.lead2{ font-size:15px; font-weight:700; color:var(--ink); margin:4px 0 16px; line-height:1.7; }
+.scene{ border:1px solid var(--line); border-radius:12px; padding:0; margin:0 0 13px; overflow:hidden; background:var(--surface); }
+.scene .sh{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; padding:12px 17px; background:#fbfaf6; border-bottom:1px solid var(--line); }
+.scene .sh .ic{ font-size:16px; }
+.scene .sh .tt{ font-size:15.5px; font-weight:800; color:var(--ink); }
+.scene .sh .rl{ font-size:12px; font-weight:700; color:#fff; background:var(--muted); border-radius:5px; padding:2px 8px; }
+.scene .bd{ padding:13px 17px 15px; }
+.scene .pt:last-child{ margin-bottom:0; }
+.scene.teach{ border-left:4px solid var(--muted); }
+.scene.self{ border-left:4px solid var(--acc); }
+.scene.self .sh{ background:var(--acc-bg); }
+.scene.self .sh .rl{ background:var(--acc); }
+.scene.self .pt{ border-left-color:var(--acc); }
+
+.ring{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); margin:14px 0 6px; }
+.ring button{ display:block; text-align:left; font-family:inherit; cursor:pointer; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 15px; transition:.15s; width:100%; min-width:0; }
+.ring button:hover{ transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.06); }
+.ring .k{ font-size:10.5px; font-weight:800; letter-spacing:1.5px; }
+.ring .t{ font-size:14.5px; font-weight:800; color:var(--ink); margin:3px 0 3px; }
+.ring .d{ font-size:12px; color:var(--muted); line-height:1.55; }
+.ring .w1{ border-top:3px solid var(--why); } .ring .w1 .k{ color:var(--why); }
+.ring .w2{ border-top:3px solid var(--how); } .ring .w2 .k{ color:var(--how); }
+.ring .w3{ border-top:3px solid var(--what); } .ring .w3 .k{ color:var(--what); }
+.ring .w4{ border-top:3px solid var(--good); } .ring .w4 .k{ color:var(--good); }
+.ringnote{ font-size:12.3px; color:var(--muted); text-align:center; margin:0 0 16px; line-height:1.7; }
+
+.box{ background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:15px 18px; margin:13px 0; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.box.warn{ background:var(--warn-bg); border-color:#fed7aa; }
+.box.ok{ background:var(--ok-bg); border-color:#bbf7d0; }
+.box h4{ margin:0 0 6px; font-size:14.5px; }
+.box.warn h4{ color:var(--bad); } .box.ok h4{ color:var(--ok); }
+.box p:last-child{ margin-bottom:0; }
+
+.ruler{ background:var(--card); border:1px solid var(--line); border-left:4px solid var(--acc);
+  border-radius:12px; padding:16px 18px 12px; margin:14px 0; }
+.ruler .rh{ font-size:13.5px; font-weight:800; color:var(--acc-d); margin:0 0 4px; }
+.ruler .rs{ font-size:12.3px; color:var(--muted); margin:0 0 10px; line-height:1.7; }
+.ruler svg{ max-width:100%; height:auto; display:block; margin:0 auto; }
+.ruler .cap{ font-size:12.5px; color:var(--muted); margin-top:10px; line-height:1.75; }
+.svgalt{ display:none; }
+.svgalt .row{ border:1px solid var(--line); border-radius:9px; padding:10px 13px; margin:0 0 9px; font-size:14px; line-height:1.7; }
+.svgalt .row.a1{ border-left:4px solid var(--muted); color:var(--ink-soft); }
+.svgalt .row.a2{ border-left:4px solid var(--acc); color:var(--acc-d); background:var(--acc-bg); }
+
+.pt{ margin:0 0 12px; padding-left:15px; border-left:2px solid var(--acc-bg); }
+.pt:last-child{ margin-bottom:2px; }
+.q{ font-size:14.2px; font-weight:800; color:var(--ink); line-height:1.68; }
+.a{ font-size:13.3px; color:var(--ink-soft); line-height:1.76; margin:3px 0 0; }
+.pt.hit{ border-left-color:var(--good); }
+.enum{ margin:6px 0 0; padding:0; list-style:none; }
+.enum li{ font-size:13.3px; color:var(--ink-soft); line-height:1.72; margin:0 0 5px; padding-left:24px; text-indent:-24px; }
+.enum li b{ color:var(--acc-d); font-weight:800; margin-right:5px; }
+
+.punch{ background:var(--card); border:2px solid var(--acc); border-radius:13px; padding:20px 22px; margin:16px 0; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.punch .p1{ font-size:20px; font-weight:800; color:var(--acc-d); line-height:1.6; }
+.punch .p2{ font-size:13px; color:var(--muted); margin-top:8px; line-height:1.7; }
+.vs{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin:12px 0; }
+.vs .col{ border:1px solid var(--line); border-radius:12px; background:var(--surface); padding:13px 16px; }
+.vs .col.neg{ border-top:3px solid var(--bad); }
+.vs .col.pos{ border-top:3px solid var(--ok); }
+.vs .col .ch{ font-size:13.5px; font-weight:800; margin:0 0 6px; }
+.vs .col.neg .ch{ color:var(--bad); } .vs .col.pos .ch{ color:var(--ok); }
+.vs .col .cn{ font-size:12.8px; color:var(--ink-soft); line-height:1.7; }
+.vs .col .cn b{ color:var(--ink); }
+.path{ counter-reset:pp; margin:6px 0 0; padding:0; list-style:none; }
+.path li{ counter-increment:pp; position:relative; padding:0 0 20px 46px; margin:0; }
+.path li:last-child{ padding-bottom:4px; }
+.path li::before{ content:"步" counter(pp); position:absolute; left:0; top:2px; width:34px; height:22px; border-radius:11px;
+  background:var(--good); color:#fff; font-size:11.5px; font-weight:800; display:grid; place-items:center; letter-spacing:.5px; }
+.path .pq{ font-size:15px; font-weight:800; color:var(--ink); line-height:1.65; }
+.path .a{ padding-left:14px; border-left:2px solid var(--acc-bg); margin:5px 0 0; }
+.guard{ background:var(--ok-bg); border:1px solid #bbf7d0; border-left:4px solid var(--ok); border-radius:10px; padding:12px 15px; margin:12px 0 2px; }
+.guard .gh2{ font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--ok); margin-bottom:4px; }
+.guard .gq{ font-size:15px; font-weight:800; color:var(--ink); line-height:1.6; }
+.guard .ga{ font-size:12.8px; color:var(--ink-soft); line-height:1.72; margin-top:5px; }
+.meas{ background:var(--acc-bg); border:1px solid #bfe3dd; border-left:4px solid var(--acc); border-radius:9px; padding:12px 15px; margin:14px 0 0; }
+.meas .m1{ font-size:14.5px; font-weight:800; color:var(--acc-d); line-height:1.75; }
+.note{ font-size:12.3px; color:var(--muted); line-height:1.75; margin:9px 0; padding:8px 12px; background:var(--bg); border-radius:8px; }
+.tpl{ background:#2b2f37; color:#e8e8ea; border-radius:10px; padding:13px 16px; margin:12px 0; font:14px/2 ui-monospace,SFMono-Regular,Menlo,monospace; overflow-x:auto; white-space:pre-wrap; }
+.tpl .lb2{ display:block; font:700 11px/1.4 -apple-system,"PingFang SC",sans-serif; color:#9aa3af; margin-bottom:7px; letter-spacing:1px; }
+
+ol.refs{ font-size:13px; color:var(--ink-soft); padding-left:0; list-style:none; counter-reset:r; }
+ol.refs li{ counter-increment:r; position:relative; padding:10px 0 10px 42px; border-bottom:1px dashed var(--line); margin:0; }
+ol.refs .q{ font-size:13.6px; line-height:1.6; }
+ol.refs .a{ font-size:12.6px; color:var(--muted); }
+ol.refs li::before{ content:"[" counter(r) "]"; position:absolute; left:0; top:9px; font-weight:800; color:var(--acc); font-size:12.5px; }
+ol.refs a{ color:var(--acc-d); overflow-wrap:anywhere; }
+ol.refs .kind{ display:inline-block; font-size:11px; font-weight:700; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:0 6px; margin-right:7px; }
+
+.appendix{ max-width:780px; margin:26px auto 0; padding:0 22px; }
+.appendix .box{ border-top:3px solid var(--line); }
+footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); margin-top:36px; line-height:1.9; }
+
+@media(max-width:560px){
+  .bar .hint, #collapse, #expand{ display:none; }
+  main, .appendix{ padding-left:16px; padding-right:16px; }
+  p, ul, ol{ font-size:16px; }
+  .a, .enum li{ font-size:14.5px; }
+  .q{ font-size:15.5px; }
+  .three li{ font-size:16px; } .three li em{ font-size:14px; }
+  .vs{ grid-template-columns:1fr; }
+  .ring{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  details.sec > summary .sub{ display:none; }
+  .svgwrap{ display:none; } .svgalt{ display:block; }
+}
+@media print{ .bar{ display:none; } details{ break-inside:avoid; } details>.body{ display:block !important; } }
+
+
+.bar .q{ display:flex; align-items:center; gap:6px; }
+.bar .q input{ font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+  color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:20px;
+  padding:9px 13px; min-height:44px; width:150px; outline:none; }
+.bar .q input:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
+.bar .q button{ padding:8px 11px; min-height:44px; }
+.bar .q .n{ font-size:12px; color:var(--muted); font-weight:700; min-width:44px; text-align:center;
+  white-space:nowrap; }
+.bar .q .n.none{ color:var(--bad); }
+mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
+mark.hit.cur{ background:var(--warn); color:#fff; box-shadow:0 0 0 2px var(--warn); }
+
+/* 🥇 稳定锚：不占位、不可见，但跳过去时不会被 sticky 工具条挡住 */
+a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); }
+
+/* 🔧 `260824` 工具条紧凑化 —— 老徐截图：搜索框把它挤成两行、占掉半屏 */
+.bar .in{ gap:6px; padding:7px 22px; }
+.bar button{ padding:7px 12px; font-size:12.5px; }
+.bar .q input{ width:132px; min-width:96px; padding:8px 12px; }
+.bar .q button{ padding:7px 10px; }
+.bar .hint{ font-size:11px; }
+@media (max-width:1000px){ .bar .hint{ display:none; } }
+/* 🔑 宽屏让工具条放宽（正文仍 780px）—— 否则 6 个按钮＋搜索框＋进度在 780 里必换行。
+   ⭐ 实测：780px 下工具条 109px 高（两行）；放宽后一行。--bar 是 JS 实测的，几行都不挡锚点。 */
+@media (min-width:1120px){ .bar .in{ max-width:1080px; } }
+@media (max-width:640px){ .bar .q input{ width:104px; } .bar .pos{ font-size:11.5px; } }
+
+/* 🏷 顶部三维度标签 */
+.dims{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:14px auto 0; }
+.dims .dim{ display:inline-flex; align-items:baseline; gap:6px; background:var(--card);
+  border:1px solid var(--line); border-radius:20px; padding:5px 13px; font-size:12px; }
+.dims .dim b{ color:var(--muted); font-weight:700; letter-spacing:.04em; }
+.dims .dim .v{ font-weight:800; color:var(--ink); letter-spacing:1px; }
+.dims .dim .lab{ color:var(--acc-d); font-weight:700; }
+.dims .dim.mt .v{ color:var(--what); } .dims .dim.im .v{ color:var(--good); }
+
+/* 📚 底部版本迭代折叠 */
+.foot details.cl{ margin-top:8px; }
+.foot details.cl > summary{ cursor:pointer; list-style:none; font-weight:700; color:var(--acc-d);
+  padding:6px 0; min-height:36px; display:flex; align-items:center; gap:6px; }
+.foot details.cl > summary::-webkit-details-marker{ display:none; }
+.foot details.cl > summary::after{ content:"＋"; color:var(--muted); font-weight:700; }
+.foot details.cl[open] > summary::after{ content:"－"; }
+.foot details.cl .body{ padding-top:4px; }
+
+.hero .three{ text-align:left; max-width:40em; margin:18px auto 0; }
+.hero .three li{ font-size:15px; padding-bottom:10px; }
+
+.foot{max-width:780px;margin:26px auto 0;padding:16px 22px 40px;border-top:1px solid var(--line);
+ font-size:12.5px;color:var(--muted);line-height:1.9;}
+.foot .badge{display:inline-block;background:var(--ink);color:#fff;padding:2px 9px;
+ font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:5px;margin-right:8px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="eyebrow">ops · skill · 2w2h</span>
+  <h1>2w2h 自述</h1>
+  <p class="lead">收到 2w2h 的推送后打开：判这次用得对不对，不对怎么改。</p>
+  <ol class="three"><li><b>它是什么</b>：全机唯一黄金圈出页 skill</li><li><b>什么时候动</b>：谁出页谁调它，调了就记、就推</li><li><b>不对怎么改</b>：按第 4 段判据说一句</li></ol>
+  
+</div>
+
+<div class="bar">
+  <div class="in">
+    <button type="button" id="prev">◀ 上一段</button>
+    <button type="button" id="next" class="pri">下一段 ▶</button>
+    <button type="button" id="collapse">全部收起</button>
+    <button type="button" id="expand">全部展开（自读）</button>
+    <span class="hint">← → 键可翻 · 展开后翻页不再收起</span>
+    <span class="q"><input id="q" type="search" placeholder="搜本页…（/ 聚焦）" autocomplete="off" spellcheck="false"><button type="button" id="qprev" title="上一个（Shift+Enter）">↑</button><button type="button" id="qnext" title="下一个（Enter）">↓</button><span class="n" id="qn">–</span></span><span class="pos">第 <b id="cur">–</b> / <span id="tot">–</span> 段</span>
+  </div>
+</div>
+
+<div class="ring">
+<button type="button" class="w1" data-go="s1"><div class="k">WHY · 第 1 段</div><div class="t">为什么</div><div class="d">一套骨架 · 一条流程 · 一条推送，缺任何一条都回到各写各的</div></button>
+<button type="button" class="w2" data-go="s2"><div class="k">HOW · 第 2 段</div><div class="t">凭什么</div><div class="d">三层管线 · 硬事件 hook · 30 分钟窗口攒着推</div></button>
+<button type="button" class="w3" data-go="s3"><div class="k">WHAT · 第 3 段</div><div class="t">有什么</div><div class="d">页面产物 · 使用记录 · 推送每行怎么读</div></button>
+<button type="button" class="w4" data-go="s4"><div class="k">HOW GOOD · 第 4 段</div><div class="t">算好了没</div><div class="d">三类「不合适」各怎么看，怎么一句话发起迭代</div></button>
+</div>
+
+<main>
+<a id="why" class="kanchor" aria-hidden="true"></a>
+<details class="sec" id="s1" data-key="why">
+  <summary><span class="num">1</span><span class="tag why">WHY</span><span class="ti">为什么要有它</span><span class="sub">不做会怎样：每条线各写一套骨架、五个坑每次重踩、老徐不知道谁在用</span></summary>
+  <div class="body"><p class="lead2">先给结论：<b>它管的不是「怎么把页做漂亮」，是三件「不做就会烂」的事。</b></p><ul><li class=""><b>没有统一骨架 ⇒ 各写各的。</b> <code>260824</code> 老徐定「我们有且只有一套黄金圈，一切 html 都用黄金圈结构」。全机 HTML 里走了黄金圈的占多少，用时现算（见第 3 段），🚫 不写死 —— 老页迭代时才改，存量不回填，这是他定的</li><li class=""><b>没有 skill ⇒ 流程只活在 AI 的记忆里。</b> 出页有六步、五个坑（生成器不能叫 <code>_出页.py</code>、变量不能叫 <code>parts</code>、注入要给 markdown……），每个坑都实撞过。写在文档里 AI 会忘，写成 skill 触发词一到就照步骤走</li><li class=""><b>没有推送 ⇒ 老徐不知道谁在用、用得对不对。</b> 他 <code>260904</code> 原话：「<b>我的目的是为了让自己知道什么在动、有什么问题，我得迭代</b>」。推送不是留痕，是给他一个「打开本页 → 判 → 说一句改」的入口</li></ul><p class="star">⭐ 三件事是一件事：<b>骨架保证出来的东西长一样，skill 保证每次都按同一条路出，推送保证出得不对时有人知道。</b></p></div>
+</details>
+<a id="how" class="kanchor" aria-hidden="true"></a>
+<details class="sec" id="s2" data-key="how">
+  <summary><span class="num">2</span><span class="tag how">HOW</span><span class="ti">它靠什么做到</span><span class="sub">出页是一份公共库，推送是一个挂在动作上的钩子，两者都不靠 AI 记得</span></summary>
+  <div class="body"><p class="lead2">先给结论：<b>出页靠一份公共库，推送靠一个钩子；两样都是「挂在已经在跑的东西上」，不靠 AI 记得。</b></p><details class="sub" open><summary><span class="nm">出页：三层管线，真身就在本夹</span></summary><div class="body"><ul><li class=""><code>_md2html.py</code> 把 markdown 渲染成 HTML 标签 → <code>_出页.py</code> 的 <code>build_ring()</code> 套上黄金圈骨架 → 各夹自己一份 <b>20 行生成器</b>只填标题、版本、注入</li><li class="crit">🔴 <b><code>~/projects/OPC/格式标准</code> 是一根软链接指到本夹</b>（<code>260904</code> 整夹搬来）。全机生成器写死的旧路径一处没改、全接住。老徐的计划：跑顺了再改直接路径、撤软链接</li><li class="">样式与脚本从样板原样抽（<code>_抽出的*</code> 三份，🚫 手改）；页内搜索、稳定锚 <code>key=</code>、动态工具条高度是出页器追加的 —— 所以 <code>cp 模板.html</code> 手写那条路拿不到这三样，本 skill 不走它</li></ul></div></details><details class="sub" open><summary><span class="nm">推送：挂在「Skill 被调用」这个硬事件上</span></summary><div class="body"><ul><li class="">Claude Code 每次调 Skill 工具后会跑 <code>PostToolUse</code> hook ⇒ <code>ops/自动化/ai配置推送.py</code>（<code>~/.claude/hooks/</code> 里是软链接）</li><li class="">它只认<b>硬事件</b>：① Skill 被调用（<code>tool_name == Skill</code>）② 被监视的文件真的变了（扫 mtime 跟快照比）。🚫 不猜「有没有用上某条 rule」—— 没有那个事件，猜就会假报</li><li class=""><b>节流按 kind 分：rule 10 分钟、skill 30 分钟</b>（老徐 <code>260904</code> 晚定「用这个 skill 就 30 分钟内推送一次」）。窗口内压下的写进 <code>pending</code>，窗口一过的第一条推送全带出 —— 🔴 只压不攒会直接违背「知道什么在动」</li><li class="">每次调用另记一行到 <code>~/.claude/.rs-notify/skill-usage.tsv</code>，<b>只追加不轮转</b>，推送正文带「这个 skill 今日 N 次 · 累计 M 次」</li><li class="">🕐 时间全打<b>北京时间</b>（老徐 <code>260904</code> 拍 B：云主机时区是纽约，不改系统，只这个脚本自己设 <code>TZ</code>）</li></ul></div></details></div>
+</details>
+<a id="what" class="kanchor" aria-hidden="true"></a>
+<details class="sec" id="s3" data-key="what">
+  <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。工具条能翻页、全展开、页内搜索（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 03:29）的快照</b>：全机 skill 调用共 5 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
+💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
+📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
+⏱ 这 30 分钟里还动了 N 条         ← 窗口内压下的，每条一行；没有就没这段
+
+📍 来源  云主机 · ai配置推送.py · skill调用   ← 哪台、哪个脚本、哪一段
+🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
+📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
+📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 03:29）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+</details>
+<a id="good" class="kanchor" aria-hidden="true"></a>
+<details class="sec" id="s4" data-key="good">
+  <summary><span class="num">4</span><span class="tag good">HOW GOOD</span><span class="ti">怎么判它做得对不对 · 不对怎么改</span><span class="sub">推送该不该来 · 这次该不该调 · 出的页对不对，三问各有判据；改只要一句话</span></summary>
+  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class="">在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
+</details>
+<a id="refs" class="kanchor" aria-hidden="true"></a>
+<details class="sec" id="s5" data-key="refs">
+  <summary><span class="num">5</span><span class="ti">📎 对照读物 · 不是作业</span><span class="sub">各摊正本在哪，本页只是门面</span></summary>
+  <div class="body"><ul><li class=""><b>给 AI 的六步</b> —— 同夹 <code>SKILL.md</code>（触发词 · 四档怎么判 · 五个坑 · 验收）</li><li class=""><b>标准长什么样</b> —— 同夹 <code>结构输出标准.md</code>（必备五件 · 机读标记 · 反例六条 · 配色）</li><li class=""><b>三层管线的来历与归属</b> —— 同夹 <code>说明-三层管线与归属.md</code></li><li class=""><b>推送脚本</b> —— <code>ops/自动化/ai配置推送.py</code>（文件头注释就是它的设计红线）</li><li class=""><b>推送台账</b> —— <code>ops/webhook总口/台账/已验证/</code> 里 rules-skills 那条（钥匙在哪、验证记录）· 五行署名格式 <code>ops/webhook总口/推送格式标准.md</code></li><li class=""><b>公开库</b> —— <a href="https://github.com/VinceLi0576/2w2h">https://github.com/VinceLi0576/2w2h</a>：本夹是正本，<code>scripts/发布到github.sh</code> 单向推；别人 <code>git clone</code> 到 <code>~/.claude/skills/2w2h</code> 就能用</li><li class=""><b>别的 skill 要照做</b> —— 夹里放 <code>自述.md</code> ＋ <code>_生成自述HTML.py</code> → <code>自述.html</code>，hook 会自动把推送里 📖 文档 指向它。本页就是模板，<code>cp</code> 本夹这三份改内容即可</li></ul></div>
+</details>
+</main>
+
+<div class="foot">
+  <span class="badge">v1.3</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>739f3c1+未提交改动</code>
+  <details class="cl"><summary>版本迭代（4 版）</summary><div class="body"><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
+</div>
+
+<script>
+(function(){
+  var steps = Array.prototype.slice.call(document.querySelectorAll('details.sec'));
+  var idx = -1, readMode = false;
+  var curEl = document.getElementById('cur'), totEl = document.getElementById('tot');
+  totEl.textContent = steps.length;
+
+  function mark(){
+    steps.forEach(function(d){ d.classList.remove('cur'); });
+    if(idx >= 0 && steps[idx] && steps[idx].open) steps[idx].classList.add('cur');
+    curEl.textContent = idx >= 0 ? (idx + 1) : '–';
+  }
+  function goto(i, scroll){
+    if(i < 0 || i >= steps.length) return;
+    idx = i;
+    var target = steps[i];
+    if(readMode){ target.open = true; }
+    else{ steps.forEach(function(d){ d.open = (d === target); }); }
+    mark();
+    if(history.replaceState) history.replaceState(null, '', '#' + target.id);
+    if(scroll !== false) target.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  document.getElementById('next').addEventListener('click', function(){ goto(idx + 1); });
+  document.getElementById('prev').addEventListener('click', function(){ goto(idx - 1); });
+  document.getElementById('collapse').addEventListener('click', function(){
+    readMode = false;
+    steps.forEach(function(d){ d.open = false; });
+    idx = -1; mark();
+    if(steps[0]) steps[0].scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  document.getElementById('expand').addEventListener('click', function(){
+    readMode = true;
+    steps.forEach(function(d){ d.open = true; }); mark();
+  });
+  document.querySelectorAll('.ring button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var i = steps.indexOf(document.getElementById(b.dataset.go));
+      if(i !== -1) goto(i);
+    });
+  });
+  steps.forEach(function(d, i){
+    d.addEventListener('toggle', function(){
+      if(d.open){ idx = i; }
+      mark();
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+    if(e.key === 'ArrowRight'){ e.preventDefault(); goto(idx + 1); }
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); goto(idx - 1); }
+  });
+  var h = location.hash.replace('#','');
+  var hi = h ? steps.indexOf(document.getElementById(h)) : -1;
+  if(hi !== -1) goto(hi, true); else goto(0, false);
+})();
+
+(function(){
+  var q=document.getElementById('q'), qn=document.getElementById('qn');
+  var hits=[], cur=-1, timer=null;
+
+  function clearHits(){
+    document.querySelectorAll('mark.hit').forEach(function(m){
+      m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
+    });
+    // 🔑 normalize 把被切碎的相邻文本节点合回去，否则搜第二次会漏跨节点的词
+    document.querySelectorAll('main, .hero').forEach(function(n){ n.normalize(); });
+    hits=[]; cur=-1;
+  }
+
+  function markAll(s){
+    clearHits();
+    if(!s) { qn.textContent='–'; qn.classList.remove('none'); return; }
+    var root=document.querySelector('main');
+    var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode:function(n){
+        if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p=n.parentNode && n.parentNode.nodeName;
+        if(p==='SCRIPT'||p==='STYLE') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    // 🔴 先收集再改 —— 边走边替换会让 TreeWalker 走乱
+    var nodes=[], n;
+    while((n=w.nextNode())) nodes.push(n);
+    var low=s.toLowerCase();
+    nodes.forEach(function(node){
+      var txt=node.nodeValue, t=txt.toLowerCase(), i=t.indexOf(low);
+      if(i<0) return;
+      var frag=document.createDocumentFragment(), last=0;
+      while(i>=0){
+        if(i>last) frag.appendChild(document.createTextNode(txt.slice(last,i)));
+        var m=document.createElement('mark'); m.className='hit';
+        m.textContent=txt.slice(i, i+s.length);
+        frag.appendChild(m); hits.push(m);
+        last=i+s.length; i=t.indexOf(low, last);
+      }
+      if(last<txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+    qn.textContent = hits.length ? ('0/'+hits.length) : '无';
+    qn.classList.toggle('none', hits.length===0);
+    if(hits.length) jump(0);
+  }
+
+  function jump(i){
+    if(!hits.length) return;
+    cur=(i+hits.length)%hits.length;
+    hits.forEach(function(h){ h.classList.remove('cur'); });
+    var h=hits[cur]; h.classList.add('cur');
+    // 🥇 这条是自建搜索存在的理由：把祖先 details 全打开，否则跳过去也看不见
+    var p=h.parentElement;
+    while(p){ if(p.tagName==='DETAILS') p.open=true; p=p.parentElement; }
+    h.scrollIntoView({behavior:'smooth', block:'center'});
+    qn.textContent=(cur+1)+'/'+hits.length;
+  }
+
+  q.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer=setTimeout(function(){ markAll(q.value.trim()); }, 180);
+  });
+  q.addEventListener('keydown', function(e){
+    if(e.key==='Enter'){ e.preventDefault(); e.shiftKey?jump(cur-1):jump(cur+1); }
+    if(e.key==='Escape'){ q.value=''; clearHits(); qn.textContent='–'; qn.classList.remove('none'); q.blur(); }
+  });
+  document.getElementById('qnext').addEventListener('click', function(){ jump(cur+1); });
+  document.getElementById('qprev').addEventListener('click', function(){ jump(cur-1); });
+  document.addEventListener('keydown', function(e){
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+    if(e.key==='/'){ e.preventDefault(); q.focus(); q.select(); }
+  });
+  // 🥇 `260824` 修一个真 bug：`--bar` 在样式里写死 64px，
+  //    但工具条加了搜索框后会**换行变高**（老徐截图里就是两行）⇒
+  //    details 的 scroll-margin-top 按 64px 算 ⇒ **锚点跳过去会被工具条挡住**。
+  //    ⇒ 实测高度写回 CSS 变量，几行都不怕。
+  function syncBar(){
+    var bar=document.querySelector('.bar');
+    if(bar) document.documentElement.style.setProperty('--bar', bar.offsetHeight+'px');
+  }
+  syncBar();
+  window.addEventListener('resize', syncBar);
+  if(window.ResizeObserver){ new ResizeObserver(syncBar).observe(document.querySelector('.bar')); }
+  window.__barHeight=function(){ syncBar();
+    return {bar:document.querySelector('.bar').offsetHeight,
+            cssVar:getComputedStyle(document.documentElement).getPropertyValue('--bar').trim()}; };
+
+  // 🔴 `260824`：原脚本只认 `#sN`（getElementById 后 steps.indexOf）——
+  //    语义锚会让它 `hi=-1` 然后**静默跳到第一段**。⇒ 必须一起加这段，否则锚是个会骗人的东西。
+  function gotoKey(k){
+    if(!k) return false;
+    var d=document.querySelector('details.sec[data-key="'+CSS.escape(k)+'"]');
+    if(!d) return false;
+    return openAndScroll(d, document.getElementById(k));
+  }
+  // 🔴 `260824` 实测抓到的行为不一致：原脚本的 hash 处理**只在加载时跑一次、没监听 hashchange**
+  //    ⇒ 页面打开后再点站内 `#sN` 链接**没反应**，而语义锚（我这套监听了）有反应。
+  //    ⇒ 两种锚行为不一致，而"有的锚能用有的不能"比"都不能用"更坑。
+  //    ⇒ 这里对 sN 也走同一套（展开祖先 ＋ 滚过去），🚫 不动原脚本。
+  function openAndScroll(el, target){
+    if(!el) return false;
+    el.open = true;
+    var p = el.parentElement;
+    while(p){ if(p.tagName==='DETAILS') p.open=true; p=p.parentElement; }
+    (target || el).scrollIntoView({behavior:'smooth', block:'start'});
+    return true;
+  }
+  function handleHash(){
+    var h=decodeURIComponent(location.hash.replace('#',''));
+    if(!h) return;
+    if(/^s[0-9]+$/.test(h)){ return openAndScroll(document.getElementById(h)); }
+    return gotoKey(h);
+  }
+  handleHash();
+  window.addEventListener('hashchange', handleHash);
+  window.__gotoKey=gotoKey;
+  window.__keys=function(){ return Array.prototype.map.call(
+    document.querySelectorAll('details.sec[data-key]'), function(d){ return d.dataset.key; }); };
+
+  // 供自动化验证用（🔑 出页后能在真浏览器里跑 __pageSearch('词') 自证）
+  window.__pageSearch=function(s){ markAll(s); return {q:s, hits:hits.length, cur:cur}; };
+  window.__pageSearchJump=function(i){ jump(i); return {cur:cur, total:hits.length,
+    text:(hits[cur]?hits[cur].textContent:null),
+    visible:(hits[cur]? !!hits[cur].getClientRects().length : false)}; };
+})();
+
+</script>
+</body>
+</html>
