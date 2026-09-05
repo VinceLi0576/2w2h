@@ -159,22 +159,28 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 #    字数是作者规矩，超了往 stderr 报，🚫 不截断（截断＝静默改内容）
 HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
-/* 抬头 ＝ 表单式：左列 [两字] 蓝标签、右列内容，四行对齐；标签就是槽位名（`260905` 老徐：中括号、蓝色、两个字就是注释） */
-.hero{ text-align:left; padding:34px 22px 22px; }
-.hero .hgrid{ max-width:780px; margin:0 auto; display:grid; grid-template-columns:56px minmax(0,1fr); column-gap:16px; row-gap:12px; align-items:baseline; }
-.k2{ color:#2563eb; font-weight:700; font-size:12px; letter-spacing:.5px; text-align:right; white-space:nowrap; line-height:1.6; }
-.k2::before{ content:"["; opacity:.65; } .k2::after{ content:"]"; opacity:.65; }
-.hero h1{ margin:0; font-size:26px; line-height:1.3; text-align:left; }
-.hero .lead{ margin:0; max-width:none; text-align:left; }
+/* 抬头 ＝ 跟四钮同一族的卡片（`260905` 老徐：参考四钮那张，整体色调排版一致）：
+   白底 · 细边 · 圆角 · 顶上一道色边（标题蓝）· 小标签字距拉开 · 正文灰。里面仍是「左标签列 ＋ 右内容列」四行对齐 */
+.hero{ background:transparent; border-bottom:0; text-align:left; padding:22px 22px 0; }
+.hero .hgrid{ max-width:780px; margin:0 auto; box-sizing:border-box; background:var(--card); border:1px solid var(--line);
+  border-top:3px solid #2563eb; border-radius:12px; padding:16px 20px 14px; box-shadow:0 1px 3px rgba(0,0,0,.03);
+  display:grid; grid-template-columns:52px minmax(0,1fr); column-gap:14px; row-gap:10px; align-items:baseline; }
+/* [两字] 标签：跟四钮上「WHY · 第 1 段」同一套字（10.5px · 800 · 字距 1.5） */
+.k2{ color:#2563eb; font-weight:800; font-size:10.5px; letter-spacing:1.5px; text-align:right; white-space:nowrap; line-height:1.7; }
+.k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
+.hero h1{ margin:0; font-size:22px; line-height:1.3; text-align:left; color:var(--ink); }
+.hero .lead{ margin:0; max-width:none; text-align:left; font-size:13.5px; color:var(--muted); line-height:1.7; }
 .hero .three{ margin:2px 0 0; }
-.hero .three li{ font-size:15px; padding-bottom:10px; }
+.hero .three li{ font-size:14.5px; padding:0 0 8px 34px; }
+.hero .three li::before{ width:22px; height:22px; font-size:11px; }
 .hero .dims{ grid-column:1 / -1; justify-content:flex-start; margin:0; }
-/* 右下角：值在上（项目 › 文件夹 · 版本），[标签] 在下，小灰字 */
-.hero .loc{ grid-column:1 / -1; display:flex; flex-direction:column; align-items:flex-end; gap:1px; margin-top:4px; }
+/* 右下角：值在上（项目 › 文件夹 · 版本），[标签] 在下 */
+.hero .loc{ grid-column:1 / -1; display:flex; flex-direction:column; align-items:flex-end; gap:0; margin-top:2px; }
 .hero .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
 .hero .loc .v b{ color:var(--acc-d); font-weight:800; }
-.hero .loc .k2.under{ font-size:10.5px; opacity:.8; }
-@media (max-width:640px){ .hero{ padding:28px 16px 18px 16px; } .hero .hgrid{ grid-template-columns:48px minmax(0,1fr); column-gap:10px; } .hero h1{ font-size:22px; } }
+.hero .loc .k2.under{ font-size:9.5px; opacity:.75; }
+.ring{ margin-top:10px; }   /* 跟四钮之间的缝 ＝ 四钮之间的缝 */
+@media (max-width:640px){ .hero{ padding:16px 12px 0; } .hero .hgrid{ padding:14px 14px 12px; grid-template-columns:44px minmax(0,1fr); column-gap:10px; } .hero h1{ font-size:19px; } }
 """
 
 # 搜索框已在 控件.html 的 .q 里（`260905` 胶囊化），不再往工具条里插
