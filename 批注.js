@@ -104,11 +104,12 @@
   var comp=document.createElement('div'); comp.className='acomp'; comp.hidden=true;
   comp.innerHTML='<div class="acomp-w"></div><blockquote class="acomp-q"></blockquote><textarea placeholder="这里怎么了、想改成什么"></textarea><div class="acomp-b"><button type="button" class="ok">保存批注</button><button type="button" class="no">取消</button></div>';
   document.body.appendChild(comp);
-  var cur=null;
-  function openComposer(p){
-    if(!p) return; cur=p;
+  var cur=null, editing=null;
+  function openComposer(p, edit){
+    if(!p) return; cur=p; editing=edit||null;
     comp.querySelector('.acomp-w').textContent=p.where; comp.querySelector('.acomp-q').textContent=p.exact;
-    comp.querySelector('textarea').value='';
+    comp.querySelector('textarea').value=editing?editing.text:'';
+    comp.querySelector('.ok').textContent=editing?'保存修改':'保存批注';
     comp.hidden=false;
     var x=Math.max(8, Math.min(window.innerWidth-360, p.rect.left)), y=p.rect.bottom+12;
     if(y+220>window.innerHeight) y=Math.max(8, p.rect.top-230);
@@ -119,6 +120,10 @@
   comp.querySelector('.no').addEventListener('click', function(){ comp.hidden=true; });
   comp.querySelector('.ok').addEventListener('click', function(){
     var text=comp.querySelector('textarea').value.trim(); if(!text) return;
+    if(editing){   // 改一条已有的：内容与「改于」时间，其余（锚、发过的议题）原样不动
+      editing.text=text; editing.edited=new Date().toISOString();
+      store.save(notes); comp.hidden=true; editing=null; render(); pop.hidden=true; return;
+    }
     var a={id:'a'+Date.now().toString(36), page:PAGE, version:VER, where:cur.where, anchor:cur.anchor, secId:cur.secId,
            exact:cur.exact, prefix:cur.prefix, suffix:cur.suffix, text:text, created:new Date().toISOString(), resolved:false, remote:''};
     notes.push(a); store.save(notes); comp.hidden=true; render();
@@ -134,11 +139,23 @@
   grip.addEventListener('click', function(){ var off=document.body.classList.toggle('anno-off');
     try{ localStorage.setItem(AK, off?'1':'0'); }catch(e){} render(); });
   var pop=document.createElement('div'); pop.className='apop'; pop.hidden=true; document.body.appendChild(pop);
+  /* 什么时候写的：今天只显示时分，别的显示 月-日 时:分（老徐 260905 要）*/
+  function when(iso){
+    var d=new Date(iso); if(isNaN(d)) return '';
+    var p=function(n){ return (n<10?'0':'')+n; };
+    var hm=p(d.getHours())+':'+p(d.getMinutes());
+    var t=new Date(); var sameDay=d.toDateString()===t.toDateString();
+    return sameDay ? hm : (p(d.getMonth()+1)+'-'+p(d.getDate())+' '+hm);
+  }
+  function meta(a){
+    return '<span class="acard-when" title="'+esc(a.created)+(a.edited?('　改于 '+esc(a.edited)):'')+'">'
+      + esc(when(a.created)) + (a.edited?' ✎':'') + '</span>';
+  }
   function cardHTML(a){
-    // 已解决 ⇒ 折成一行（老徐 260905：解决后的卡片别占地方也别难看）；点标题能展开看回内容
+    // 已解决 ⇒ 折成一行；点标题能展开看回内容
     if(a.resolved){
       return '<div class="acard done" data-id="'+a.id+'">'
-        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'
+        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'+meta(a)
         +'<span class="acard-act">'
         +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 议题">↗</a>':'')
         +'<button type="button" data-act="res" title="重开">↩</button>'
@@ -147,8 +164,9 @@
         +'<div class="acard-t">'+esc(a.text)+'</div></div></div>';
     }
     return '<div class="acard" data-id="'+a.id+'">'
-      +'<div class="acard-w">'+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'
+      +'<div class="acard-w">'+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'+meta(a)
       +'<span class="acard-act">'
+      +'<button type="button" data-act="edit" title="改这条批注">✎</button>'
       +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="已发到 GitHub，点开看议题">↗</a>'
                 :'<button type="button" data-act="gh" title="发到 GitHub">⇧</button>')
       +'<button type="button" data-act="res" title="标为已解决">✓</button>'
@@ -156,8 +174,6 @@
       +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
       +'<div class="acard-t">'+esc(a.text)+'</div></div>';
   }
-  /* 右边到底还剩多少能摆卡：🔴 必须扣掉右侧竖条（260905 实撞：没扣，卡片被压在竖条下面、文字被切）。
-     竖条位置现量，别写死 —— 它自己会因缩放和窄屏变宽窄。 */
   var GAP=14, MIN=150;   // 正文到卡片的间距 · 卡片最窄（再窄中文一行放不下几个字，不如退回点黄线弹出）
   function railRoom(){
     if(document.body.classList.contains('anno-off')) return 0;
@@ -222,6 +238,12 @@
           body:JSON.stringify({number:+num, state:a.resolved?'closed':'open'})}).catch(function(){}); } }
     if(b.dataset.act==='del'){ if(confirm('删掉这条批注？')){ notes=notes.filter(function(x){return x!==a;}); store.save(notes); render(); pop.hidden=true; } }
     if(b.dataset.act==='gh'){ sendGH(a, b); }
+    if(b.dataset.act==='edit'){
+      var m=document.querySelector('mark.anno[data-id="'+a.id+'"]');
+      openComposer({exact:a.exact, prefix:a.prefix, suffix:a.suffix, where:a.where, anchor:a.anchor, secId:a.secId,
+                    rect:(m?m.getBoundingClientRect():card.getBoundingClientRect())}, a);
+      pop.hidden=true;
+    }
   }
   rail.addEventListener('click', act); pop.addEventListener('click', act);
   document.addEventListener('click', function(e){ var w=e.target.closest&&e.target.closest('.acard.done .acard-w'); if(w&&!e.target.closest('button,a')) w.parentNode.classList.toggle('show'); });
