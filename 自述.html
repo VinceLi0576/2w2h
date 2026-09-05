@@ -219,6 +219,25 @@ body.toc-on #page{ padding-left:240px; }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
 
+/* ── 💬 留言面板（`260905`） */
+.note{ position:fixed; top:62px; right:12px; z-index:58; width:340px; max-width:calc(100vw - 24px); box-sizing:border-box;
+  background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px 12px; box-shadow:0 8px 28px rgba(0,0,0,.12); font-size:13px; }
+.note[hidden]{ display:none; }
+.note .note-h{ display:flex; align-items:center; justify-content:space-between; font-weight:800; color:var(--ink); margin-bottom:6px; }
+.note .note-x{ font:700 16px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
+.note .note-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
+.note .note-w{ font-size:12px; color:var(--acc-d); font-weight:700; margin-bottom:6px; }
+.note .note-q{ margin:0 0 8px; padding:6px 10px; border-left:3px solid var(--line); color:var(--ink-soft); font-size:12.3px; line-height:1.6;
+  max-height:84px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
+.note textarea{ width:100%; box-sizing:border-box; min-height:110px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 11px; outline:none; }
+.note textarea:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
+.note .note-b{ display:flex; align-items:center; gap:10px; margin-top:8px; }
+.note .note-send{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
+.note .note-send:hover{ background:var(--acc-d); }
+.note .note-s{ font-size:12px; color:var(--muted); } .note .note-s a{ color:var(--acc-d); font-weight:700; }
+@media (max-width:640px){ .note{ top:56px; right:6px; } }
+
 
 mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
 mark.hit.cur{ background:var(--warn); color:#fff; box-shadow:0 0 0 2px var(--warn); }
@@ -256,6 +275,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <body>
 <div class="ctl" id="ctl">
   <button type="button" id="toctoggle" title="目录（侧边框架）">☰</button>
+  <button type="button" id="notebtn" title="留言给 AI（先选中一段文字再点，会带上引用）">💬</button>
   <button type="button" id="qtoggle" title="搜本页（按 / 也行）">🔍</button>
   <button type="button" id="zoomout" title="缩小">A－</button>
   <button type="button" id="zoomin" title="放大">A＋</button>
@@ -302,7 +322,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 03:52）的快照</b>：全机 skill 调用共 6 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 留言给 AI（变成 GitHub issue）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 03:55）的快照</b>：全机 skill 调用共 6 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -312,12 +332,12 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 03:52）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 03:55）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
   <summary><span class="num">4</span><span class="tag good">HOW GOOD</span><span class="ti">怎么判它做得对不对 · 不对怎么改</span><span class="sub">推送该不该来 · 这次该不该调 · 出的页对不对，三问各有判据；改只要一句话</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class="">在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
+  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加）</b>：在页面上选中那段文字，点右上角 💬，写一句「哪里不对、改成什么」，发送 —— 它会变成 GitHub 上的一条 issue（仓库 <code>2w2h</code>，标签「留言」），我用 <code>scripts/读留言.sh</code> 读，改完关 issue。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
 </details>
 <a id="refs" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s5" data-key="refs">
@@ -327,8 +347,8 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 </main>
 
 <div class="foot">
-  <span class="badge">v1.7</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>1f3cde6</code>
-  <details class="cl"><summary>版本迭代（8 版）</summary><div class="body"><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
+  <span class="badge">v1.8</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>1f3cde6+未提交改动</code>
+  <details class="cl"><summary>版本迭代（9 版）</summary><div class="body"><code>v1.8</code> 260905：加 💬 留言：选中文字点它 → 变成 GitHub issue（老徐：基于位置写留言备注，保存了 AI 再读再改）<br><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
 </div>
 </div>
 
@@ -465,6 +485,56 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   (wide.addEventListener ? wide.addEventListener('change', render) : wide.addListener(render));
   render();
   window.__toc=function(){ return {items:ol.children.length, on:document.body.classList.contains('toc-on'), drawer:document.body.classList.contains('toc-drawer')}; };
+})();
+/* 💬 留言（`260905` 老徐：基于点的位置写留言备注，保存了 AI 再读再改）
+   页面 → POST /api/note（Pages Function）→ GitHub Issue（仓库 2w2h，标签「留言」）；AI 用公开 API 读，改完关 issue。
+   位置＝当前段／小节（选中文字则带引用）。本地 file:// 打开时发不了，会提示去站上发。 */
+(function(){
+  var btn=document.getElementById('notebtn'), page=document.getElementById('page'); if(!btn||!page) return;
+  var sel={quote:'',where:'',anchor:''};
+  function locate(node){
+    var el=node&&(node.nodeType===1?node:node.parentElement);
+    var sub=el&&el.closest?el.closest('details.sub'):null, sec=el&&el.closest?el.closest('details.sec'):null, w='', a='';
+    if(sec){ var ti=sec.querySelector('summary .ti'), n=sec.querySelector('summary .num');
+      w='第'+(n?n.textContent:'?')+'段 '+(ti?ti.textContent:''); a='#'+(sec.dataset.key||sec.id); }
+    if(sub){ var nm=sub.querySelector('summary .nm'); w+=(w?' · ':'')+(nm?nm.textContent:''); if(sub.id) a='#'+sub.id; }
+    return {where:w, anchor:a};
+  }
+  document.addEventListener('selectionchange', function(){
+    var s=document.getSelection(); if(!s||s.isCollapsed) return;
+    var t=s.toString().trim(); if(!t||!page.contains(s.anchorNode)) return;
+    var l=locate(s.anchorNode); sel={quote:t.slice(0,600), where:l.where, anchor:l.anchor};
+  });
+  var box=document.createElement('div'); box.className='note'; box.hidden=true;
+  box.innerHTML='<div class="note-h">💬 留言给 AI<button type="button" class="note-x" title="关闭">×</button></div>'
+    +'<div class="note-w"></div><blockquote class="note-q" hidden></blockquote>'
+    +'<textarea placeholder="哪里不对、想改成什么。发出去会变成 GitHub 上的一条 issue，AI 读了改，改完关掉。"></textarea>'
+    +'<div class="note-b"><button type="button" class="note-send">发送</button><span class="note-s"></span></div>';
+  document.body.appendChild(box);
+  var W=box.querySelector('.note-w'), Q=box.querySelector('.note-q'), TA=box.querySelector('textarea'), S=box.querySelector('.note-s');
+  function open(){
+    var cur=document.querySelector('details.sec.cur')||document.querySelector('details.sec[open]');
+    var l=sel.quote?{where:sel.where,anchor:sel.anchor}:locate(cur);
+    box.dataset.where=l.where||''; box.dataset.anchor=l.anchor||'';
+    W.textContent='位置：'+(l.where||'整页'); Q.hidden=!sel.quote; Q.textContent=sel.quote;
+    S.textContent=''; box.hidden=false; TA.focus();
+  }
+  btn.addEventListener('click', function(){ if(box.hidden) open(); else box.hidden=true; });
+  box.querySelector('.note-x').addEventListener('click', function(){ box.hidden=true; });
+  box.querySelector('.note-send').addEventListener('click', function(){
+    var text=TA.value.trim(); if(!text){ S.textContent='先写点什么'; return; }
+    S.textContent='发送中…';
+    var pg=location.pathname.split('/').filter(Boolean)[0]||'';
+    fetch('/api/note',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({page:pg, anchor:box.dataset.anchor, where:box.dataset.where, quote:Q.hidden?'':Q.textContent, text:text})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j.ok){ S.innerHTML='已存为 <a href="'+j.url+'" target="_blank" rel="noopener">issue #'+j.number+'</a>'; TA.value=''; sel={quote:'',where:'',anchor:''}; }
+        else{ S.textContent='没存上：'+(j.error||'未知错误'); }
+      })
+      .catch(function(e){ S.textContent='没存上：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message); });
+  });
+  window.__note=function(){ return {open:!box.hidden, where:box.dataset.where, anchor:box.dataset.anchor, quote:Q.hidden?'':Q.textContent}; };
 })();
 
 (function(){
