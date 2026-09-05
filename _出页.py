@@ -159,8 +159,19 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 #    字数是作者规矩，超了往 stderr 报，🚫 不截断（截断＝静默改内容）
 HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
-.hero .three{ text-align:left; max-width:40em; margin:18px auto 0; }
+.hero{ position:relative; padding-bottom:34px; }
+/* [两字] 蓝标签 ＝ 槽位名，页面自己说明每个位置填什么（`260905` 老徐：中括号、蓝色、两个字就是注释） */
+.k2{ color:#2563eb; font-weight:700; letter-spacing:.5px; margin-right:.45em; font-size:.55em; vertical-align:.18em; white-space:nowrap; }
+.k2::before{ content:"["; opacity:.7; } .k2::after{ content:"]"; opacity:.7; }
+.hero .lead .k2{ font-size:12px; vertical-align:.08em; }
+.hero .three-wrap{ max-width:40em; margin:18px auto 0; text-align:left; display:grid; grid-template-columns:auto 1fr; gap:6px 10px; align-items:start; }
+.hero .three-wrap > .k2{ font-size:12px; margin:6px 0 0; }
+.hero .three{ text-align:left; margin:0; }
 .hero .three li{ font-size:15px; padding-bottom:10px; }
+/* 右下角：项目 › 文件夹 · 版本（小灰字） */
+.hero .loc{ position:absolute; right:22px; bottom:10px; font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
+.hero .loc b{ color:var(--acc-d); font-weight:800; }
+@media (max-width:640px){ .hero .loc{ position:static; margin-top:14px; text-align:right; } .hero{ padding-bottom:26px; } }
 """
 
 # 搜索框已在 控件.html 的 .q 里（`260905` 胶囊化），不再往工具条里插
@@ -289,6 +300,16 @@ SEARCH_JS = """
 
 
 
+def _loc(src_p):
+    """右下角那行「项目 › 文件夹」—— 🔴 只到夹，不到文件（`260905` 老徐：一个 html 是整个夹的内容孵出来的，
+    先收集、再整理、再孵化、多轮聊完才出页）。夹在 ~/projects 下就按它算；不在就退回夹名。"""
+    try:
+        rel = src_p.resolve().parent.relative_to(pathlib.Path.home() / "projects")
+        return " › ".join(rel.parts)
+    except Exception:
+        return src_p.resolve().parent.name
+
+
 def _src_commit(src_p):
     """徽章里的「提交」＝ **这份 md 自己**最后一次提交，🚫 不是仓库 HEAD。
     🔴 `260904` ops-tailscale 实撞：md 从没提交过（untracked），徽章却印了仓库 HEAD `c271adc` ——
@@ -340,7 +361,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
     tldr_html = ""
     if secs and secs[0]["meta"].get("tldr"):
         tl = secs.pop(0)
-        tldr_html = three(tl["md"])
+        tldr_html = '<div class="three-wrap"><span class="k2">要点</span>' + three(tl["md"]) + '</div>'
         mains = [ln.strip() for ln in tl["md"].split("\n") if re.match(r"^\d+\.\s+", ln.strip())]
         mains = [re.sub(r"^\d+\.\s+", "", m).partition("‖")[0].strip() for m in mains]
         if len(mains) != 3:
@@ -469,11 +490,11 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 %s
 <div id="page">
 <div class="hero">
-  <span class="eyebrow">%s</span>
-  <h1>%s</h1>
-  <p class="lead">%s</p>
+  <h1><span class="k2">标题</span>%s</h1>
+  <p class="lead"><span class="k2">导语</span>%s</p>
   %s
   %s
+  <div class="loc">%s · <b>%s</b></div>
 </div>
 
 %s
@@ -496,8 +517,8 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 </script>
 </body>
 </html>
-""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl, esc(eyebrow), inline(h1), inline(lead),
-       tldr_html, dims_html,
+""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl, inline(h1), inline(lead),
+       tldr_html, dims_html, esc(_loc(src_p)), esc(version),
        '\n<div class="ring">\n%s\n</div>\n' % "\n".join(ring) if ring else "",
        "\n".join(parts), version, src_p.name, gen_rel, commit, len(changelog), cl, todo_html, done_html,
        script + SEARCH_JS)
