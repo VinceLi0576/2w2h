@@ -84,6 +84,7 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
     # 收起所有 N.x 时它就是这段的 TL;DR。首段结论在下面遇到第一个 <p> 时填进来。
     keypt_title = inline(subline) if subline else ""
     keypt_slot = None
+    lead_plain = [""]
     if subline or first_is_lead:
         out.append(None); keypt_slot = len(out) - 1
     for b in render("\n" + md_body):
@@ -95,7 +96,7 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
             k += 1
             no = ('<span class="no">%s.%d</span>' % (secnum, k)) if secnum is not None else ''
             sid = (' id="s%s-%d"' % (secnum, k)) if secnum is not None else ''
-            sub = ('<details class="sub" open%s><summary>%s<span class="nm">%s</span></summary>'
+            sub = ('<details class="sub"%s><summary>%s<span class="nm">%s</span></summary>'   # 260905 老徐定：小节默认收起，点开段先看要点
                    '<div class="body">' % (sid, no, b[6:]))
             continue
         if not done_lead:
@@ -107,6 +108,7 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
             if re.match(r'<p(?=[\s>])', b):
                 lead_html = re.sub(r'^<p(?=[\s>])[^>]*>', '<p class="lead2">', b, count=1)
                 lead_html = re.sub(r'(<p class="lead2">)\s*先给结论[：:]\s*', r'\1', lead_html, count=1)   # 「要点」块里这四个字多余
+                lead_plain[0] = re.sub(r"<[^>]+>", "", lead_html).strip()
                 if keypt_slot is not None:
                     out[keypt_slot] = ('<div class="keypt"><span class="tag title">要点</span>'
                                        + ('<span class="kt">%s</span>' % keypt_title if keypt_title else '')
@@ -127,6 +129,7 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
         out.append(sub + "</div></details>")
     if keypt_slot is not None:   # 只有副标、没有结论段 ⇒ 要点块只剩标题行
         out[keypt_slot] = ('<div class="keypt"><span class="tag title">要点</span><span class="kt">%s</span></div>' % keypt_title) if keypt_title else ""
+    body_html.last_lead = lead_plain[0]   # 收起态段头要露的那一行（`260905` 老徐定，NN/g：折叠里的正文等于多一次点击）
     return "".join(x for x in out if x)
 
 
@@ -137,7 +140,7 @@ def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None)
 # 🔑 为什么不靠浏览器的 Ctrl+F：本页大部分内容在折叠的 <details> 里，
 #    **原生查找搜不到没展开的内容** ⇒ 自建搜索的核心价值就是**跳过去时自动把祖先 details 展开**。
 SEARCH_CSS = """
-mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
+mark.hit{ background:#fde68a; color:inherit; padding:0 1px; }
 mark.hit.cur{ background:var(--warn); color:#fff; box-shadow:0 0 0 2px var(--warn); }
 
 /* 🥇 稳定锚：不占位、不可见 */
@@ -146,14 +149,14 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 /* 🏷 顶部三维度标签 */
 .dims{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:14px auto 0; }
 .dims .dim{ display:inline-flex; align-items:baseline; gap:6px; background:var(--card);
-  border:1px solid var(--line); border-radius:20px; padding:5px 13px; font-size:12px; }
+  border:1px solid var(--line); border-radius:16px; padding:5px 13px; font-size:12px; }
 .dims .dim b{ color:var(--muted); font-weight:700; letter-spacing:.04em; }
 .dims .dim .v{ font-weight:800; color:var(--ink); letter-spacing:1px; }
 .dims .dim .lab{ color:var(--acc-d); font-weight:700; }
 .dims .dim.mt .v{ color:var(--what); } .dims .dim.im .v{ color:var(--good); }
 
 /* 📚⬜✅ 底部三栏（`260905` 老徐：设计同正文折叠段 —— 专门一列、卡片、可展开） */
-.foot details.cl{ background:var(--card); border:1px solid var(--line); border-radius:13px; margin:0 0 11px;
+.foot details.cl{ background:var(--card); border:1px solid var(--line); border-radius:10px; margin:0 0 11px;
   overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.03); }
 .foot details.cl > summary{ cursor:pointer; list-style:none; padding:13px 18px; display:flex; align-items:center;
   gap:10px; min-height:48px; font-size:14.5px; font-weight:800; color:var(--acc-d); }
@@ -162,16 +165,16 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 .foot details.cl[open] > summary::after{ content:"－"; }
 .foot details.cl[open] > summary{ border-bottom:1px solid var(--line); background:#fbfaf6; }
 .foot details.cl > .body{ padding:10px 18px 14px; font-size:13px; line-height:1.85; color:var(--ink-soft); }
-.foot details.cl > summary .n{ margin-left:2px; font-weight:700; font-size:12.5px; color:var(--muted); }
+.foot details.cl > summary .n{ margin-left:2px; font-weight:700; font-size:13px; color:var(--muted); }
 .foot details.cl.td > summary{ color:var(--warn); }
 .foot details.cl.dn > summary{ color:var(--ok); }
 .foot ul.tdlist{ margin:0; padding-left:0; list-style:none; }
 .foot ul.tdlist li{ position:relative; padding:6px 0 6px 22px; line-height:1.7; color:var(--ink); }
 .foot ul.tdlist li + li{ border-top:1px solid var(--line); }
-.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:7px; font-size:11px; }
+.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:7px; font-size:10.5px; }
 .foot ul.tdlist.done li::before{ content:"✅"; }
 .foot ul.tdlist.done li{ color:var(--muted); }
-.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:11.5px; display:block; margin-top:2px; }
+.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:12px; display:block; margin-top:2px; }
 .foot .cl-wrap{ margin-top:14px; }
 """
 
@@ -180,26 +183,32 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
 /* 第 0 段（`260905` 老徐：抬头跟下面的段长一样 —— 0 [标题] 名字 · 0.1 导语 · 0.2 要点 · 右下角 项目 › 文件夹 · 版本） */
-.tag.title{ background:#2563eb; }
-/* 每段开头的「要点」块（`260905` 老徐）：形状同 N.x 小节，左边蓝方块替代数字；不带号、不折叠 */
-.keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
-  background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:11px 16px 12px; margin:8px 0 9px; }
-.keypt .tag.title{ font-size:10.5px; letter-spacing:1.5px; padding:3px 8px; align-self:center; }
-.keypt .kt{ font-size:12.5px; color:var(--muted); font-weight:600; line-height:1.6; }
-.keypt .kb{ grid-column:1 / -1; }
-.keypt .kb .lead2{ margin:0; }
+.tag.title{ background:var(--acc); }   /* 260905 颜色收敛：界面只留青，标题／要点不再单独用蓝（NN/g：2 主色＋2 辅色） */
 details.sec.s0 > summary .ti{ font-size:19px; }
 details.sec.s0 .lead2{ font-weight:500; color:var(--ink-soft); font-size:14.5px; }
 details.sec.s0 .three{ margin:2px 0 0; }
 details.sec.s0 .three li{ font-size:14.5px; padding:0 0 8px 34px; }
-details.sec.s0 .three li::before{ width:22px; height:22px; font-size:11px; }
+details.sec.s0 .three li::before{ width:22px; height:22px; font-size:10.5px; }
 details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
-details.sec.s0 .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
+details.sec.s0 .loc .v{ font-size:12px; color:var(--muted); letter-spacing:.3px; }
 details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
-.k2{ color:#1d4ed8; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; }   /* 260905：原 #2563eb 叠 opacity .75 只有 3.31:1，不过 AA */
+.k2{ color:var(--acc-d); font-weight:800; font-size:10.5px; letter-spacing:1.5px; white-space:nowrap; }
 .k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
-main > .ring{ max-width:none; padding:0; margin:0 0 11px; }   /* 四钮进了 main，跟段同宽 */
+/* 每段开头的「要点」块：形状同 N.x 小节，左边青方块替代数字；不带号、不折叠 */
+.keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:11px 16px 12px; margin:8px 0 9px; }
+.keypt .tag.title{ font-size:10.5px; letter-spacing:1.5px; padding:3px 8px; align-self:center; }
+.keypt .kt{ font-size:13px; color:var(--muted); font-weight:600; line-height:1.6; }
+.keypt .kb{ grid-column:1 / -1; }
+.keypt .kb .lead2{ margin:0; }
+/* 收起态段头露一行结论（`260905` 老徐定）；展开后隐去，正文里的要点块会显示同一句 */
+details.sec > summary .brief{ flex-basis:100%; margin:2px 0 0 35px; font-size:13px; font-weight:500; color:var(--muted);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+details.sec[open] > summary .brief{ display:none; }
+main > .ring{ max-width:none; padding:0; margin:0 0 11px; }
 main{ padding-top:22px; }
+@media (max-width:640px){ .ring{ grid-template-columns:1fr; }   /* 260905：四钮手机单列（唯一证实的移动端缺口） */
+  details.sec > summary .brief{ white-space:normal; } }
 """
 
 # 搜索框已在 控件.html 的 .q 里（`260905` 胶囊化），不再往工具条里插
@@ -426,7 +435,9 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
                         '<div class="d">%s</div></button>'
                         % (wcls, sid, TAGTXT.get(tag, tag), n,
                            inline(t.strip()), inline(d.strip())))
+        body_html.last_lead = ""
         inner = three(s["md"]) if meta.get("tldr") else body_html(s["md"], warn=(tag in TAGCLS), secnum=n, subline=meta.get("sub"))
+        brief = ('<span class="brief">%s</span>' % esc(body_html.last_lead)) if body_html.last_lead else ""
         # 🥇 `260824` 修一个真缺陷（`ops-问题对齐` 报，老徐的用法暴露的）：
         #    `id="sN"` 是**位置编号**，插一段后面全漂 ⇒ 他收藏的 #s3 回来是另一段，**而且完全静默**。
         # 🔑 病因不是"编号会漂"，是**同一个 id 担了两个职责**：
@@ -442,7 +453,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             '%s<details class="sec" id="%s"%s%s>\n  <summary><span class="num">%d</span>%s'
             '<span class="ti">%s</span>%s</summary>\n  <div class="body">%s</div>\n</details>'
             % (anchor, sid, (' data-key="%s"' % esc(key)) if key else '',
-               '', n, tagspan, inline(s["title"]), '', inner))   # 260905：段头只留 序号·档位·标题，副标下移进正文
+               '', n, tagspan, inline(s["title"]), brief, inner))   # 260905：段头 序号·档位·标题 ＋ 收起态露一行结论（展开即隐）
 
     if nokey:
         print("⚠️ 这些段没有稳定锚（md 里加 `key=xxx`，否则只能靠会漂的 #sN 引用）：\n   "
@@ -529,9 +540,9 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 %s
 %s
 .foot{max-width:780px;margin:26px auto 0;padding:16px 22px 40px;border-top:1px solid var(--line);
- font-size:12.5px;color:var(--muted);line-height:1.9;}
+ font-size:13px;color:var(--muted);line-height:1.9;}
 .foot .badge{display:inline-block;background:var(--ink);color:#fff;padding:2px 9px;
- font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:5px;margin-right:8px;}
+ font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:6px;margin-right:8px;}
 </style>
 </head>
 <body>

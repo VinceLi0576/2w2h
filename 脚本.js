@@ -3,7 +3,7 @@
   var idx = -1, readMode = false;
   var curEl = document.getElementById('cur'), totEl = document.getElementById('tot');
   function numOf(d){ var n=d&&d.querySelector('summary .num'); return n?n.textContent:''; }
-  totEl.textContent = steps.length ? numOf(steps[steps.length-1]) : '–';   // 有第 0 段时总数就是最后一段的号
+  totEl.textContent = steps.length;   // 260905：显示「第 N 段 · 共 M 段」，M 是段数（有第 0 段时 = 末号 + 1）
 
   function mark(){
     steps.forEach(function(d){ d.classList.remove('cur'); });

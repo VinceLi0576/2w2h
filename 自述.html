@@ -24,47 +24,47 @@ sup a{ color:inherit; text-decoration:none; display:inline-block; padding:2px 3p
 ul,ol{ font-size:14.5px; color:var(--ink-soft); padding-left:22px; }
 li{ margin:6px 0; }
 
-details.sec{ background:var(--card); border:1px solid var(--line); border-radius:13px; margin:0 0 11px; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); box-shadow:0 1px 3px rgba(0,0,0,.05); }
+details.sec{ background:var(--card); border:1px solid var(--line); border-radius:10px; margin:0 0 11px; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); box-shadow:0 1px 3px rgba(0,0,0,.05); }
 details.sec > summary{ cursor:pointer; list-style:none; padding:15px 20px; display:flex; align-items:center; gap:11px; flex-wrap:wrap; min-height:52px; }
 details.sec > summary::-webkit-details-marker{ display:none; }
 details.sec > summary::after{ content:"＋"; margin-left:auto; color:var(--muted); font-weight:700; font-size:16px; flex:none; }
 details.sec[open] > summary::after{ content:"－"; }
 details.sec[open] > summary{ border-bottom:1px solid var(--line); background:#fbfaf6; }
-details.sec > summary .num{ flex:none; width:24px; height:24px; border-radius:7px; background:var(--acc-bg); color:var(--acc-d); font-size:12px; font-weight:800; display:grid; place-items:center; }
+details.sec > summary .num{ flex:none; width:24px; height:24px; border-radius:6px; background:var(--acc-bg); color:var(--acc-d); font-size:12px; font-weight:800; display:grid; place-items:center; }
 details.sec > summary .ti{ font-size:16px; font-weight:800; color:var(--ink); }
-details.sec > summary .sub{ font-size:12.5px; color:var(--muted); font-weight:500; }
+details.sec > summary .sub{ font-size:13px; color:var(--muted); font-weight:500; }
 details.sec > .body{ padding:6px 20px 16px; }
 details.sec.cur{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
-details.sec > summary .tag{ flex:none; font-size:10.5px; font-weight:800; letter-spacing:1.5px; color:#fff; border-radius:5px; padding:2px 8px; }
+details.sec > summary .tag{ flex:none; font-size:10.5px; font-weight:800; letter-spacing:1.5px; color:#fff; border-radius:6px; padding:2px 8px; }
 .tag.why{ background:var(--why); } .tag.what{ background:var(--what); }
 .tag.how{ background:var(--how); } .tag.good{ background:var(--good); }
 
-details.sub{ background:var(--surface); border:1px solid var(--line); border-radius:11px; margin:0 0 9px; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); }
+details.sub{ background:var(--surface); border:1px solid var(--line); border-radius:10px; margin:0 0 9px; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); }
 details.sub > summary{ cursor:pointer; list-style:none; padding:12px 16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-height:48px; }
 details.sub > summary::-webkit-details-marker{ display:none; }
 details.sub > summary::after{ content:"＋"; margin-left:auto; color:var(--muted); font-weight:700; flex:none; }
 details.sub[open] > summary::after{ content:"－"; }
 details.sub[open] > summary{ border-bottom:1px solid var(--line); }
 details.sub > .body{ padding:12px 16px 4px; }
-details.sub .no{ flex:none; font-size:12px; font-weight:800; color:#fff; background:var(--acc); border-radius:5px; padding:2px 8px; }
-details.sub .nm{ font-size:15.5px; font-weight:800; color:var(--ink); }
-details.sub .en{ font-size:11.5px; color:var(--muted); font-weight:600; }
+details.sub .no{ flex:none; font-size:12px; font-weight:800; color:#fff; background:var(--acc); border-radius:6px; padding:2px 8px; }
+details.sub .nm{ font-size:16px; font-weight:800; color:var(--ink); }
+details.sub .en{ font-size:12px; color:var(--muted); font-weight:600; }
 details.sub.warnsub{ border-left:4px solid var(--warn); } details.sub.warnsub .no{ background:var(--warn); }
 details.sub.road{ border-left:4px solid var(--what); } details.sub.road .no{ background:var(--what); }
 details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ background:#0891b2; }
 
 .three{ counter-reset:t; margin:0; padding:0; list-style:none; }
-.three li{ counter-increment:t; position:relative; padding:0 0 14px 40px; margin:0; font-size:15.5px; font-weight:700; color:var(--ink); line-height:1.72; }
+.three li{ counter-increment:t; position:relative; padding:0 0 14px 40px; margin:0; font-size:16px; font-weight:700; color:var(--ink); line-height:1.72; }
 .three li:last-child{ padding-bottom:2px; }
-.three li::before{ content:counter(t); position:absolute; left:0; top:3px; width:25px; height:25px; border-radius:50%; background:var(--acc); color:#fff; font-size:12.5px; font-weight:800; display:grid; place-items:center; }
-.three li em{ font-style:normal; font-weight:500; font-size:13.3px; color:var(--ink-soft); display:block; line-height:1.76; margin-top:3px; }
+.three li::before{ content:counter(t); position:absolute; left:0; top:3px; width:25px; height:25px; border-radius:50%; background:var(--acc); color:#fff; font-size:13px; font-weight:800; display:grid; place-items:center; }
+.three li em{ font-style:normal; font-weight:500; font-size:13px; color:var(--ink-soft); display:block; line-height:1.76; margin-top:3px; }
 
-.lead2{ font-size:15px; font-weight:700; color:var(--ink); margin:4px 0 16px; line-height:1.7; }
-.scene{ border:1px solid var(--line); border-radius:12px; padding:0; margin:0 0 13px; overflow:hidden; background:var(--surface); }
+.lead2{ font-size:14.5px; font-weight:700; color:var(--ink); margin:4px 0 16px; line-height:1.7; }
+.scene{ border:1px solid var(--line); border-radius:10px; padding:0; margin:0 0 13px; overflow:hidden; background:var(--surface); }
 .scene .sh{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; padding:12px 17px; background:#fbfaf6; border-bottom:1px solid var(--line); }
 .scene .sh .ic{ font-size:16px; }
-.scene .sh .tt{ font-size:15.5px; font-weight:800; color:var(--ink); }
-.scene .sh .rl{ font-size:12px; font-weight:700; color:#fff; background:var(--muted); border-radius:5px; padding:2px 8px; }
+.scene .sh .tt{ font-size:16px; font-weight:800; color:var(--ink); }
+.scene .sh .rl{ font-size:12px; font-weight:700; color:#fff; background:var(--muted); border-radius:6px; padding:2px 8px; }
 .scene .bd{ padding:13px 17px 15px; }
 .scene .pt:last-child{ margin-bottom:0; }
 .scene.teach{ border-left:4px solid var(--muted); }
@@ -74,7 +74,7 @@ details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ backg
 .scene.self .pt{ border-left-color:var(--acc); }
 
 .ring{ display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); max-width:780px; margin:14px auto 6px; padding:0 22px; box-sizing:border-box; }  /* 260905 老徐：一行四个太宽，固定两行两列、跟正文同宽 */
-.ring button{ display:block; text-align:left; font-family:inherit; cursor:pointer; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 15px; transition:.15s; width:100%; min-width:0; }
+.ring button{ display:block; text-align:left; font-family:inherit; cursor:pointer; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 15px; transition:.15s; width:100%; min-width:0; }
 .ring button:hover{ transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.06); }
 .ring .k{ font-size:10.5px; font-weight:800; letter-spacing:1.5px; }
 .ring .t{ font-size:14.5px; font-weight:800; color:var(--ink); margin:3px 0 3px; }
@@ -83,9 +83,9 @@ details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ backg
 .ring .w2{ border-top:3px solid var(--how); } .ring .w2 .k{ color:var(--how); }
 .ring .w3{ border-top:3px solid var(--what); } .ring .w3 .k{ color:var(--what); }
 .ring .w4{ border-top:3px solid var(--good); } .ring .w4 .k{ color:var(--good); }
-.ringnote{ font-size:12.3px; color:var(--muted); text-align:center; margin:0 0 16px; line-height:1.7; }
+.ringnote{ font-size:12px; color:var(--muted); text-align:center; margin:0 0 16px; line-height:1.7; }
 
-.box{ background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:15px 18px; margin:13px 0; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.box{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:15px 18px; margin:13px 0; box-shadow:0 1px 3px rgba(0,0,0,.04); }
 .box.warn{ background:var(--warn-bg); border-color:#fed7aa; }
 .box.ok{ background:var(--ok-bg); border-color:#bbf7d0; }
 .box h4{ margin:0 0 6px; font-size:14.5px; }
@@ -93,60 +93,60 @@ details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ backg
 .box p:last-child{ margin-bottom:0; }
 
 .ruler{ background:var(--card); border:1px solid var(--line); border-left:4px solid var(--acc);
-  border-radius:12px; padding:16px 18px 12px; margin:14px 0; }
-.ruler .rh{ font-size:13.5px; font-weight:800; color:var(--acc-d); margin:0 0 4px; }
-.ruler .rs{ font-size:12.3px; color:var(--muted); margin:0 0 10px; line-height:1.7; }
+  border-radius:10px; padding:16px 18px 12px; margin:14px 0; }
+.ruler .rh{ font-size:13px; font-weight:800; color:var(--acc-d); margin:0 0 4px; }
+.ruler .rs{ font-size:12px; color:var(--muted); margin:0 0 10px; line-height:1.7; }
 .ruler svg{ max-width:100%; height:auto; display:block; margin:0 auto; }
-.ruler .cap{ font-size:12.5px; color:var(--muted); margin-top:10px; line-height:1.75; }
+.ruler .cap{ font-size:13px; color:var(--muted); margin-top:10px; line-height:1.75; }
 .svgalt{ display:none; }
-.svgalt .row{ border:1px solid var(--line); border-radius:9px; padding:10px 13px; margin:0 0 9px; font-size:14px; line-height:1.7; }
+.svgalt .row{ border:1px solid var(--line); border-radius:10px; padding:10px 13px; margin:0 0 9px; font-size:14.5px; line-height:1.7; }
 .svgalt .row.a1{ border-left:4px solid var(--muted); color:var(--ink-soft); }
 .svgalt .row.a2{ border-left:4px solid var(--acc); color:var(--acc-d); background:var(--acc-bg); }
 
 .pt{ margin:0 0 12px; padding-left:15px; border-left:2px solid var(--acc-bg); }
 .pt:last-child{ margin-bottom:2px; }
-.q{ font-size:14.2px; font-weight:800; color:var(--ink); line-height:1.68; }
-.a{ font-size:13.3px; color:var(--ink-soft); line-height:1.76; margin:3px 0 0; }
+.q{ font-size:14.5px; font-weight:800; color:var(--ink); line-height:1.68; }
+.a{ font-size:13px; color:var(--ink-soft); line-height:1.76; margin:3px 0 0; }
 .pt.hit{ border-left-color:var(--good); }
 .enum{ margin:6px 0 0; padding:0; list-style:none; }
-.enum li{ font-size:13.3px; color:var(--ink-soft); line-height:1.72; margin:0 0 5px; padding-left:24px; text-indent:-24px; }
+.enum li{ font-size:13px; color:var(--ink-soft); line-height:1.72; margin:0 0 5px; padding-left:24px; text-indent:-24px; }
 .enum li b{ color:var(--acc-d); font-weight:800; margin-right:5px; }
 
-.punch{ background:var(--card); border:2px solid var(--acc); border-radius:13px; padding:20px 22px; margin:16px 0; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.04); }
-.punch .p1{ font-size:20px; font-weight:800; color:var(--acc-d); line-height:1.6; }
+.punch{ background:var(--card); border:2px solid var(--acc); border-radius:10px; padding:20px 22px; margin:16px 0; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.punch .p1{ font-size:19px; font-weight:800; color:var(--acc-d); line-height:1.6; }
 .punch .p2{ font-size:13px; color:var(--muted); margin-top:8px; line-height:1.7; }
 .vs{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin:12px 0; }
-.vs .col{ border:1px solid var(--line); border-radius:12px; background:var(--surface); padding:13px 16px; }
+.vs .col{ border:1px solid var(--line); border-radius:10px; background:var(--surface); padding:13px 16px; }
 .vs .col.neg{ border-top:3px solid var(--bad); }
 .vs .col.pos{ border-top:3px solid var(--ok); }
-.vs .col .ch{ font-size:13.5px; font-weight:800; margin:0 0 6px; }
+.vs .col .ch{ font-size:13px; font-weight:800; margin:0 0 6px; }
 .vs .col.neg .ch{ color:var(--bad); } .vs .col.pos .ch{ color:var(--ok); }
-.vs .col .cn{ font-size:12.8px; color:var(--ink-soft); line-height:1.7; }
+.vs .col .cn{ font-size:13px; color:var(--ink-soft); line-height:1.7; }
 .vs .col .cn b{ color:var(--ink); }
 .path{ counter-reset:pp; margin:6px 0 0; padding:0; list-style:none; }
 .path li{ counter-increment:pp; position:relative; padding:0 0 20px 46px; margin:0; }
 .path li:last-child{ padding-bottom:4px; }
-.path li::before{ content:"步" counter(pp); position:absolute; left:0; top:2px; width:34px; height:22px; border-radius:11px;
-  background:var(--good); color:#fff; font-size:11.5px; font-weight:800; display:grid; place-items:center; letter-spacing:.5px; }
-.path .pq{ font-size:15px; font-weight:800; color:var(--ink); line-height:1.65; }
+.path li::before{ content:"步" counter(pp); position:absolute; left:0; top:2px; width:34px; height:22px; border-radius:10px;
+  background:var(--good); color:#fff; font-size:12px; font-weight:800; display:grid; place-items:center; letter-spacing:.5px; }
+.path .pq{ font-size:14.5px; font-weight:800; color:var(--ink); line-height:1.65; }
 .path .a{ padding-left:14px; border-left:2px solid var(--acc-bg); margin:5px 0 0; }
 .guard{ background:var(--ok-bg); border:1px solid #bbf7d0; border-left:4px solid var(--ok); border-radius:10px; padding:12px 15px; margin:12px 0 2px; }
-.guard .gh2{ font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--ok); margin-bottom:4px; }
-.guard .gq{ font-size:15px; font-weight:800; color:var(--ink); line-height:1.6; }
-.guard .ga{ font-size:12.8px; color:var(--ink-soft); line-height:1.72; margin-top:5px; }
-.meas{ background:var(--acc-bg); border:1px solid #bfe3dd; border-left:4px solid var(--acc); border-radius:9px; padding:12px 15px; margin:14px 0 0; }
+.guard .gh2{ font-size:10.5px; font-weight:800; letter-spacing:1.5px; color:var(--ok); margin-bottom:4px; }
+.guard .gq{ font-size:14.5px; font-weight:800; color:var(--ink); line-height:1.6; }
+.guard .ga{ font-size:13px; color:var(--ink-soft); line-height:1.72; margin-top:5px; }
+.meas{ background:var(--acc-bg); border:1px solid #bfe3dd; border-left:4px solid var(--acc); border-radius:10px; padding:12px 15px; margin:14px 0 0; }
 .meas .m1{ font-size:14.5px; font-weight:800; color:var(--acc-d); line-height:1.75; }
-.note{ font-size:12.3px; color:var(--muted); line-height:1.75; margin:9px 0; padding:8px 12px; background:var(--bg); border-radius:8px; }
-.tpl{ background:#2b2f37; color:#e8e8ea; border-radius:10px; padding:13px 16px; margin:12px 0; font:14px/2 ui-monospace,SFMono-Regular,Menlo,monospace; overflow-x:auto; white-space:pre-wrap; }
-.tpl .lb2{ display:block; font:700 11px/1.4 -apple-system,"PingFang SC",sans-serif; color:#9aa3af; margin-bottom:7px; letter-spacing:1px; }
+.note{ font-size:12px; color:var(--muted); line-height:1.75; margin:9px 0; padding:8px 12px; background:var(--bg); border-radius:6px; }
+.tpl{ background:#2b2f37; color:#e8e8ea; border-radius:10px; padding:13px 16px; margin:12px 0; font:14.5px/2 ui-monospace,SFMono-Regular,Menlo,monospace; overflow-x:auto; white-space:pre-wrap; }
+.tpl .lb2{ display:block; font:700 10.5px/1.4 -apple-system,"PingFang SC",sans-serif; color:#9aa3af; margin-bottom:7px; letter-spacing:1px; }
 
 ol.refs{ font-size:13px; color:var(--ink-soft); padding-left:0; list-style:none; counter-reset:r; }
 ol.refs li{ counter-increment:r; position:relative; padding:10px 0 10px 42px; border-bottom:1px dashed var(--line); margin:0; }
-ol.refs .q{ font-size:13.6px; line-height:1.6; }
-ol.refs .a{ font-size:12.6px; color:var(--muted); }
-ol.refs li::before{ content:"[" counter(r) "]"; position:absolute; left:0; top:9px; font-weight:800; color:var(--acc); font-size:12.5px; }
+ol.refs .q{ font-size:13px; line-height:1.6; }
+ol.refs .a{ font-size:13px; color:var(--muted); }
+ol.refs li::before{ content:"[" counter(r) "]"; position:absolute; left:0; top:9px; font-weight:800; color:var(--acc); font-size:13px; }
 ol.refs a{ color:var(--acc-d); overflow-wrap:anywhere; }
-ol.refs .kind{ display:inline-block; font-size:11px; font-weight:700; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:0 6px; margin-right:7px; }
+ol.refs .kind{ display:inline-block; font-size:10.5px; font-weight:700; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:0 6px; margin-right:7px; }
 
 .appendix{ max-width:780px; margin:26px auto 0; padding:0 22px; }
 .appendix .box{ border-top:3px solid var(--line); }
@@ -156,8 +156,8 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
   main, .appendix{ padding-left:16px; padding-right:16px; }
   p, ul, ol{ font-size:16px; }
   .a, .enum li{ font-size:14.5px; }
-  .q{ font-size:15.5px; }
-  .three li{ font-size:16px; } .three li em{ font-size:14px; }
+  .q{ font-size:16px; }
+  .three li{ font-size:16px; } .three li em{ font-size:14.5px; }
   .vs{ grid-template-columns:1fr; }
   details.sec > summary .sub{ display:none; }
   .svgwrap{ display:none; } .svgalt{ display:block; }
@@ -167,16 +167,16 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 /* ── 右侧竖排控件条（`260905` 老徐：要竖着，后面还会加按钮）。从上到下四组：导航（目录·上下段）· 展收 · 阅读（搜·缩放）· 互动（留言） */
 .ctl{ position:fixed; top:72px; right:12px; z-index:60; display:flex; flex-direction:column; align-items:center; gap:2px;
   background:rgba(255,254,250,.94); backdrop-filter:saturate(180%) blur(10px); border:1px solid var(--line);
-  border-radius:22px; padding:6px 4px; box-shadow:0 2px 8px rgba(0,0,0,.07); }
-.ctl button{ font:700 14px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:var(--acc-d);
+  border-radius:16px; padding:6px 4px; box-shadow:0 2px 8px rgba(0,0,0,.07); }
+.ctl button{ font:700 14.5px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:var(--acc-d);
   background:transparent; border:0; border-radius:16px; width:34px; height:34px; cursor:pointer; padding:0; }
 .ctl button:hover{ background:var(--acc-bg); }
 .ctl #prev, .ctl #next{ font-size:12px; }
 .ctl .sep{ display:block; width:20px; height:1px; background:var(--line); margin:3px 0; }
-.ctl .pos{ font-size:11px; color:var(--muted); font-weight:700; white-space:nowrap; line-height:1; }
-.ctl .pos b{ color:var(--acc-d); font-size:12.5px; }
+.ctl .pos{ display:flex; flex-direction:column; align-items:center; gap:1px; font-size:10.5px; color:var(--muted); font-weight:700; white-space:nowrap; line-height:1.25; }
+.ctl .pos b{ color:var(--acc-d); font-size:12px; }
 .ctl .q{ position:absolute; top:0; right:calc(100% + 8px); display:flex; align-items:center; gap:6px;
-  background:var(--card); border:1px solid var(--line); border-radius:20px; padding:6px 8px;
+  background:var(--card); border:1px solid var(--line); border-radius:16px; padding:6px 8px;
   box-shadow:0 4px 14px rgba(0,0,0,.09); }
 .ctl .q[hidden]{ display:none; }
 .ctl .q input{ font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:var(--ink);
@@ -195,22 +195,22 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 /* ── 侧边目录（`260905` 老徐：参考飞书／语雀，从侧边看到全部框架） */
 .toc{ display:none; position:fixed; top:0; left:0; bottom:0; width:240px; overflow:auto; box-sizing:border-box;
   padding:18px 12px 30px 16px; background:var(--surface); border-right:1px solid var(--line); z-index:55; font-size:13px; }
-.toc .toc-h{ font-size:11px; letter-spacing:1.5px; color:var(--muted); font-weight:800; margin:0 0 10px 8px; }
+.toc .toc-h{ font-size:10.5px; letter-spacing:1.5px; color:var(--muted); font-weight:800; margin:0 0 10px 8px; }
 .toc ol{ list-style:none; margin:0; padding:0; }
 .toc > ol > li{ margin:0 0 4px; }
-.toc a{ display:block; color:var(--ink); text-decoration:none; padding:6px 8px; border-radius:8px; line-height:1.45;
+.toc a{ display:block; color:var(--ink); text-decoration:none; padding:6px 8px; border-radius:6px; line-height:1.45;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .toc a:hover{ background:var(--acc-bg); }
 .toc > ol > li > a{ font-weight:700; }
 .toc li.cur > a{ background:var(--acc-bg); color:var(--acc-d); }
-.toc .tag{ display:inline-block; color:#fff; font-size:9px; font-weight:800; letter-spacing:1px; padding:1px 5px; border-radius:4px; vertical-align:1px; }
+.toc .tag{ display:inline-block; color:#fff; font-size:10.5px; font-weight:800; letter-spacing:1px; padding:1px 5px; border-radius:6px; vertical-align:1px; }
 .toc ol ol{ margin:1px 0 6px 12px; padding-left:6px; border-left:2px solid var(--line); }
-.toc ol ol a{ font-size:12.3px; font-weight:500; color:var(--ink-soft); padding:4px 8px; }
+.toc ol ol a{ font-size:12px; font-weight:500; color:var(--ink-soft); padding:4px 8px; }
 body.toc-on .toc{ display:block; }
 body.toc-on #page{ padding-left:240px; }
 @media (min-width:1300px){ body.toc-on #page{ padding-right:240px; } }   /* 260905 老徐：右边也要空一点，正文居中在目录与右边之间 */
 .toc .toc-h{ display:flex; align-items:center; justify-content:space-between; }
-.toc .toc-x{ font:700 14px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
+.toc .toc-x{ font:700 14.5px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
 .toc .toc-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
@@ -225,24 +225,24 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .abub[hidden]{ display:none; }
 .amenu{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:4px; box-shadow:0 6px 20px rgba(0,0,0,.14); display:flex; flex-direction:column; min-width:120px; }
 .amenu[hidden]{ display:none; }
-.amenu button{ font:600 13px/1 inherit; color:var(--ink); background:transparent; border:0; text-align:left; padding:9px 12px; border-radius:7px; cursor:pointer; }
+.amenu button{ font:600 13px/1 inherit; color:var(--ink); background:transparent; border:0; text-align:left; padding:9px 12px; border-radius:6px; cursor:pointer; }
 .amenu button:hover{ background:var(--acc-bg); color:var(--acc-d); }
-.acomp{ position:fixed; z-index:70; width:340px; max-width:calc(100vw - 16px); box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; box-shadow:0 10px 30px rgba(0,0,0,.16); font-size:13px; }
+.acomp{ position:fixed; z-index:70; width:340px; max-width:calc(100vw - 16px); box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; box-shadow:0 10px 30px rgba(0,0,0,.16); font-size:13px; }
 .acomp[hidden]{ display:none; }
-.acomp .acomp-w{ font-size:12.5px; color:var(--acc-d); font-weight:800; margin-bottom:4px; }
+.acomp .acomp-w{ font-size:13px; color:var(--acc-d); font-weight:800; margin-bottom:4px; }
 .acomp .acomp-m{ display:flex; align-items:center; gap:7px; margin-bottom:8px; }
 .acomp .acomp-m .acard-no{ color:var(--ink); font-weight:800; font-size:12px; }
-.acomp .acomp-tag{ font-size:11px; color:var(--muted); font-weight:600; }
-.acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid var(--anno-quote); color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
-.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:rgba(21,128,61,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
+.acomp .acomp-tag{ font-size:10.5px; color:var(--muted); font-weight:600; }
+.acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid var(--anno-quote); color:var(--ink-soft); font-size:12px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 6px 6px 0; }
+.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13px/1.6 inherit; color:var(--ink); background:rgba(21,128,61,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
 .acomp textarea:focus{ border-color:var(--anno-mine); box-shadow:0 0 0 3px rgba(21,128,61,.14); }
 .acomp .acomp-b{ display:flex; gap:8px; margin-top:8px; }
 .acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--anno-mine); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
 .acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
 .arail .acard{ position:absolute; width:260px; }
 .acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--anno-mine);
-  border-radius:10px; padding:9px 11px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
-.acard .acard-w{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--acc-d); font-weight:800; margin-bottom:3px; }
+  border-radius:10px; padding:9px 11px; font-size:13px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.acard .acard-w{ display:flex; align-items:center; gap:7px; font-size:13px; color:var(--acc-d); font-weight:800; margin-bottom:3px; }
 .acard .acard-where{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .acard .acard-m{ display:flex; align-items:center; gap:8px; margin:0 0 7px 26px; }
 .acard .acard-v, .acard .acard-no{ color:var(--muted); font-weight:700; font-size:10.5px; letter-spacing:.3px; }
@@ -256,8 +256,8 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acard .acard-act .op:disabled{ background:var(--line); color:var(--muted); cursor:default; }
 .acard .acard-act .op:hover{ transition:.12s; }
 .acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word;
-  border-left:3px solid var(--anno-mine); background:rgba(21,128,61,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
-.acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
+  border-left:3px solid var(--anno-mine); background:rgba(21,128,61,.06); border-radius:0 6px 6px 0; padding:5px 10px; }
+.acard .acard-lost{ font-size:12px; color:var(--warn); font-weight:700; margin-bottom:4px; }
 /* 已解决 ⇒ 折起，只剩头两行与两个小操作；点头两行展开看回内容 */
 .acard.done{ border-left-color:var(--line); background:var(--surface); }
 .acard.done .acard-w, .acard.done .acard-m{ color:var(--muted); cursor:pointer; }
@@ -265,16 +265,16 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acard.done .acard-more{ display:none; }
 .acard.done.show .acard-more{ display:block; }
 .acard.done .acard-act{ margin-top:6px; }
-.acard.done .acard-act .op{ width:22px; height:22px; font-size:11px; background:var(--muted); }
+.acard.done .acard-act .op{ width:22px; height:22px; font-size:10.5px; background:var(--muted); }
 .apop{ position:fixed; z-index:70; width:330px; max-width:calc(100vw - 16px); }
 .apop[hidden]{ display:none; }
 .apop .acard{ box-shadow:0 10px 30px rgba(0,0,0,.16); }
 /* 竖条 💬 的批注列表面板 */
 .ctl button{ position:relative; }
-.ctl-badge{ position:absolute; top:2px; right:2px; min-width:14px; height:14px; border-radius:7px; background:#f5c400; color:#000; font:800 9.5px/14px inherit; padding:0 3px; }
+.ctl-badge{ position:absolute; top:2px; right:2px; min-width:14px; height:14px; border-radius:6px; background:#f5c400; color:#000; font:800 10.5px/14px inherit; padding:0 3px; }
 .ctl-badge[hidden]{ display:none; }
 .note{ position:fixed; top:72px; right:64px; z-index:58; width:340px; max-width:calc(100vw - 80px); max-height:calc(100vh - 100px); overflow:auto; box-sizing:border-box;
-  background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px 12px; box-shadow:0 8px 28px rgba(0,0,0,.12); font-size:13px; }
+  background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px 12px; box-shadow:0 8px 28px rgba(0,0,0,.12); font-size:13px; }
 .note[hidden]{ display:none; }
 .note .note-h{ display:flex; align-items:center; justify-content:space-between; font-weight:800; color:var(--ink); margin-bottom:8px; }
 .note .note-x{ font:700 16px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
@@ -301,18 +301,18 @@ body.anno-off .arail{ display:none; }
 
 /* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数（`260905` 老徐：标记明显一些） */
 .anno-dot{ flex:none; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%;
-  background:var(--anno-mine); color:#fff; font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
+  background:var(--anno-mine); color:#fff; font:800 10.5px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
 .acard.done .anno-dot{ background:var(--muted); }
-.anno-dot.inline{ display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; font-size:11px; font-weight:800;
+.anno-dot.inline{ display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; font-size:10.5px; font-weight:800;
   margin:0 1px 0 3px; vertical-align:-3px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.2); line-height:1; }
 
 /* 代码块（260905 子 agent 实测：原先没有任何样式，段与小节又 overflow:hidden ⇒ 宽行被裁、滚不动，390px 全裁） */
-pre{ margin:10px 0; padding:10px 12px; background:#f4f3ee; border:1px solid var(--line); border-radius:8px;
-  overflow-x:auto; max-width:100%; font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:var(--ink); }
+pre{ margin:10px 0; padding:10px 12px; background:#f4f3ee; border:1px solid var(--line); border-radius:6px;
+  overflow-x:auto; max-width:100%; font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:var(--ink); }
 pre code{ white-space:pre; background:transparent; padding:0; font:inherit; }
 
 
-mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
+mark.hit{ background:#fde68a; color:inherit; padding:0 1px; }
 mark.hit.cur{ background:var(--warn); color:#fff; box-shadow:0 0 0 2px var(--warn); }
 
 /* 🥇 稳定锚：不占位、不可见 */
@@ -321,14 +321,14 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 /* 🏷 顶部三维度标签 */
 .dims{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:14px auto 0; }
 .dims .dim{ display:inline-flex; align-items:baseline; gap:6px; background:var(--card);
-  border:1px solid var(--line); border-radius:20px; padding:5px 13px; font-size:12px; }
+  border:1px solid var(--line); border-radius:16px; padding:5px 13px; font-size:12px; }
 .dims .dim b{ color:var(--muted); font-weight:700; letter-spacing:.04em; }
 .dims .dim .v{ font-weight:800; color:var(--ink); letter-spacing:1px; }
 .dims .dim .lab{ color:var(--acc-d); font-weight:700; }
 .dims .dim.mt .v{ color:var(--what); } .dims .dim.im .v{ color:var(--good); }
 
 /* 📚⬜✅ 底部三栏（`260905` 老徐：设计同正文折叠段 —— 专门一列、卡片、可展开） */
-.foot details.cl{ background:var(--card); border:1px solid var(--line); border-radius:13px; margin:0 0 11px;
+.foot details.cl{ background:var(--card); border:1px solid var(--line); border-radius:10px; margin:0 0 11px;
   overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.03); }
 .foot details.cl > summary{ cursor:pointer; list-style:none; padding:13px 18px; display:flex; align-items:center;
   gap:10px; min-height:48px; font-size:14.5px; font-weight:800; color:var(--acc-d); }
@@ -337,44 +337,50 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 .foot details.cl[open] > summary::after{ content:"－"; }
 .foot details.cl[open] > summary{ border-bottom:1px solid var(--line); background:#fbfaf6; }
 .foot details.cl > .body{ padding:10px 18px 14px; font-size:13px; line-height:1.85; color:var(--ink-soft); }
-.foot details.cl > summary .n{ margin-left:2px; font-weight:700; font-size:12.5px; color:var(--muted); }
+.foot details.cl > summary .n{ margin-left:2px; font-weight:700; font-size:13px; color:var(--muted); }
 .foot details.cl.td > summary{ color:var(--warn); }
 .foot details.cl.dn > summary{ color:var(--ok); }
 .foot ul.tdlist{ margin:0; padding-left:0; list-style:none; }
 .foot ul.tdlist li{ position:relative; padding:6px 0 6px 22px; line-height:1.7; color:var(--ink); }
 .foot ul.tdlist li + li{ border-top:1px solid var(--line); }
-.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:7px; font-size:11px; }
+.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:7px; font-size:10.5px; }
 .foot ul.tdlist.done li::before{ content:"✅"; }
 .foot ul.tdlist.done li{ color:var(--muted); }
-.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:11.5px; display:block; margin-top:2px; }
+.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:12px; display:block; margin-top:2px; }
 .foot .cl-wrap{ margin-top:14px; }
 
 /* 第 0 段（`260905` 老徐：抬头跟下面的段长一样 —— 0 [标题] 名字 · 0.1 导语 · 0.2 要点 · 右下角 项目 › 文件夹 · 版本） */
-.tag.title{ background:#2563eb; }
-/* 每段开头的「要点」块（`260905` 老徐）：形状同 N.x 小节，左边蓝方块替代数字；不带号、不折叠 */
-.keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
-  background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:11px 16px 12px; margin:8px 0 9px; }
-.keypt .tag.title{ font-size:10.5px; letter-spacing:1.5px; padding:3px 8px; align-self:center; }
-.keypt .kt{ font-size:12.5px; color:var(--muted); font-weight:600; line-height:1.6; }
-.keypt .kb{ grid-column:1 / -1; }
-.keypt .kb .lead2{ margin:0; }
+.tag.title{ background:var(--acc); }   /* 260905 颜色收敛：界面只留青，标题／要点不再单独用蓝（NN/g：2 主色＋2 辅色） */
 details.sec.s0 > summary .ti{ font-size:19px; }
 details.sec.s0 .lead2{ font-weight:500; color:var(--ink-soft); font-size:14.5px; }
 details.sec.s0 .three{ margin:2px 0 0; }
 details.sec.s0 .three li{ font-size:14.5px; padding:0 0 8px 34px; }
-details.sec.s0 .three li::before{ width:22px; height:22px; font-size:11px; }
+details.sec.s0 .three li::before{ width:22px; height:22px; font-size:10.5px; }
 details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
-details.sec.s0 .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
+details.sec.s0 .loc .v{ font-size:12px; color:var(--muted); letter-spacing:.3px; }
 details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
-.k2{ color:#1d4ed8; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; }   /* 260905：原 #2563eb 叠 opacity .75 只有 3.31:1，不过 AA */
+.k2{ color:var(--acc-d); font-weight:800; font-size:10.5px; letter-spacing:1.5px; white-space:nowrap; }
 .k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
-main > .ring{ max-width:none; padding:0; margin:0 0 11px; }   /* 四钮进了 main，跟段同宽 */
+/* 每段开头的「要点」块：形状同 N.x 小节，左边青方块替代数字；不带号、不折叠 */
+.keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:11px 16px 12px; margin:8px 0 9px; }
+.keypt .tag.title{ font-size:10.5px; letter-spacing:1.5px; padding:3px 8px; align-self:center; }
+.keypt .kt{ font-size:13px; color:var(--muted); font-weight:600; line-height:1.6; }
+.keypt .kb{ grid-column:1 / -1; }
+.keypt .kb .lead2{ margin:0; }
+/* 收起态段头露一行结论（`260905` 老徐定）；展开后隐去，正文里的要点块会显示同一句 */
+details.sec > summary .brief{ flex-basis:100%; margin:2px 0 0 35px; font-size:13px; font-weight:500; color:var(--muted);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+details.sec[open] > summary .brief{ display:none; }
+main > .ring{ max-width:none; padding:0; margin:0 0 11px; }
 main{ padding-top:22px; }
+@media (max-width:640px){ .ring{ grid-template-columns:1fr; }   /* 260905：四钮手机单列（唯一证实的移动端缺口） */
+  details.sec > summary .brief{ white-space:normal; } }
 
 .foot{max-width:780px;margin:26px auto 0;padding:16px 22px 40px;border-top:1px solid var(--line);
- font-size:12.5px;color:var(--muted);line-height:1.9;}
+ font-size:13px;color:var(--muted);line-height:1.9;}
 .foot .badge{display:inline-block;background:var(--ink);color:#fff;padding:2px 9px;
- font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:5px;margin-right:8px;}
+ font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:6px;margin-right:8px;}
 </style>
 </head>
 <body>
@@ -382,7 +388,7 @@ main{ padding-top:22px; }
   <button type="button" id="toctoggle" title="目录（侧边框架）">☰</button>
   <span class="sep"></span>
   <button type="button" id="prev" title="上一段（←）">▲</button>
-  <span class="pos"><b id="cur">–</b>/<span id="tot">–</span></span>
+  <span class="pos"><span class="l">第<b id="cur">–</b>段</span><span class="l">共<span id="tot">–</span>段</span></span>
   <button type="button" id="next" title="下一段（→）">▼</button>
   <span class="sep"></span>
   <button type="button" id="expand" title="全部展开，之后翻页不再收起">⊞</button>
@@ -421,18 +427,18 @@ main{ padding-top:22px; }
 
 <a id="why" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s1" data-key="why">
-  <summary><span class="num">1</span><span class="tag why">WHY</span><span class="ti">为什么要有它</span></summary>
-  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">不做会怎样：各写各的、五个坑重踩、没人知道谁在用</span><div class="kb"><p class="lead2"><b>它管的不是「怎么把页做漂亮」，是三件「不做就会烂」的事</b> —— 骨架保证出来的东西长一样，skill 保证每次都按同一条路出，推送保证出得不对时有人知道。</p></div></div><details class="sub" open id="s1-1"><summary><span class="no">1.1</span><span class="nm">没有统一骨架 ⇒ 各写各的</span></summary><div class="body"><p class=""><code>260824</code> 老徐定「我们有且只有一套黄金圈，一切 html 都用黄金圈结构」。全机 HTML 里走了黄金圈的占多少，用时现算（见第 3 段），🚫 不写死 —— 老页迭代时才改，存量不回填，这是他定的。</p></div></details><details class="sub" open id="s1-2"><summary><span class="no">1.2</span><span class="nm">没有 skill ⇒ 流程只活在 AI 的记忆里</span></summary><div class="body"><p class="">出页有六步、五个坑（生成器不能叫 <code>_出页.py</code>、变量不能叫 <code>parts</code>、注入要给 markdown……），每个坑都实撞过。写在文档里 AI 会忘，写成 skill 触发词一到就照步骤走。</p></div></details><details class="sub" open id="s1-3"><summary><span class="no">1.3</span><span class="nm">没有推送 ⇒ 老徐不知道谁在用、用得对不对</span></summary><div class="body"><p class="">他 <code>260904</code> 原话：「<b>我的目的是为了让自己知道什么在动、有什么问题，我得迭代</b>」。推送不是留痕，是给他一个「打开本页 → 判 → 说一句改」的入口。</p></div></details></div>
+  <summary><span class="num">1</span><span class="tag why">WHY</span><span class="ti">为什么要有它</span><span class="brief">它管的不是「怎么把页做漂亮」，是三件「不做就会烂」的事 —— 骨架保证出来的东西长一样，skill 保证每次都按同一条路出，推送保证出得不对时有人知道。</span></summary>
+  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">不做会怎样：各写各的、五个坑重踩、没人知道谁在用</span><div class="kb"><p class="lead2"><b>它管的不是「怎么把页做漂亮」，是三件「不做就会烂」的事</b> —— 骨架保证出来的东西长一样，skill 保证每次都按同一条路出，推送保证出得不对时有人知道。</p></div></div><details class="sub" id="s1-1"><summary><span class="no">1.1</span><span class="nm">没有统一骨架 ⇒ 各写各的</span></summary><div class="body"><p class=""><code>260824</code> 老徐定「我们有且只有一套黄金圈，一切 html 都用黄金圈结构」。全机 HTML 里走了黄金圈的占多少，用时现算（见第 3 段），🚫 不写死 —— 老页迭代时才改，存量不回填，这是他定的。</p></div></details><details class="sub" id="s1-2"><summary><span class="no">1.2</span><span class="nm">没有 skill ⇒ 流程只活在 AI 的记忆里</span></summary><div class="body"><p class="">出页有六步、五个坑（生成器不能叫 <code>_出页.py</code>、变量不能叫 <code>parts</code>、注入要给 markdown……），每个坑都实撞过。写在文档里 AI 会忘，写成 skill 触发词一到就照步骤走。</p></div></details><details class="sub" id="s1-3"><summary><span class="no">1.3</span><span class="nm">没有推送 ⇒ 老徐不知道谁在用、用得对不对</span></summary><div class="body"><p class="">他 <code>260904</code> 原话：「<b>我的目的是为了让自己知道什么在动、有什么问题，我得迭代</b>」。推送不是留痕，是给他一个「打开本页 → 判 → 说一句改」的入口。</p></div></details></div>
 </details>
 <a id="how" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s2" data-key="how">
-  <summary><span class="num">2</span><span class="tag how">HOW</span><span class="ti">它靠什么做到</span></summary>
-  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">出页是一份公共库，推送是一个挂在动作上的钩子，两者都不靠 AI 记得</span><div class="kb"><p class="lead2"><b>出页靠一份公共库，推送靠一个钩子；两样都是「挂在已经在跑的东西上」，不靠 AI 记得。</b></p></div></div><details class="sub" open id="s2-1"><summary><span class="no">2.1</span><span class="nm">出页：三层管线，真身就在本夹</span></summary><div class="body"><ul><li class=""><code>_md2html.py</code> 把 markdown 渲染成 HTML 标签 → <code>_出页.py</code> 的 <code>build_ring()</code> 套上黄金圈骨架 → 各夹自己一份 <b>20 行生成器</b>只填标题、版本、注入</li><li class="crit">🔴 <b><code>~/projects/OPC/格式标准</code> 是一根软链接指到本夹</b>（<code>260904</code> 整夹搬来）。全机生成器写死的旧路径一处没改、全接住。老徐的计划：跑顺了再改直接路径、撤软链接</li><li class="">样式与脚本就在本夹（<code>样式.css</code> <code>脚本.js</code> <code>控件.html</code>，<code>260905</code> 起是正本）；页内搜索、稳定锚 <code>key=</code>、缩放是出页器与控件一起给的 —— 所以 <code>cp 模板.html</code> 手写那条路拿不到这几样，本 skill 不走它</li></ul></div></details><details class="sub" open id="s2-2"><summary><span class="no">2.2</span><span class="nm">推送：挂在「Skill 被调用」这个硬事件上</span></summary><div class="body"><ul><li class="">Claude Code 每次调 Skill 工具后会跑 <code>PostToolUse</code> hook ⇒ <code>ops/自动化/ai配置推送.py</code>（<code>~/.claude/hooks/</code> 里是软链接）</li><li class="">它只认<b>硬事件</b>：① Skill 被调用（<code>tool_name == Skill</code>）② 被监视的文件真的变了（扫 mtime 跟快照比）。🚫 不猜「有没有用上某条 rule」—— 没有那个事件，猜就会假报</li><li class=""><b>节流按 kind 分：rule 10 分钟、skill 30 分钟</b>（老徐 <code>260904</code> 晚定「用这个 skill 就 30 分钟内推送一次」）。窗口内压下的写进 <code>pending</code>，窗口一过的第一条推送全带出 —— 🔴 只压不攒会直接违背「知道什么在动」</li><li class="">每次调用另记一行到 <code>~/.claude/.rs-notify/skill-usage.tsv</code>，<b>只追加不轮转</b>，推送正文带「这个 skill 今日 N 次 · 累计 M 次」</li><li class="">🕐 时间全打<b>北京时间</b>（老徐 <code>260904</code> 拍 B：云主机时区是纽约，不改系统，只这个脚本自己设 <code>TZ</code>）</li></ul></div></details></div>
+  <summary><span class="num">2</span><span class="tag how">HOW</span><span class="ti">它靠什么做到</span><span class="brief">出页靠一份公共库，推送靠一个钩子；两样都是「挂在已经在跑的东西上」，不靠 AI 记得。</span></summary>
+  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">出页是一份公共库，推送是一个挂在动作上的钩子，两者都不靠 AI 记得</span><div class="kb"><p class="lead2"><b>出页靠一份公共库，推送靠一个钩子；两样都是「挂在已经在跑的东西上」，不靠 AI 记得。</b></p></div></div><details class="sub" id="s2-1"><summary><span class="no">2.1</span><span class="nm">出页：三层管线，真身就在本夹</span></summary><div class="body"><ul><li class=""><code>_md2html.py</code> 把 markdown 渲染成 HTML 标签 → <code>_出页.py</code> 的 <code>build_ring()</code> 套上黄金圈骨架 → 各夹自己一份 <b>20 行生成器</b>只填标题、版本、注入</li><li class="crit">🔴 <b><code>~/projects/OPC/格式标准</code> 是一根软链接指到本夹</b>（<code>260904</code> 整夹搬来）。全机生成器写死的旧路径一处没改、全接住。老徐的计划：跑顺了再改直接路径、撤软链接</li><li class="">样式与脚本就在本夹（<code>样式.css</code> <code>脚本.js</code> <code>控件.html</code>，<code>260905</code> 起是正本）；页内搜索、稳定锚 <code>key=</code>、缩放是出页器与控件一起给的 —— 所以 <code>cp 模板.html</code> 手写那条路拿不到这几样，本 skill 不走它</li></ul></div></details><details class="sub" id="s2-2"><summary><span class="no">2.2</span><span class="nm">推送：挂在「Skill 被调用」这个硬事件上</span></summary><div class="body"><ul><li class="">Claude Code 每次调 Skill 工具后会跑 <code>PostToolUse</code> hook ⇒ <code>ops/自动化/ai配置推送.py</code>（<code>~/.claude/hooks/</code> 里是软链接）</li><li class="">它只认<b>硬事件</b>：① Skill 被调用（<code>tool_name == Skill</code>）② 被监视的文件真的变了（扫 mtime 跟快照比）。🚫 不猜「有没有用上某条 rule」—— 没有那个事件，猜就会假报</li><li class=""><b>节流按 kind 分：rule 10 分钟、skill 30 分钟</b>（老徐 <code>260904</code> 晚定「用这个 skill 就 30 分钟内推送一次」）。窗口内压下的写进 <code>pending</code>，窗口一过的第一条推送全带出 —— 🔴 只压不攒会直接违背「知道什么在动」</li><li class="">每次调用另记一行到 <code>~/.claude/.rs-notify/skill-usage.tsv</code>，<b>只追加不轮转</b>，推送正文带「这个 skill 今日 N 次 · 累计 M 次」</li><li class="">🕐 时间全打<b>北京时间</b>（老徐 <code>260904</code> 拍 B：云主机时区是纽约，不改系统，只这个脚本自己设 <code>TZ</code>）</li></ul></div></details></div>
 </details>
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
-  <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span></summary>
-  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span><div class="kb"><p class="lead2"><b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p></div></div><details class="sub" open id="s3-1"><summary><span class="no">3.1</span><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open id="s3-2"><summary><span class="no">3.2</span><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 12:19）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open id="s3-3"><summary><span class="no">3.3</span><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="brief">三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</span></summary>
+  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span><div class="kb"><p class="lead2"><b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p></div></div><details class="sub" id="s3-1"><summary><span class="no">3.1</span><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" id="s3-2"><summary><span class="no">3.2</span><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 12:46）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" id="s3-3"><summary><span class="no">3.3</span><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -442,12 +448,12 @@ main{ padding-top:22px; }
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open id="s3-4"><summary><span class="no">3.4</span><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 12:19）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" id="s3-4"><summary><span class="no">3.4</span><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 12:46）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
-  <summary><span class="num">4</span><span class="tag good">HOW GOOD</span><span class="ti">怎么判它做得对不对 · 不对怎么改</span></summary>
-  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">推送该不该来 · 这次该不该调 · 出的页对不对，三问各有判据；改只要一句话</span><div class="kb"><p class="lead2"><b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p></div></div><details class="sub" open id="s4-1"><summary><span class="no">4.1</span><span class="nm">推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open id="s4-2"><summary><span class="no">4.2</span><span class="nm">这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open id="s4-3"><summary><span class="no">4.3</span><span class="nm">出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open id="s4-4"><summary><span class="no">4.4</span><span class="nm">🔢 版本怎么走（<code>260905</code> 定）</span></summary><div class="body"><p class=""><b>一个版本 ＝ 一轮审阅。</b> 这一版页面改多少次，号都不动；你的批注顺着编 <code>2.9.01</code> <code>2.9.02</code>，递增不复用。 你说一句「这轮排查完毕」，我才收尾：整轮批注归档进下面「版本迭代」那一栏 → 清空页面标记 → 升下一版。</p></div></details><details class="sub" open id="s4-5"><summary><span class="no">4.5</span><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加，像 Word 批注）</b>：选中那段文字，点冒出来的「💬 批注」（右键菜单里也有），写一句「哪里不对、改成什么」，保存 —— 那几个字底下画黄线，卡片贴在右侧空白跟它对齐；手机上点黄线弹卡。✓ 解决之后<b>这条就从页面上消失</b>（批注本来就是要求改文档，改完原文多半已经没了，再拿黄线锚它只会一直报「原文找不到」），回看去竖条 💬 里的「已解决」折叠。先存在你浏览器里；卡片上「发到 GitHub」你点了才出去（变成仓库 <code>2w2h</code> 的一条 issue，我用 <code>scripts/读留言.sh</code> 读，改完关掉、卡片变灰）。🔴 存哪还没最后定：公开仓库＝留言公开；配钥匙那步要放 Cloudflare Pages 的 <b>Secrets（加密）</b>，不是环境变量（明文）。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
+  <summary><span class="num">4</span><span class="tag good">HOW GOOD</span><span class="ti">怎么判它做得对不对 · 不对怎么改</span><span class="brief">收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：SKILL.md、本页 md、hook 脚本。</span></summary>
+  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">推送该不该来 · 这次该不该调 · 出的页对不对，三问各有判据；改只要一句话</span><div class="kb"><p class="lead2"><b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p></div></div><details class="sub" id="s4-1"><summary><span class="no">4.1</span><span class="nm">推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" id="s4-2"><summary><span class="no">4.2</span><span class="nm">这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" id="s4-3"><summary><span class="no">4.3</span><span class="nm">出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" id="s4-4"><summary><span class="no">4.4</span><span class="nm">🔢 版本怎么走（<code>260905</code> 定）</span></summary><div class="body"><p class=""><b>一个版本 ＝ 一轮审阅。</b> 这一版页面改多少次，号都不动；你的批注顺着编 <code>2.9.01</code> <code>2.9.02</code>，递增不复用。 你说一句「这轮排查完毕」，我才收尾：整轮批注归档进下面「版本迭代」那一栏 → 清空页面标记 → 升下一版。</p></div></details><details class="sub" id="s4-5"><summary><span class="no">4.5</span><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加，像 Word 批注）</b>：选中那段文字，点冒出来的「💬 批注」（右键菜单里也有），写一句「哪里不对、改成什么」，保存 —— 那几个字底下画黄线，卡片贴在右侧空白跟它对齐；手机上点黄线弹卡。✓ 解决之后<b>这条就从页面上消失</b>（批注本来就是要求改文档，改完原文多半已经没了，再拿黄线锚它只会一直报「原文找不到」），回看去竖条 💬 里的「已解决」折叠。先存在你浏览器里；卡片上「发到 GitHub」你点了才出去（变成仓库 <code>2w2h</code> 的一条 issue，我用 <code>scripts/读留言.sh</code> 读，改完关掉、卡片变灰）。🔴 存哪还没最后定：公开仓库＝留言公开；配钥匙那步要放 Cloudflare Pages 的 <b>Secrets（加密）</b>，不是环境变量（明文）。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
 </details>
 <a id="refs" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s5" data-key="refs">
@@ -456,7 +462,7 @@ main{ padding-top:22px; }
 </details>
 <a id="terms" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s6" data-key="terms">
-  <summary><span class="num">6</span><span class="ti">📖 概念库 · 本页用到的词</span></summary>
+  <summary><span class="num">6</span><span class="ti">📖 概念库 · 本页用到的词</span><span class="brief">本页出现的词都在这，按第一次出现的顺序排；解释只说它在本页是什么意思，不讲全貌。</span></summary>
   <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">一个词一句人话；看正文卡住了来这儿查</span><div class="kb"><p class="lead2">本页出现的词都在这，按第一次出现的顺序排；解释只说它在本页是什么意思，不讲全貌。</p></div></div><ul><li class=""><b>2w2h</b> —— 2W ＝ WHY · WHAT，2H ＝ HOW · HOW GOOD。既是全机 HTML 的格式标准的名字，也是出这种页的那个 skill 的名字</li><li class=""><b>黄金圈</b> —— 讲一件事的顺序：先为什么、再凭什么、再是什么、最后算好没。本页四个彩色钮就是这四档</li><li class=""><b>四档</b> —— WHY 为什么要管 · HOW 凭什么做到 · WHAT 具体是什么 · HOW GOOD 做到什么程度算好。缺哪档出页器会报</li><li class=""><b>skill</b> —— Claude Code 里一套带触发词的步骤：你说到那几个词，AI 就自动照步骤走，不靠它记得</li><li class=""><b>hook</b> —— 系统在某个动作之后强制跑的一小段程序。AI 会忘，hook 不会</li><li class=""><b>出页器</b> —— 把 md 变成这种 HTML 的公共程序（代码里叫 <code>build_ring</code>），全机几十个页共用这一份</li><li class=""><b>三层管线</b> —— md 变标签 → 套上黄金圈骨架 → 各夹自己 20 行生成器只填标题、版本、注入</li><li class=""><b>正本</b> —— 唯一可信的那一份；别处只放指路的指针，不放第二份</li><li class=""><b>md 正本 · HTML 产物</b> —— 内容改 md 再重出 HTML，🚫 不手改 HTML；两处改会分叉</li><li class=""><b>稳定锚（key）</b> —— 每段一个不随位置漂的名字。收藏 <code>#why</code> 回来还是这一段，收藏 <code>#s1</code> 插一段就漂</li><li class=""><b>现算注入</b> —— 会变的东西（数量、清单、体积）出页时现算填进去，🚫 写死进 md</li><li class=""><b>软链接</b> —— 一个路径指向另一个路径的替身。<code>OPC/格式标准</code> 现在就是一根，旧路径照旧能用</li><li class=""><b>版本 ＝ 一轮审阅</b> —— 一轮里页面怎么改，版本号都不动；你的批注编 <code>2.9.01</code> <code>2.9.02</code> 递增不复用；你说排查完毕才归档、清空、升版</li><li class=""><b>批注</b> —— 选中一段字冒出来的气泡里写的话。🟡 黄线是你划的原文，🟢 绿是你写的；点「解」它就从页面上消失，回看去 💬 列表</li><li class=""><b>要点块</b> —— 每段开头那张蓝方块小卡，不带号不折叠。把正文块全收起，剩下的就是这段的结论</li><li class=""><b>推送 · 节流</b> —— 这个 skill 被调用就往企微群推一条；30 分钟内只推一条，压下的攒着下条带出，🚫 不丢</li><li class=""><b>Pages Function · Secret</b> —— 站上那一小段服务端代码，和只有它看得见的钥匙。批注就是经它存进 GitHub 的</li><li class=""><b>issue（议题）</b> —— GitHub 上一条可开可关的记录，本页把它当批注的存放处；关掉 ＝ 已解决</li><li class=""><b>资料库</b> —— 上一段，各摊正本在哪。给延伸不给负担</li></ul></div>
 </details>
 </main>
@@ -477,7 +483,7 @@ main{ padding-top:22px; }
   var idx = -1, readMode = false;
   var curEl = document.getElementById('cur'), totEl = document.getElementById('tot');
   function numOf(d){ var n=d&&d.querySelector('summary .num'); return n?n.textContent:''; }
-  totEl.textContent = steps.length ? numOf(steps[steps.length-1]) : '–';   // 有第 0 段时总数就是最后一段的号
+  totEl.textContent = steps.length;   // 260905：显示「第 N 段 · 共 M 段」，M 是段数（有第 0 段时 = 末号 + 1）
 
   function mark(){
     steps.forEach(function(d){ d.classList.remove('cur'); });
