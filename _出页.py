@@ -132,24 +132,27 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 .dims .dim .lab{ color:var(--acc-d); font-weight:700; }
 .dims .dim.mt .v{ color:var(--what); } .dims .dim.im .v{ color:var(--good); }
 
-/* ✅⬜ 底部待办／已办（`260905`） */
-.foot ul.tdlist{ margin:2px 0 0; padding-left:0; list-style:none; }
-.foot ul.tdlist li{ position:relative; padding:5px 0 5px 20px; line-height:1.65; color:var(--ink); }
-.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:5px; font-size:11px; }
-.foot ul.tdlist.done li::before{ content:"✅"; }
-.foot ul.tdlist.done li{ color:var(--muted); }
-.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:11.5px; display:block; margin-top:1px; }
+/* 📚⬜✅ 底部三栏（`260905` 老徐：设计同正文折叠段 —— 专门一列、卡片、可展开） */
+.foot details.cl{ background:var(--card); border:1px solid var(--line); border-radius:13px; margin:0 0 11px;
+  overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.03); }
+.foot details.cl > summary{ cursor:pointer; list-style:none; padding:13px 18px; display:flex; align-items:center;
+  gap:10px; min-height:48px; font-size:14.5px; font-weight:800; color:var(--acc-d); }
+.foot details.cl > summary::-webkit-details-marker{ display:none; }
+.foot details.cl > summary::after{ content:"＋"; margin-left:auto; color:var(--muted); font-weight:700; font-size:16px; flex:none; }
+.foot details.cl[open] > summary::after{ content:"－"; }
+.foot details.cl[open] > summary{ border-bottom:1px solid var(--line); background:#fbfaf6; }
+.foot details.cl > .body{ padding:10px 18px 14px; font-size:13px; line-height:1.85; color:var(--ink-soft); }
+.foot details.cl > summary .n{ margin-left:2px; font-weight:700; font-size:12.5px; color:var(--muted); }
 .foot details.cl.td > summary{ color:var(--warn); }
 .foot details.cl.dn > summary{ color:var(--ok); }
-
-/* 📚 底部版本迭代折叠 */
-.foot details.cl{ margin-top:8px; }
-.foot details.cl > summary{ cursor:pointer; list-style:none; font-weight:700; color:var(--acc-d);
-  padding:6px 0; min-height:36px; display:flex; align-items:center; gap:6px; }
-.foot details.cl > summary::-webkit-details-marker{ display:none; }
-.foot details.cl > summary::after{ content:"＋"; color:var(--muted); font-weight:700; }
-.foot details.cl[open] > summary::after{ content:"－"; }
-.foot details.cl .body{ padding-top:4px; }
+.foot ul.tdlist{ margin:0; padding-left:0; list-style:none; }
+.foot ul.tdlist li{ position:relative; padding:6px 0 6px 22px; line-height:1.7; color:var(--ink); }
+.foot ul.tdlist li + li{ border-top:1px solid var(--line); }
+.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:7px; font-size:11px; }
+.foot ul.tdlist.done li::before{ content:"✅"; }
+.foot ul.tdlist.done li{ color:var(--muted); }
+.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:11.5px; display:block; margin-top:2px; }
+.foot .cl-wrap{ margin-top:14px; }
 """
 
 # ── 抬头三行（`260905` 老徐定：标题 → 一句话 → 三行 → 才到功能栏；三行就是 TL;DR，🚫 不再另开折叠段，否则重复）
@@ -412,9 +415,9 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             t, who = (r if isinstance(r, (tuple, list)) else (r, ""))
             out.append('<li>%s%s</li>' % (inline(t), ('<em>%s</em>' % inline(who)) if who else ""))
         return "".join(out)
-    todo_html = ('<details class="cl td"><summary>⬜ 待办（%d 条）</summary><div class="body">'
+    todo_html = ('<details class="cl td"><summary>⬜ 待办<span class="n">%d 条</span></summary><div class="body">'
                  '<ul class="tdlist">%s</ul></div></details>' % (len(todo), _lines(todo, "⬜"))) if todo else ""
-    done_html = ('<details class="cl dn"><summary>✅ 已办（%d 条）</summary><div class="body">'
+    done_html = ('<details class="cl dn"><summary>✅ 已办<span class="n">%d 条</span></summary><div class="body">'
                  '<ul class="tdlist done">%s</ul></div></details>' % (len(done), _lines(done, "✅"))) if done else ""
 
     # 🏷 三维度标签（`260824` 老徐定）：成熟度 1-5（播种→常青）· 重要程度 1-5 星 · 类型
@@ -480,9 +483,11 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 
 <div class="foot">
   <span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code>
-  <details class="cl"><summary>📚 版本迭代（%d 版）</summary><div class="body">%s</div></details>
+  <div class="cl-wrap">
+  <details class="cl"><summary>📚 版本迭代<span class="n">%d 版</span></summary><div class="body">%s</div></details>
   %s
   %s
+  </div>
 </div>
 </div>
 
