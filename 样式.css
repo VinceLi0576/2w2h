@@ -203,5 +203,9 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 .toc ol ol a{ font-size:12.3px; font-weight:500; color:var(--ink-soft); padding:4px 8px; }
 body.toc-on .toc{ display:block; }
 body.toc-on #page{ padding-left:240px; }
+@media (min-width:1300px){ body.toc-on #page{ padding-right:240px; } }   /* 260905 老徐：右边也要空一点，正文居中在目录与右边之间 */
+.toc .toc-h{ display:flex; align-items:center; justify-content:space-between; }
+.toc .toc-x{ font:700 14px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
+.toc .toc-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }

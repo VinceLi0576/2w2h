@@ -77,7 +77,8 @@
   var page=document.getElementById('page'); if(!page) return;
   var secs=Array.prototype.slice.call(document.querySelectorAll('details.sec')); if(!secs.length) return;
   var nav=document.createElement('nav'); nav.className='toc'; nav.id='toc';
-  var head=document.createElement('div'); head.className='toc-h'; head.textContent='目录'; nav.appendChild(head);
+  var head=document.createElement('div'); head.className='toc-h'; head.appendChild(document.createTextNode('目录'));
+  var xb=document.createElement('button'); xb.type='button'; xb.className='toc-x'; xb.title='收起目录（右上角 ☰ 再打开）'; xb.textContent='«'; head.appendChild(xb); nav.appendChild(head);
   var ol=document.createElement('ol');
   function closeDrawer(){ document.body.classList.remove('toc-drawer'); }
   secs.forEach(function(d,i){
@@ -117,10 +118,12 @@
   try{ var v=localStorage.getItem(KEY); if(v!==null) on=(v==='1'); }catch(e){}
   function render(){ document.body.classList.toggle('toc-on', wide.matches && on); if(wide.matches) closeDrawer(); }
   var tb=document.getElementById('toctoggle');
-  if(tb) tb.addEventListener('click', function(){
+  function toggle(){
     if(wide.matches){ on=!on; try{ localStorage.setItem(KEY, on?'1':'0'); }catch(e){} render(); }
     else{ document.body.classList.toggle('toc-drawer'); }
-  });
+  }
+  if(tb) tb.addEventListener('click', toggle);
+  xb.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
   document.addEventListener('click', function(e){
     if(document.body.classList.contains('toc-drawer') && !nav.contains(e.target) && !(tb && tb.contains(e.target))) closeDrawer();
   });

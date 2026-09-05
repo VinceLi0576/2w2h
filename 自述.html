@@ -212,6 +212,10 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 .toc ol ol a{ font-size:12.3px; font-weight:500; color:var(--ink-soft); padding:4px 8px; }
 body.toc-on .toc{ display:block; }
 body.toc-on #page{ padding-left:240px; }
+@media (min-width:1300px){ body.toc-on #page{ padding-right:240px; } }   /* 260905 老徐：右边也要空一点，正文居中在目录与右边之间 */
+.toc .toc-h{ display:flex; align-items:center; justify-content:space-between; }
+.toc .toc-x{ font:700 14px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
+.toc .toc-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
 
@@ -298,7 +302,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 03:45）的快照</b>：全机 skill 调用共 5 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 03:52）的快照</b>：全机 skill 调用共 6 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -308,7 +312,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 03:45）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 03:52）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
@@ -323,8 +327,8 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 </main>
 
 <div class="foot">
-  <span class="badge">v1.6</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>788bce1+未提交改动</code>
-  <details class="cl"><summary>版本迭代（7 版）</summary><div class="body"><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
+  <span class="badge">v1.7</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>1f3cde6</code>
+  <details class="cl"><summary>版本迭代（8 版）</summary><div class="body"><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
 </div>
 </div>
 
@@ -408,7 +412,8 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   var page=document.getElementById('page'); if(!page) return;
   var secs=Array.prototype.slice.call(document.querySelectorAll('details.sec')); if(!secs.length) return;
   var nav=document.createElement('nav'); nav.className='toc'; nav.id='toc';
-  var head=document.createElement('div'); head.className='toc-h'; head.textContent='目录'; nav.appendChild(head);
+  var head=document.createElement('div'); head.className='toc-h'; head.appendChild(document.createTextNode('目录'));
+  var xb=document.createElement('button'); xb.type='button'; xb.className='toc-x'; xb.title='收起目录（右上角 ☰ 再打开）'; xb.textContent='«'; head.appendChild(xb); nav.appendChild(head);
   var ol=document.createElement('ol');
   function closeDrawer(){ document.body.classList.remove('toc-drawer'); }
   secs.forEach(function(d,i){
@@ -448,10 +453,12 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   try{ var v=localStorage.getItem(KEY); if(v!==null) on=(v==='1'); }catch(e){}
   function render(){ document.body.classList.toggle('toc-on', wide.matches && on); if(wide.matches) closeDrawer(); }
   var tb=document.getElementById('toctoggle');
-  if(tb) tb.addEventListener('click', function(){
+  function toggle(){
     if(wide.matches){ on=!on; try{ localStorage.setItem(KEY, on?'1':'0'); }catch(e){} render(); }
     else{ document.body.classList.toggle('toc-drawer'); }
-  });
+  }
+  if(tb) tb.addEventListener('click', toggle);
+  xb.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
   document.addEventListener('click', function(e){
     if(document.body.classList.contains('toc-drawer') && !nav.contains(e.target) && !(tb && tb.contains(e.target))) closeDrawer();
   });
