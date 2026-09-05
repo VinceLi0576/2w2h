@@ -128,17 +128,27 @@
   var rail=document.createElement('div'); rail.className='arail'; page.appendChild(rail);
   var pop=document.createElement('div'); pop.className='apop'; pop.hidden=true; document.body.appendChild(pop);
   function cardHTML(a){
-    return '<div class="acard'+(a.resolved?' done':'')+'" data-id="'+a.id+'">'
-      +'<div class="acard-w">'+esc(a.where)+' <span class="acard-v">'+esc(a.version)+'</span></div>'
+    // 已解决 ⇒ 折成一行（老徐 260905：解决后的卡片别占地方也别难看）；点标题能展开看回内容
+    if(a.resolved){
+      return '<div class="acard done" data-id="'+a.id+'">'
+        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'
+        +'<span class="acard-act">'
+        +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 议题">↗</a>':'')
+        +'<button type="button" data-act="res" title="重开">↩</button>'
+        +'<button type="button" data-act="del" title="删除">✕</button></span></div>'
+        +'<div class="acard-more"><blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
+        +'<div class="acard-t">'+esc(a.text)+'</div></div></div>';
+    }
+    return '<div class="acard" data-id="'+a.id+'">'
+      +'<div class="acard-w">'+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'
+      +'<span class="acard-act">'
+      +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="已发到 GitHub，点开看议题">↗</a>'
+                :'<button type="button" data-act="gh" title="发到 GitHub">⇧</button>')
+      +'<button type="button" data-act="res" title="标为已解决">✓</button>'
+      +'<button type="button" data-act="del" title="删除">✕</button></span></div>'
       +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
-      +'<div class="acard-t">'+esc(a.text)+'</div>'
-      +'<div class="acard-b"><button type="button" data-act="res">'+(a.resolved?'↩ 重开':'✓ 解决')+'</button>'
-      +'<button type="button" data-act="gh" '+(a.remote?'disabled':'')+'>'+(a.remote?'已发到 GitHub':'发到 GitHub')+'</button>'
-      +'<button type="button" data-act="del">删</button></div>'
-      +(a.remote?'<a class="acard-l" href="'+esc(a.remote)+'" target="_blank" rel="noopener">issue ↗</a>':'')+'</div>';
+      +'<div class="acard-t">'+esc(a.text)+'</div></div>';
   }
-  /* 右侧还剩多少可视像素给卡片：≥200 就摆卡（卡宽随空间收窄到 180–260），不够就退到「点黄线弹卡」。
-     ⚠️ #page 有 zoom 时 getBoundingClientRect 已是视觉像素，直接跟 innerWidth 比即可 */
   function railRoom(){ var m=main.getBoundingClientRect(); var room=window.innerWidth-m.right-16; return room>=200?room:0; }
   function render(){
     unwrapAll(); rail.innerHTML='';
@@ -178,16 +188,17 @@
     if(b.dataset.act==='gh'){ sendGH(a, b); }
   }
   rail.addEventListener('click', act); pop.addEventListener('click', act);
+  document.addEventListener('click', function(e){ var w=e.target.closest&&e.target.closest('.acard.done .acard-w'); if(w&&!e.target.closest('button,a')) w.parentNode.classList.toggle('show'); });
   document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('.note .note-list')) act(e); });
 
   /* ── 发到 GitHub（🔴 只在点了按钮时；走 /api/note，站上没配钥匙会回明白话） */
   function sendGH(a, b){
-    b.disabled=true; b.textContent='发送中…';
+    b.disabled=true; b.textContent='…';
     fetch('/api/note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:PAGE, anchor:a.anchor, where:a.where+' · '+a.version, quote:a.exact, text:a.text+'\n\n<!-- anno '+JSON.stringify({id:a.id,version:a.version,anchor:a.anchor,prefix:a.prefix,suffix:a.suffix})+' -->'})})
       .then(function(r){ return r.json(); }).then(function(j){
         if(j.ok){ a.remote=j.url; store.save(notes); render(); }
-        else{ b.disabled=false; b.textContent='发到 GitHub'; alert('没发出去：'+(j.error||'未知错误')); }
-      }).catch(function(e){ b.disabled=false; b.textContent='发到 GitHub'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
+        else{ b.disabled=false; b.textContent='⇧'; alert('没发出去：'+(j.error||'未知错误')); }
+      }).catch(function(e){ b.disabled=false; b.textContent='⇧'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
   }
 
   /* ── 竖条里的 💬：批注列表面板 */

@@ -233,18 +233,26 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
 .acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
 .arail .acard{ position:absolute; width:260px; }
-.acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid #f5c400; border-radius:10px; padding:10px 12px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
-.acard.done{ border-left-color:var(--line); background:var(--surface); color:var(--muted); }
-.acard.done blockquote, .acard.done .acard-t{ display:none; }
-.acard.done .acard-w::after{ content:"　✓ 已解决"; color:var(--ok); font-weight:700; }
-.acard .acard-w{ font-size:11.5px; color:var(--acc-d); font-weight:700; margin-bottom:5px; }
-.acard .acard-v{ color:var(--muted); font-weight:600; }
+.acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid #f5c400;
+  border-radius:10px; padding:9px 11px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.acard .acard-w{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--acc-d); font-weight:700;
+  margin-bottom:6px; white-space:nowrap; overflow:hidden; }
+.acard .acard-w > :first-child{ overflow:hidden; text-overflow:ellipsis; }
+.acard .acard-v{ color:var(--muted); font-weight:600; flex:none; }
+.acard .acard-act{ margin-left:auto; display:flex; align-items:center; gap:1px; flex:none; }
+.acard .acard-act button, .acard .acard-act a{ font:700 12px/1 inherit; color:var(--muted); background:transparent;
+  border:0; border-radius:6px; width:22px; height:22px; display:grid; place-items:center; cursor:pointer; text-decoration:none; }
+.acard .acard-act button:hover, .acard .acard-act a:hover{ background:var(--acc-bg); color:var(--acc-d); }
+.acard .acard-act button:disabled{ color:var(--line); cursor:default; background:transparent; }
 .acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word; }
-.acard .acard-b{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-.acard .acard-b button{ font:600 11.5px/1 inherit; color:var(--acc-d); background:var(--acc-bg); border:0; border-radius:12px; padding:6px 10px; cursor:pointer; }
-.acard .acard-b button:disabled{ color:var(--muted); background:var(--surface); cursor:default; }
-.acard .acard-l{ display:inline-block; margin-top:6px; font-size:11.5px; color:var(--acc-d); }
 .acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
+/* 已解决 ⇒ 一行，灰、无引用无正文；点标题展开看回内容 */
+.acard.done{ border-left-color:var(--line); background:var(--surface); padding:6px 10px; }
+.acard.done .acard-w{ margin:0; color:var(--muted); cursor:pointer; }
+.acard.done .acard-act{ opacity:0; transition:.15s; }
+.acard.done:hover .acard-act, .acard.done.show .acard-act{ opacity:1; }
+.acard.done .acard-more{ display:none; padding-top:6px; }
+.acard.done.show .acard-more{ display:block; }
 .apop{ position:fixed; z-index:70; width:330px; max-width:calc(100vw - 16px); }
 .apop[hidden]{ display:none; }
 .apop .acard{ box-shadow:0 10px 30px rgba(0,0,0,.16); }
