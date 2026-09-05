@@ -202,7 +202,7 @@ details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
 .keypt .kb{ grid-column:1 / -1; }
 .keypt .kb .lead2{ margin:0; }
 /* 收起态段头露一行结论（`260905` 老徐定）；展开后隐去，正文里的要点块会显示同一句 */
-details.sec > summary .brief{ flex-basis:100%; margin:2px 0 0 35px; font-size:13px; font-weight:500; color:var(--muted);
+details.sec > summary .brief{ order:99; flex-basis:100%; margin:2px 0 0 35px; font-size:13px; font-weight:500; color:var(--muted);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 details.sec[open] > summary .brief{ display:none; }
 main > .ring{ max-width:none; padding:0; margin:0 0 11px; }
