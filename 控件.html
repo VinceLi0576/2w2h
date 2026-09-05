@@ -1,14 +1,18 @@
 <div class="ctl" id="ctl">
   <button type="button" id="toctoggle" title="目录（侧边框架）">☰</button>
-  <button type="button" id="notebtn" title="留言给 AI（先选中一段文字再点，会带上引用）">💬</button>
-  <button type="button" id="qtoggle" title="搜本页（按 / 也行）">🔍</button>
-  <button type="button" id="zoomout" title="缩小">A－</button>
-  <button type="button" id="zoomin" title="放大">A＋</button>
-  <button type="button" id="prev" title="上一段（←）">‹</button>
+  <span class="sep"></span>
+  <button type="button" id="prev" title="上一段（←）">▲</button>
   <span class="pos"><b id="cur">–</b>/<span id="tot">–</span></span>
-  <button type="button" id="next" title="下一段（→）">›</button>
-  <button type="button" id="collapse" title="全部收起">⊟</button>
+  <button type="button" id="next" title="下一段（→）">▼</button>
+  <span class="sep"></span>
   <button type="button" id="expand" title="全部展开，之后翻页不再收起">⊞</button>
+  <button type="button" id="collapse" title="全部收起">⊟</button>
+  <span class="sep"></span>
+  <button type="button" id="qtoggle" title="搜本页（按 / 也行）">🔍</button>
+  <button type="button" id="zoomin" title="放大">A＋</button>
+  <button type="button" id="zoomout" title="缩小">A－</button>
+  <span class="sep"></span>
+  <button type="button" id="notebtn" title="留言给 AI（先选中一段文字再点，会带上引用）">💬</button>
   <div class="q" id="qbox" hidden>
     <input id="q" type="search" placeholder="搜本页…" autocomplete="off" spellcheck="false">
     <button type="button" id="qprev" title="上一个（Shift+Enter）">↑</button>
