@@ -126,6 +126,13 @@
 
   /* ── 渲染：黄线 ＋ 右侧卡片（宽屏）／点黄线弹卡（窄屏） */
   var rail=document.createElement('div'); rail.className='arail'; page.appendChild(rail);
+  /* 右侧批注栏的收起把手（跟左边目录的 « 对称）—— 260905 老徐：可以缩进去 */
+  var grip=document.createElement('button'); grip.type='button'; grip.className='agrip'; grip.hidden=true;
+  document.body.appendChild(grip);
+  var AK='2w2h-anno-off';
+  try{ if(localStorage.getItem(AK)==='1') document.body.classList.add('anno-off'); }catch(e){}
+  grip.addEventListener('click', function(){ var off=document.body.classList.toggle('anno-off');
+    try{ localStorage.setItem(AK, off?'1':'0'); }catch(e){} render(); });
   var pop=document.createElement('div'); pop.className='apop'; pop.hidden=true; document.body.appendChild(pop);
   function cardHTML(a){
     // 已解决 ⇒ 折成一行（老徐 260905：解决后的卡片别占地方也别难看）；点标题能展开看回内容
@@ -149,7 +156,7 @@
       +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
       +'<div class="acard-t">'+esc(a.text)+'</div></div>';
   }
-  function railRoom(){ var m=main.getBoundingClientRect(); var room=window.innerWidth-m.right-16; return room>=200?room:0; }
+  function railRoom(){ if(document.body.classList.contains('anno-off')) return 0; var m=main.getBoundingClientRect(); var room=window.innerWidth-m.right-16; return room>=220?room:0; }
   function render(){
     unwrapAll(); rail.innerHTML='';
     var placed=[];
@@ -164,15 +171,20 @@
         var first=marks[0]; var vis=first.getClientRects().length>0;
         if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
         var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
-        var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+24;
+        // 260905 老徐：卡片要往外一点 —— 离正文 40（原 24），右边至少留 12
+        var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+40;
         placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
         var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
-        el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, Math.max(180, room-16))/zoom()+'px'; rail.appendChild(el);
+        el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, Math.max(180, room-40))/zoom()+'px'; rail.appendChild(el);
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
     });
     var list=document.querySelector('.note .note-list'); if(list) list.innerHTML=notes.length?notes.map(function(a){ return '<div class="acard'+(a.resolved?' done':'')+' inlist" data-id="'+a.id+'">'+ (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）</div>':'') + cardHTML(a).replace(/^<div class="acard[^>]*">|<\/div>$/g,'')+'</div>'; }).join(''):'<div class="note-empty">还没有批注。选中一段字，点冒出来的「💬 批注」。</div>';
-    var cnt=document.getElementById('notecnt'); if(cnt){ var open=notes.filter(function(a){return !a.resolved;}).length; cnt.textContent=open||''; cnt.hidden=!open; }
+    var off=document.body.classList.contains('anno-off'), n=notes.filter(function(a){return !a._lost;}).length;
+    grip.hidden=!(n && (off || railRoom()));
+    grip.textContent=off?('批注 '+n+' »'):'«';
+    grip.title=off?'展开右侧批注栏':'收起右侧批注栏';
+        var cnt=document.getElementById('notecnt'); if(cnt){ var open=notes.filter(function(a){return !a.resolved;}).length; cnt.textContent=open||''; cnt.hidden=!open; }
   }
   function showPop(a, m){
     pop.innerHTML=cardHTML(a); pop.hidden=false;
@@ -183,7 +195,11 @@
   document.addEventListener('mousedown', function(e){ if(!pop.hidden&&!pop.contains(e.target)&&!(e.target.closest&&e.target.closest('mark.anno'))) pop.hidden=true; });
   function act(e){
     var b=e.target.closest('button[data-act]'); if(!b) return; var card=b.closest('.acard'); var a=notes.filter(function(x){return x.id===card.dataset.id;})[0]; if(!a) return;
-    if(b.dataset.act==='res'){ a.resolved=!a.resolved; store.save(notes); render(); pop.hidden=true; }
+    if(b.dataset.act==='res'){ a.resolved=!a.resolved; store.save(notes); render(); pop.hidden=true;
+      // 同步关／开远端议题（发过 GitHub 的才有）—— 260905：解决了那边也该合上
+      if(a.remote){ var num=(a.remote.match(/\/(\d+)$/)||[])[1];
+        if(num) fetch('/api/note',{method:'PATCH',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({number:+num, state:a.resolved?'closed':'open'})}).catch(function(){}); } }
     if(b.dataset.act==='del'){ if(confirm('删掉这条批注？')){ notes=notes.filter(function(x){return x!==a;}); store.save(notes); render(); pop.hidden=true; } }
     if(b.dataset.act==='gh'){ sendGH(a, b); }
   }

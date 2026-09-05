@@ -270,3 +270,11 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .note .note-empty, .note .note-tip{ font-size:12px; color:var(--muted); line-height:1.6; }
 .note .note-tip{ margin-top:8px; border-top:1px solid var(--line); padding-top:8px; }
 @media (max-width:640px){ .note{ top:64px; right:42px; max-width:calc(100vw - 50px); } .arail{ display:none; } }
+/* 右侧批注栏的收起把手（`260905`）—— 跟左侧目录的 « 对称 */
+.agrip{ position:fixed; right:56px; bottom:18px; z-index:59; font:700 12px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+  color:var(--acc-d); background:rgba(255,254,250,.94); backdrop-filter:saturate(180%) blur(10px);
+  border:1px solid var(--line); border-radius:16px; padding:8px 12px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.agrip[hidden]{ display:none; }
+.agrip:hover{ background:var(--acc-bg); }
+body.anno-off .arail{ display:none; }
+@media (max-width:640px){ .agrip{ display:none; } }
