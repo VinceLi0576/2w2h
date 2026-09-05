@@ -2,12 +2,13 @@
   var steps = Array.prototype.slice.call(document.querySelectorAll('details.sec'));
   var idx = -1, readMode = false;
   var curEl = document.getElementById('cur'), totEl = document.getElementById('tot');
-  totEl.textContent = steps.length;
+  function numOf(d){ var n=d&&d.querySelector('summary .num'); return n?n.textContent:''; }
+  totEl.textContent = steps.length ? numOf(steps[steps.length-1]) : '–';   // 有第 0 段时总数就是最后一段的号
 
   function mark(){
     steps.forEach(function(d){ d.classList.remove('cur'); });
     if(idx >= 0 && steps[idx] && steps[idx].open) steps[idx].classList.add('cur');
-    curEl.textContent = idx >= 0 ? (idx + 1) : '–';
+    curEl.textContent = idx >= 0 ? (numOf(steps[idx]) || (idx + 1)) : '–';
     document.dispatchEvent(new CustomEvent('secchange', {detail: idx}));   // 侧边目录靠它高亮
   }
   function goto(i, scroll){

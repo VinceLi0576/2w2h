@@ -350,28 +350,20 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 .foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:11.5px; display:block; margin-top:2px; }
 .foot .cl-wrap{ margin-top:14px; }
 
-/* 抬头 ＝ 跟四钮同一族的卡片（`260905` 老徐：参考四钮那张，整体色调排版一致）：
-   白底 · 细边 · 圆角 · 顶上一道色边（标题蓝）· 小标签字距拉开 · 正文灰。里面仍是「左标签列 ＋ 右内容列」四行对齐 */
-.hero{ background:transparent; border-bottom:0; text-align:left; padding:22px 22px 0; }
-.hero .hgrid{ max-width:736px; margin:0 auto; box-sizing:border-box; background:var(--card);   /* 736 ＝ 780 − 四钮／正文两侧各 22 的内边距，边缘对齐 */ border:1px solid var(--line);
-  border-top:3px solid #2563eb; border-radius:12px; padding:16px 20px 14px; box-shadow:0 1px 3px rgba(0,0,0,.03);
-  display:grid; grid-template-columns:52px minmax(0,1fr); column-gap:14px; row-gap:10px; align-items:baseline; }
-/* [两字] 标签：跟四钮上「WHY · 第 1 段」同一套字（10.5px · 800 · 字距 1.5） */
-.k2{ color:#2563eb; font-weight:800; font-size:10.5px; letter-spacing:1.5px; text-align:right; white-space:nowrap; line-height:1.7; }
+/* 第 0 段（`260905` 老徐：抬头跟下面的段长一样 —— 0 [标题] 名字 · 0.1 导语 · 0.2 要点 · 右下角 项目 › 文件夹 · 版本） */
+.tag.title{ background:#2563eb; }
+details.sec.s0 > summary .ti{ font-size:19px; }
+details.sec.s0 .lead2{ font-weight:500; color:var(--ink-soft); font-size:14.5px; }
+details.sec.s0 .three{ margin:2px 0 0; }
+details.sec.s0 .three li{ font-size:14.5px; padding:0 0 8px 34px; }
+details.sec.s0 .three li::before{ width:22px; height:22px; font-size:11px; }
+details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
+details.sec.s0 .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
+details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
+.k2{ color:#2563eb; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; opacity:.75; }
 .k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
-.hero h1{ margin:0; font-size:22px; line-height:1.3; text-align:left; color:var(--ink); }
-.hero .lead{ margin:0; max-width:none; text-align:left; font-size:13.5px; color:var(--muted); line-height:1.7; }
-.hero .three{ margin:2px 0 0; }
-.hero .three li{ font-size:14.5px; padding:0 0 8px 34px; }
-.hero .three li::before{ width:22px; height:22px; font-size:11px; }
-.hero .dims{ grid-column:1 / -1; justify-content:flex-start; margin:0; }
-/* 右下角：值在上（项目 › 文件夹 · 版本），[标签] 在下 */
-.hero .loc{ grid-column:1 / -1; display:flex; flex-direction:column; align-items:flex-end; gap:0; margin-top:2px; }
-.hero .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
-.hero .loc .v b{ color:var(--acc-d); font-weight:800; }
-.hero .loc .k2.under{ font-size:9.5px; opacity:.75; }
-.ring{ margin-top:10px; }   /* 跟四钮之间的缝 ＝ 四钮之间的缝 */
-@media (max-width:640px){ .hero{ padding:16px 12px 0; } .hero .hgrid{ padding:14px 14px 12px; grid-template-columns:44px minmax(0,1fr); column-gap:10px; } .hero h1{ font-size:19px; } }
+main > .ring{ max-width:none; padding:0; margin:0 0 11px; }   /* 四钮进了 main，跟段同宽 */
+main{ padding-top:22px; }
 
 .foot{max-width:780px;margin:26px auto 0;padding:16px 22px 40px;border-top:1px solid var(--line);
  font-size:12.5px;color:var(--muted);line-height:1.9;}
@@ -403,16 +395,16 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   </div>
 </div>
 <div id="page">
-<div class="hero">
- <div class="hgrid">
-  <span class="k2">标题</span><h1>2w2h 自述</h1>
-  <span class="k2">导语</span><p class="lead">收到 2w2h 的推送后打开：判这次用得对不对，不对怎么改。</p>
-  <span class="k2">要点</span><ol class="three"><li><b>它是什么</b>：全机唯一黄金圈出页 skill</li><li><b>什么时候动</b>：谁出页谁调它，调了就记、就推</li><li><b>不对怎么改</b>：按第 4 段判据说一句</li></ol>
-  
-  <div class="loc"><span class="v">ops › skill › 2w2h · <b>v2.9</b></span><span class="k2 under">项目 › 文件夹 · 版本</span></div>
- </div>
-</div>
-
+<main>
+<a id="tldr" class="kanchor" aria-hidden="true"></a>
+<details class="sec s0" id="s0" data-key="tldr">
+  <summary><span class="num">0</span><span class="tag title">标题</span><span class="ti">2w2h 自述</span></summary>
+  <div class="body">
+    <details class="sub" open id="s0-1"><summary><span class="no">0.1</span><span class="nm">导语</span></summary><div class="body"><p class="lead2">收到 2w2h 的推送后打开：判这次用得对不对，不对怎么改。</p></div></details>
+    <details class="sub" open id="s0-2"><summary><span class="no">0.2</span><span class="nm">要点</span></summary><div class="body"><ol class="three"><li><b>它是什么</b>：全机唯一黄金圈出页 skill</li><li><b>什么时候动</b>：谁出页谁调它，调了就记、就推</li><li><b>不对怎么改</b>：按第 4 段判据说一句</li></ol></div></details>
+    <div class="loc"><span class="v">ops › skill › 2w2h · <b>v2.9</b></span><span class="k2 under">项目 › 文件夹 · 版本</span></div>
+  </div>
+</details>
 
 <div class="ring">
 <button type="button" class="w1" data-go="s1"><div class="k">WHY · 第 1 段</div><div class="t">为什么</div><div class="d">一套骨架 · 一条流程 · 一条推送，缺任何一条都回到各写各的</div></button>
@@ -421,7 +413,6 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <button type="button" class="w4" data-go="s4"><div class="k">HOW GOOD · 第 4 段</div><div class="t">算好了没</div><div class="d">三类「不合适」各怎么看，怎么一句话发起迭代</div></button>
 </div>
 
-<main>
 <a id="why" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s1" data-key="why">
   <summary><span class="num">1</span><span class="tag why">WHY</span><span class="ti">为什么要有它</span><span class="sub">不做会怎样：每条线各写一套骨架、五个坑每次重踩、老徐不知道谁在用</span></summary>
@@ -435,7 +426,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 11:13）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 11:15）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -445,7 +436,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 11:13）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 11:15）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
@@ -474,12 +465,13 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   var steps = Array.prototype.slice.call(document.querySelectorAll('details.sec'));
   var idx = -1, readMode = false;
   var curEl = document.getElementById('cur'), totEl = document.getElementById('tot');
-  totEl.textContent = steps.length;
+  function numOf(d){ var n=d&&d.querySelector('summary .num'); return n?n.textContent:''; }
+  totEl.textContent = steps.length ? numOf(steps[steps.length-1]) : '–';   // 有第 0 段时总数就是最后一段的号
 
   function mark(){
     steps.forEach(function(d){ d.classList.remove('cur'); });
     if(idx >= 0 && steps[idx] && steps[idx].open) steps[idx].classList.add('cur');
-    curEl.textContent = idx >= 0 ? (idx + 1) : '–';
+    curEl.textContent = idx >= 0 ? (numOf(steps[idx]) || (idx + 1)) : '–';
     document.dispatchEvent(new CustomEvent('secchange', {detail: idx}));   // 侧边目录靠它高亮
   }
   function goto(i, scroll){

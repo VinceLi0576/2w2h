@@ -159,28 +159,20 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 #    字数是作者规矩，超了往 stderr 报，🚫 不截断（截断＝静默改内容）
 HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
-/* 抬头 ＝ 跟四钮同一族的卡片（`260905` 老徐：参考四钮那张，整体色调排版一致）：
-   白底 · 细边 · 圆角 · 顶上一道色边（标题蓝）· 小标签字距拉开 · 正文灰。里面仍是「左标签列 ＋ 右内容列」四行对齐 */
-.hero{ background:transparent; border-bottom:0; text-align:left; padding:22px 22px 0; }
-.hero .hgrid{ max-width:736px; margin:0 auto; box-sizing:border-box; background:var(--card);   /* 736 ＝ 780 − 四钮／正文两侧各 22 的内边距，边缘对齐 */ border:1px solid var(--line);
-  border-top:3px solid #2563eb; border-radius:12px; padding:16px 20px 14px; box-shadow:0 1px 3px rgba(0,0,0,.03);
-  display:grid; grid-template-columns:52px minmax(0,1fr); column-gap:14px; row-gap:10px; align-items:baseline; }
-/* [两字] 标签：跟四钮上「WHY · 第 1 段」同一套字（10.5px · 800 · 字距 1.5） */
-.k2{ color:#2563eb; font-weight:800; font-size:10.5px; letter-spacing:1.5px; text-align:right; white-space:nowrap; line-height:1.7; }
+/* 第 0 段（`260905` 老徐：抬头跟下面的段长一样 —— 0 [标题] 名字 · 0.1 导语 · 0.2 要点 · 右下角 项目 › 文件夹 · 版本） */
+.tag.title{ background:#2563eb; }
+details.sec.s0 > summary .ti{ font-size:19px; }
+details.sec.s0 .lead2{ font-weight:500; color:var(--ink-soft); font-size:14.5px; }
+details.sec.s0 .three{ margin:2px 0 0; }
+details.sec.s0 .three li{ font-size:14.5px; padding:0 0 8px 34px; }
+details.sec.s0 .three li::before{ width:22px; height:22px; font-size:11px; }
+details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
+details.sec.s0 .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
+details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
+.k2{ color:#2563eb; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; opacity:.75; }
 .k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
-.hero h1{ margin:0; font-size:22px; line-height:1.3; text-align:left; color:var(--ink); }
-.hero .lead{ margin:0; max-width:none; text-align:left; font-size:13.5px; color:var(--muted); line-height:1.7; }
-.hero .three{ margin:2px 0 0; }
-.hero .three li{ font-size:14.5px; padding:0 0 8px 34px; }
-.hero .three li::before{ width:22px; height:22px; font-size:11px; }
-.hero .dims{ grid-column:1 / -1; justify-content:flex-start; margin:0; }
-/* 右下角：值在上（项目 › 文件夹 · 版本），[标签] 在下 */
-.hero .loc{ grid-column:1 / -1; display:flex; flex-direction:column; align-items:flex-end; gap:0; margin-top:2px; }
-.hero .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
-.hero .loc .v b{ color:var(--acc-d); font-weight:800; }
-.hero .loc .k2.under{ font-size:9.5px; opacity:.75; }
-.ring{ margin-top:10px; }   /* 跟四钮之间的缝 ＝ 四钮之间的缝 */
-@media (max-width:640px){ .hero{ padding:16px 12px 0; } .hero .hgrid{ padding:14px 14px 12px; grid-template-columns:44px minmax(0,1fr); column-gap:10px; } .hero h1{ font-size:19px; } }
+main > .ring{ max-width:none; padding:0; margin:0 0 11px; }   /* 四钮进了 main，跟段同宽 */
+main{ padding-top:22px; }
 """
 
 # 搜索框已在 控件.html 的 .q 里（`260905` 胶囊化），不再往工具条里插
@@ -370,7 +362,8 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
     tldr_html = ""
     if secs and secs[0]["meta"].get("tldr"):
         tl = secs.pop(0)
-        tldr_html = '<span class="k2">要点</span>' + three(tl["md"])   # 两个网格格子：标签 · 三行
+        tldr_html = three(tl["md"])
+        tldr_key = (tl["meta"].get("key") or "tldr").strip()
         mains = [ln.strip() for ln in tl["md"].split("\n") if re.match(r"^\d+\.\s+", ln.strip())]
         mains = [re.sub(r"^\d+\.\s+", "", m).partition("‖")[0].strip() for m in mains]
         if len(mains) != 3:
@@ -379,7 +372,8 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             if len(_plain(m)) > HEAD_MAX["三行每行"]:
                 print("⚠️ 抬头第 %d 行 %d 字，上限 %d：%s" % (i, len(_plain(m)), HEAD_MAX["三行每行"], _plain(m)[:30]), file=sys.stderr)
     else:
-        print("⚠️ md 第一段不是 tldr ⇒ 抬头没有三行（标准要求 标题→一句话→三行→功能栏）", file=sys.stderr)
+        tldr_key = "tldr"
+        print("⚠️ md 第一段不是 tldr ⇒ 第 0 段没有要点（标准要求 0 标题 → 0.1 导语 → 0.2 要点）", file=sys.stderr)
     if len(_plain(h1)) > HEAD_MAX["标题"]:
         print("⚠️ 标题 %d 字，上限 %d" % (len(_plain(h1)), HEAD_MAX["标题"]), file=sys.stderr)
     if len(_plain(lead)) > HEAD_MAX["一句话"]:
@@ -478,6 +472,23 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             dims_html = '<div class="dims">%s</div>' % "".join(dim_parts)
 
 
+    # ── 第 0 段（`260905` 老徐定：抬头不单独一块，长得跟下面的段一样 —— 0 [标题] 名字，展开是 0.1 导语 · 0.2 要点，右下角 项目 › 文件夹 · 版本）
+    sec0 = ('<a id="%s" class="kanchor" aria-hidden="true"></a>\n'
+            '<details class="sec s0" id="s0" data-key="%s">\n'
+            '  <summary><span class="num">0</span><span class="tag title">标题</span><span class="ti">%s</span></summary>\n'
+            '  <div class="body">\n'
+            '    <details class="sub" open id="s0-1"><summary><span class="no">0.1</span><span class="nm">导语</span></summary>'
+            '<div class="body"><p class="lead2">%s</p></div></details>\n'
+            '%s'
+            '%s'
+            '    <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2 under">项目 › 文件夹 · 版本</span></div>\n'
+            '  </div>\n</details>'
+            % (esc(tldr_key), esc(tldr_key), inline(h1), inline(lead),
+               ('    <details class="sub" open id="s0-2"><summary><span class="no">0.2</span><span class="nm">要点</span></summary>'
+                '<div class="body">%s</div></details>\n' % tldr_html) if tldr_html else '',
+               ('    %s\n' % dims_html) if dims_html else '',
+               esc(_loc(src_p)), esc(version)))
+
     html = """<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -498,18 +509,9 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 <body>
 %s
 <div id="page">
-<div class="hero">
- <div class="hgrid">
-  <span class="k2">标题</span><h1>%s</h1>
-  <span class="k2">导语</span><p class="lead">%s</p>
-  %s
-  %s
-  <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2 under">项目 › 文件夹 · 版本</span></div>
- </div>
-</div>
-
-%s
 <main>
+%s
+%s
 %s
 </main>
 
@@ -528,8 +530,8 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 </script>
 </body>
 </html>
-""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl, inline(h1), inline(lead),
-       tldr_html, dims_html, esc(_loc(src_p)), esc(version),
+""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl,
+       sec0,
        '\n<div class="ring">\n%s\n</div>\n' % "\n".join(ring) if ring else "",
        "\n".join(parts), version, src_p.name, gen_rel, commit, len(changelog), cl, todo_html, done_html,
        script + SEARCH_JS)
