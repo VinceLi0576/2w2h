@@ -293,5 +293,9 @@ body.anno-off .arail{ display:none; }
 .note details.donebox[open] > summary::after{ content:"－"; }
 .note .acard.inlist{ margin-bottom:8px; }
 
+/* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数（`260905` 老徐：标记明显一些） */
+.anno-dot{ flex:none; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%;
+  background:var(--anno-mine); color:#fff; font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
+.acard.done .anno-dot{ background:var(--muted); }
 .anno-dot.inline{ display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; font-size:11px; font-weight:800;
   margin:0 1px 0 3px; vertical-align:-3px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.2); line-height:1; }
