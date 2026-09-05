@@ -5,12 +5,6 @@
 *{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
 body{ margin:0; padding:0 0 80px; font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.78; -webkit-font-smoothing:antialiased; }
 
-.hero{ background:var(--surface); border-bottom:1px solid var(--line); text-align:center; padding:40px 22px 26px; }
-.hero .eyebrow{ display:inline-block; font-size:11.5px; letter-spacing:.5px; color:var(--acc-d); font-weight:700; margin-bottom:11px; }
-.hero h1{ margin:0 auto 9px; font-size:26px; font-weight:800; }
-.hero .lead{ margin:0 auto; max-width:40em; font-size:14.5px; color:var(--ink-soft); }
-.hero a{ color:var(--muted); font-size:13px; text-decoration:none; }
-.hero a:hover{ color:var(--acc); }
 
 
 main{ max-width:780px; margin:0 auto; padding:22px 22px 0; }
@@ -186,7 +180,7 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 @media (max-width:640px){
   .ctl{ top:64px; right:4px; padding:4px 2px; } .ctl button{ width:30px; height:30px; font-size:13px; }
   .ctl .q{ right:calc(100% + 4px); } .ctl .q input{ width:118px; }
-  .hero{ padding-right:46px; padding-left:22px; }
+  main{ padding-right:48px; }   /* 260905 子 agent 实测：36px 竖条会盖住卡片右缘的 ＋/－，正文让开 */
 }
 
 /* ── 侧边目录（`260905` 老徐：参考飞书／语雀，从侧边看到全部框架） */
@@ -214,7 +208,7 @@ body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); w
 
 /* ── 💬 批注（`260905` 老徐定四条：气泡／右键 · 黄线＋右侧对齐卡片 · 解决变灰折叠 · 手机点黄线弹出） */
 #page{ position:relative; }
-:root{ --anno-quote:#f5c400; --anno-mine:#2f9e5e; }   /* 🟡 划中的原文 · 🟢 自己写的（`260905` 老徐定） */
+:root{ --anno-quote:#f5c400; --anno-mine:#15803d; }   /* 260905 子 agent 实算：#2f9e5e 白字 3.40:1 不过 AA，#15803d 5.02:1 */   /* 🟡 划中的原文 · 🟢 自己写的（`260905` 老徐定） */
 mark.anno{ background:transparent; color:inherit; border-bottom:2px solid var(--anno-quote); box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
 mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .abub, .amenu{ position:fixed; z-index:70; }
@@ -231,8 +225,8 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acomp .acomp-m .acard-no{ color:var(--ink); font-weight:800; font-size:12px; }
 .acomp .acomp-tag{ font-size:11px; color:var(--muted); font-weight:600; }
 .acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid var(--anno-quote); color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
-.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:rgba(47,158,94,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
-.acomp textarea:focus{ border-color:var(--anno-mine); box-shadow:0 0 0 3px rgba(47,158,94,.14); }
+.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:rgba(21,128,61,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
+.acomp textarea:focus{ border-color:var(--anno-mine); box-shadow:0 0 0 3px rgba(21,128,61,.14); }
 .acomp .acomp-b{ display:flex; gap:8px; margin-top:8px; }
 .acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--anno-mine); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
 .acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
@@ -253,7 +247,7 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acard .acard-act .op:disabled{ background:var(--line); color:var(--muted); cursor:default; }
 .acard .acard-act .op:hover{ transition:.12s; }
 .acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word;
-  border-left:3px solid var(--anno-mine); background:rgba(47,158,94,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
+  border-left:3px solid var(--anno-mine); background:rgba(21,128,61,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
 .acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
 /* 已解决 ⇒ 折起，只剩头两行与两个小操作；点头两行展开看回内容 */
 .acard.done{ border-left-color:var(--line); background:var(--surface); }
@@ -302,3 +296,8 @@ body.anno-off .arail{ display:none; }
 .acard.done .anno-dot{ background:var(--muted); }
 .anno-dot.inline{ display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; font-size:11px; font-weight:800;
   margin:0 1px 0 3px; vertical-align:-3px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.2); line-height:1; }
+
+/* 代码块（260905 子 agent 实测：原先没有任何样式，段与小节又 overflow:hidden ⇒ 宽行被裁、滚不动，390px 全裁） */
+pre{ margin:10px 0; padding:10px 12px; background:#f4f3ee; border:1px solid var(--line); border-radius:8px;
+  overflow-x:auto; max-width:100%; font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:var(--ink); }
+pre code{ white-space:pre; background:transparent; padding:0; font:inherit; }

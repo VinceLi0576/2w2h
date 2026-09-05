@@ -196,7 +196,7 @@ details.sec.s0 .three li::before{ width:22px; height:22px; font-size:11px; }
 details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
 details.sec.s0 .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
 details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
-.k2{ color:#2563eb; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; opacity:.75; }
+.k2{ color:#1d4ed8; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; }   /* 260905：原 #2563eb 叠 opacity .75 只有 3.31:1，不过 AA */
 .k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
 main > .ring{ max-width:none; padding:0; margin:0 0 11px; }   /* 四钮进了 main，跟段同宽 */
 main{ padding-top:22px; }
@@ -310,6 +310,7 @@ SEARCH_JS = """
     var h=decodeURIComponent(location.hash.replace('#',''));
     if(!h) return;
     if(/^s[0-9]+$/.test(h)){ return openAndScroll(document.getElementById(h)); }
+    if(/^s[0-9]+-[0-9]+$/.test(h)){ var sub=document.getElementById(h); return sub && openAndScroll(sub); }   // 260905：目录点小节写的是 #sN-k，刷新后也要认
     return gotoKey(h);
   }
   handleHash();

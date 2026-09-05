@@ -14,12 +14,6 @@
 *{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
 body{ margin:0; padding:0 0 80px; font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.78; -webkit-font-smoothing:antialiased; }
 
-.hero{ background:var(--surface); border-bottom:1px solid var(--line); text-align:center; padding:40px 22px 26px; }
-.hero .eyebrow{ display:inline-block; font-size:11.5px; letter-spacing:.5px; color:var(--acc-d); font-weight:700; margin-bottom:11px; }
-.hero h1{ margin:0 auto 9px; font-size:26px; font-weight:800; }
-.hero .lead{ margin:0 auto; max-width:40em; font-size:14.5px; color:var(--ink-soft); }
-.hero a{ color:var(--muted); font-size:13px; text-decoration:none; }
-.hero a:hover{ color:var(--acc); }
 
 
 main{ max-width:780px; margin:0 auto; padding:22px 22px 0; }
@@ -195,7 +189,7 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 @media (max-width:640px){
   .ctl{ top:64px; right:4px; padding:4px 2px; } .ctl button{ width:30px; height:30px; font-size:13px; }
   .ctl .q{ right:calc(100% + 4px); } .ctl .q input{ width:118px; }
-  .hero{ padding-right:46px; padding-left:22px; }
+  main{ padding-right:48px; }   /* 260905 子 agent 实测：36px 竖条会盖住卡片右缘的 ＋/－，正文让开 */
 }
 
 /* ── 侧边目录（`260905` 老徐：参考飞书／语雀，从侧边看到全部框架） */
@@ -223,7 +217,7 @@ body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); w
 
 /* ── 💬 批注（`260905` 老徐定四条：气泡／右键 · 黄线＋右侧对齐卡片 · 解决变灰折叠 · 手机点黄线弹出） */
 #page{ position:relative; }
-:root{ --anno-quote:#f5c400; --anno-mine:#2f9e5e; }   /* 🟡 划中的原文 · 🟢 自己写的（`260905` 老徐定） */
+:root{ --anno-quote:#f5c400; --anno-mine:#15803d; }   /* 260905 子 agent 实算：#2f9e5e 白字 3.40:1 不过 AA，#15803d 5.02:1 */   /* 🟡 划中的原文 · 🟢 自己写的（`260905` 老徐定） */
 mark.anno{ background:transparent; color:inherit; border-bottom:2px solid var(--anno-quote); box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
 mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .abub, .amenu{ position:fixed; z-index:70; }
@@ -240,8 +234,8 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acomp .acomp-m .acard-no{ color:var(--ink); font-weight:800; font-size:12px; }
 .acomp .acomp-tag{ font-size:11px; color:var(--muted); font-weight:600; }
 .acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid var(--anno-quote); color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
-.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:rgba(47,158,94,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
-.acomp textarea:focus{ border-color:var(--anno-mine); box-shadow:0 0 0 3px rgba(47,158,94,.14); }
+.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:rgba(21,128,61,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
+.acomp textarea:focus{ border-color:var(--anno-mine); box-shadow:0 0 0 3px rgba(21,128,61,.14); }
 .acomp .acomp-b{ display:flex; gap:8px; margin-top:8px; }
 .acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--anno-mine); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
 .acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
@@ -262,7 +256,7 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acard .acard-act .op:disabled{ background:var(--line); color:var(--muted); cursor:default; }
 .acard .acard-act .op:hover{ transition:.12s; }
 .acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word;
-  border-left:3px solid var(--anno-mine); background:rgba(47,158,94,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
+  border-left:3px solid var(--anno-mine); background:rgba(21,128,61,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
 .acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
 /* 已解决 ⇒ 折起，只剩头两行与两个小操作；点头两行展开看回内容 */
 .acard.done{ border-left-color:var(--line); background:var(--surface); }
@@ -311,6 +305,11 @@ body.anno-off .arail{ display:none; }
 .acard.done .anno-dot{ background:var(--muted); }
 .anno-dot.inline{ display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; font-size:11px; font-weight:800;
   margin:0 1px 0 3px; vertical-align:-3px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.2); line-height:1; }
+
+/* 代码块（260905 子 agent 实测：原先没有任何样式，段与小节又 overflow:hidden ⇒ 宽行被裁、滚不动，390px 全裁） */
+pre{ margin:10px 0; padding:10px 12px; background:#f4f3ee; border:1px solid var(--line); border-radius:8px;
+  overflow-x:auto; max-width:100%; font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:var(--ink); }
+pre code{ white-space:pre; background:transparent; padding:0; font:inherit; }
 
 
 mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
@@ -367,7 +366,7 @@ details.sec.s0 .three li::before{ width:22px; height:22px; font-size:11px; }
 details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
 details.sec.s0 .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
 details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
-.k2{ color:#2563eb; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; opacity:.75; }
+.k2{ color:#1d4ed8; font-weight:800; font-size:9.5px; letter-spacing:1.5px; white-space:nowrap; }   /* 260905：原 #2563eb 叠 opacity .75 只有 3.31:1，不过 AA */
 .k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
 main > .ring{ max-width:none; padding:0; margin:0 0 11px; }   /* 四钮进了 main，跟段同宽 */
 main{ padding-top:22px; }
@@ -433,7 +432,7 @@ main{ padding-top:22px; }
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span></summary>
-  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span><div class="kb"><p class="lead2"><b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p></div></div><details class="sub" open id="s3-1"><summary><span class="no">3.1</span><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open id="s3-2"><summary><span class="no">3.2</span><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 11:47）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open id="s3-3"><summary><span class="no">3.3</span><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><div class="keypt"><span class="tag title">要点</span><span class="kt">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span><div class="kb"><p class="lead2"><b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p></div></div><details class="sub" open id="s3-1"><summary><span class="no">3.1</span><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open id="s3-2"><summary><span class="no">3.2</span><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 12:19）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open id="s3-3"><summary><span class="no">3.3</span><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -443,7 +442,7 @@ main{ padding-top:22px; }
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open id="s3-4"><summary><span class="no">3.4</span><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 11:47）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open id="s3-4"><summary><span class="no">3.4</span><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 12:19）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
@@ -1042,6 +1041,7 @@ main{ padding-top:22px; }
     var h=decodeURIComponent(location.hash.replace('#',''));
     if(!h) return;
     if(/^s[0-9]+$/.test(h)){ return openAndScroll(document.getElementById(h)); }
+    if(/^s[0-9]+-[0-9]+$/.test(h)){ var sub=document.getElementById(h); return sub && openAndScroll(sub); }   // 260905：目录点小节写的是 #sN-k，刷新后也要认
     return gotoKey(h);
   }
   handleHash();
