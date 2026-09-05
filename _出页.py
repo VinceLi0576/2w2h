@@ -162,7 +162,7 @@ HERO_CSS = """
 /* 抬头 ＝ 跟四钮同一族的卡片（`260905` 老徐：参考四钮那张，整体色调排版一致）：
    白底 · 细边 · 圆角 · 顶上一道色边（标题蓝）· 小标签字距拉开 · 正文灰。里面仍是「左标签列 ＋ 右内容列」四行对齐 */
 .hero{ background:transparent; border-bottom:0; text-align:left; padding:22px 22px 0; }
-.hero .hgrid{ max-width:780px; margin:0 auto; box-sizing:border-box; background:var(--card); border:1px solid var(--line);
+.hero .hgrid{ max-width:736px; margin:0 auto; box-sizing:border-box; background:var(--card);   /* 736 ＝ 780 − 四钮／正文两侧各 22 的内边距，边缘对齐 */ border:1px solid var(--line);
   border-top:3px solid #2563eb; border-radius:12px; padding:16px 20px 14px; box-shadow:0 1px 3px rgba(0,0,0,.03);
   display:grid; grid-template-columns:52px minmax(0,1fr); column-gap:14px; row-gap:10px; align-items:baseline; }
 /* [两字] 标签：跟四钮上「WHY · 第 1 段」同一套字（10.5px · 800 · 字距 1.5） */
