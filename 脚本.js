@@ -8,6 +8,7 @@
     steps.forEach(function(d){ d.classList.remove('cur'); });
     if(idx >= 0 && steps[idx] && steps[idx].open) steps[idx].classList.add('cur');
     curEl.textContent = idx >= 0 ? (idx + 1) : '–';
+    document.dispatchEvent(new CustomEvent('secchange', {detail: idx}));   // 侧边目录靠它高亮
   }
   function goto(i, scroll){
     if(i < 0 || i >= steps.length) return;
@@ -48,6 +49,7 @@
     if(e.key === 'ArrowRight'){ e.preventDefault(); goto(idx + 1); }
     if(e.key === 'ArrowLeft'){ e.preventDefault(); goto(idx - 1); }
   });
+  window.__goto = goto; window.__idx = function(){ return idx; };   // 侧边目录用
   var h = location.hash.replace('#','');
   var hi = h ? steps.indexOf(document.getElementById(h)) : -1;
   if(hi !== -1) goto(hi, true); else goto(0, false);
@@ -67,4 +69,62 @@
   zo.addEventListener('click', function(){ if(z>80){ z-=10; apply(); } });
   apply();
   window.__zoom=function(){ return z; };
+})();
+/* 侧边目录（`260905` 老徐：参考飞书／语雀，多段内容要能从侧边看到全部框架）
+   宽屏（≥1180）默认常驻左侧，☰ 可收起并记住；窄屏是抽屉，☰ 拉出、点项或点外面收回。
+   目录从 DOM 现算（段：num·tag·标题；小节：details.sub 的名字），🚫 不在生成器里另拼一份 */
+(function(){
+  var page=document.getElementById('page'); if(!page) return;
+  var secs=Array.prototype.slice.call(document.querySelectorAll('details.sec')); if(!secs.length) return;
+  var nav=document.createElement('nav'); nav.className='toc'; nav.id='toc';
+  var head=document.createElement('div'); head.className='toc-h'; head.textContent='目录'; nav.appendChild(head);
+  var ol=document.createElement('ol');
+  function closeDrawer(){ document.body.classList.remove('toc-drawer'); }
+  secs.forEach(function(d,i){
+    var li=document.createElement('li'); li.dataset.i=i;
+    var a=document.createElement('a'); a.href='#'+d.id;
+    var tag=d.querySelector('summary .tag'), ti=d.querySelector('summary .ti');
+    if(tag){ var t=document.createElement('span'); t.className=tag.className; t.textContent=tag.textContent; a.appendChild(t); }
+    a.appendChild(document.createTextNode((tag?' ':'')+(ti?ti.textContent:d.id)));
+    a.addEventListener('click', function(e){ e.preventDefault(); window.__goto ? window.__goto(i) : (d.open=true, d.scrollIntoView()); closeDrawer(); });
+    li.appendChild(a);
+    var subs=d.querySelectorAll('details.sub');
+    if(subs.length){
+      var ol2=document.createElement('ol');
+      subs.forEach(function(sd,j){
+        if(!sd.id) sd.id=d.id+'-'+(j+1);
+        var li2=document.createElement('li'), a2=document.createElement('a'); a2.href='#'+sd.id;
+        var nm=sd.querySelector('summary .nm'); a2.textContent=nm?nm.textContent:sd.id;
+        a2.addEventListener('click', function(e){
+          e.preventDefault();
+          if(window.__goto) window.__goto(i,false); d.open=true; sd.open=true;
+          sd.scrollIntoView({behavior:'smooth', block:'start'});
+          if(history.replaceState) history.replaceState(null,'','#'+sd.id);
+          closeDrawer();
+        });
+        li2.appendChild(a2); ol2.appendChild(li2);
+      });
+      li.appendChild(ol2);
+    }
+    ol.appendChild(li);
+  });
+  nav.appendChild(ol);
+  document.body.insertBefore(nav, page);
+  function hl(i){ Array.prototype.forEach.call(ol.children, function(li){ li.classList.toggle('cur', +li.dataset.i===i); }); }
+  document.addEventListener('secchange', function(e){ hl(e.detail); });
+  if(window.__idx) hl(window.__idx());
+  var KEY='2w2h-toc', wide=window.matchMedia('(min-width:1180px)'), on=true;
+  try{ var v=localStorage.getItem(KEY); if(v!==null) on=(v==='1'); }catch(e){}
+  function render(){ document.body.classList.toggle('toc-on', wide.matches && on); if(wide.matches) closeDrawer(); }
+  var tb=document.getElementById('toctoggle');
+  if(tb) tb.addEventListener('click', function(){
+    if(wide.matches){ on=!on; try{ localStorage.setItem(KEY, on?'1':'0'); }catch(e){} render(); }
+    else{ document.body.classList.toggle('toc-drawer'); }
+  });
+  document.addEventListener('click', function(e){
+    if(document.body.classList.contains('toc-drawer') && !nav.contains(e.target) && !(tb && tb.contains(e.target))) closeDrawer();
+  });
+  (wide.addEventListener ? wide.addEventListener('change', render) : wide.addListener(render));
+  render();
+  window.__toc=function(){ return {items:ol.children.length, on:document.body.classList.contains('toc-on'), drawer:document.body.classList.contains('toc-drawer')}; };
 })();

@@ -186,3 +186,22 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
   .ctl{ top:6px; right:6px; padding:2px 3px; } .ctl button{ width:32px; height:32px; }
   .ctl .q input{ width:128px; } .hero{ padding-top:62px; }
 }
+
+/* ── 侧边目录（`260905` 老徐：参考飞书／语雀，从侧边看到全部框架） */
+.toc{ display:none; position:fixed; top:0; left:0; bottom:0; width:240px; overflow:auto; box-sizing:border-box;
+  padding:18px 12px 30px 16px; background:var(--surface); border-right:1px solid var(--line); z-index:55; font-size:13px; }
+.toc .toc-h{ font-size:11px; letter-spacing:1.5px; color:var(--muted); font-weight:800; margin:0 0 10px 8px; }
+.toc ol{ list-style:none; margin:0; padding:0; }
+.toc > ol > li{ margin:0 0 4px; }
+.toc a{ display:block; color:var(--ink); text-decoration:none; padding:6px 8px; border-radius:8px; line-height:1.45;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.toc a:hover{ background:var(--acc-bg); }
+.toc > ol > li > a{ font-weight:700; }
+.toc li.cur > a{ background:var(--acc-bg); color:var(--acc-d); }
+.toc .tag{ display:inline-block; color:#fff; font-size:9px; font-weight:800; letter-spacing:1px; padding:1px 5px; border-radius:4px; vertical-align:1px; }
+.toc ol ol{ margin:1px 0 6px 12px; padding-left:6px; border-left:2px solid var(--line); }
+.toc ol ol a{ font-size:12.3px; font-weight:500; color:var(--ink-soft); padding:4px 8px; }
+body.toc-on .toc{ display:block; }
+body.toc-on #page{ padding-left:240px; }
+body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
+@media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
