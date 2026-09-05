@@ -25,6 +25,11 @@
   var notes=store.load();
 
   /* 这一轮（当前版本）的下一个编号。递增不复用 —— 已解决的也占着号，🚫 别让新的顶上去 */
+  /* 圆圈里那个数字 ＝ 编号末段（2.9.03 → 3）。正文黄线后面和卡片左上角用同一个，一眼对得上 */
+  function seq(a){
+    var m=(a.no||'').match(/\.(\d+)$/);
+    return m ? String(parseInt(m[1],10)) : String(notes.indexOf(a)+1);
+  }
   function nextNo(){
     var base=(VER||'v?').replace(/^v/,''), max=0;
     notes.forEach(function(a){
@@ -171,7 +176,7 @@
     // 已解决 ⇒ 折成一行；点标题能展开看回内容
     if(a.resolved){
       return '<div class="acard done" data-id="'+a.id+'">'
-        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
+        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
         +'<span class="acard-act">'
         +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 议题">↗</a>':'')
         +'<button type="button" data-act="res" title="重开">↩</button>'
@@ -180,7 +185,7 @@
         +'<div class="acard-t">'+esc(a.text)+'</div></div></div>';
     }
     return '<div class="acard" data-id="'+a.id+'">'
-      +'<div class="acard-w">'+esc(a.where)+'<span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
+      +'<div class="acard-w">'+esc(a.where)+'<span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
       +'<span class="acard-act">'
       +'<button type="button" data-act="edit" title="改这条批注">✎</button>'
       +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="已发到 GitHub，点开看议题">↗</a>'
@@ -219,6 +224,12 @@
       a._lost=!marks;
       if(!marks) return;
       marks.forEach(function(m){ m.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, m); }); });
+      // 黄线末尾挂一个绿圆圈序号 —— 跟右边卡片上那个是同一个数（260905 老徐：标记明显一些）
+      var last=marks[marks.length-1];
+      var dot=document.createElement('sup'); dot.className='anno-dot inline'; dot.textContent=seq(a);
+      dot.title='第 '+(a.no||seq(a))+' 条批注 · 点看内容';
+      dot.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, last); });
+      last.appendChild(dot);
       if(room){
         var first=marks[0]; var vis=first.getClientRects().length>0;
         if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
