@@ -245,34 +245,30 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .arail .acard{ position:absolute; width:260px; }
 .acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--anno-mine);
   border-radius:10px; padding:9px 11px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
-.acard .acard-w{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--acc-d); font-weight:700;
-  margin-bottom:6px; white-space:nowrap; overflow:hidden; }
-.acard .acard-w > :first-child{ overflow:hidden; text-overflow:ellipsis; }
-.acard .acard-v{ color:var(--muted); font-weight:600; flex:none; }
-.acard .acard-no{ flex:none; font-size:10px; font-weight:700; color:var(--muted); letter-spacing:.3px; }
-/* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数（`260905` 老徐：标记明显一些） */
-.anno-dot{ flex:none; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%;
-  background:var(--anno-mine); color:#fff; font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
-.anno-dot.inline{ position:relative; top:-.4em; margin-left:3px; width:17px; height:17px; font-size:10px;
-  cursor:pointer; vertical-align:baseline; box-shadow:0 1px 3px rgba(0,0,0,.18); }
-.anno-dot.inline:hover{ filter:brightness(1.1); }
-.acard.done .anno-dot{ background:var(--muted); }
-.acard .acard-when{ color:var(--muted); font-weight:600; font-size:10.5px; flex:none; }
-.acard .acard-act{ margin-left:auto; display:flex; align-items:center; gap:1px; flex:none; }
-.acard .acard-act button, .acard .acard-act a{ font:700 12px/1 inherit; color:var(--muted); background:transparent;
-  border:0; border-radius:6px; width:22px; height:22px; display:grid; place-items:center; cursor:pointer; text-decoration:none; }
-.acard .acard-act button:hover, .acard .acard-act a:hover{ background:var(--acc-bg); color:var(--acc-d); }
-.acard .acard-act button:disabled{ color:var(--line); cursor:default; background:transparent; }
+.acard .acard-w{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--acc-d); font-weight:800; margin-bottom:3px; }
+.acard .acard-where{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.acard .acard-m{ display:flex; align-items:center; gap:8px; margin:0 0 7px 26px; }
+.acard .acard-v, .acard .acard-no{ color:var(--muted); font-weight:700; font-size:10.5px; letter-spacing:.3px; }
+/* 操作一律一个字的绿圆圈，独立一行、永远看得见（260905 老徐：增删改查一个字，✎⇧✓✕ 看不懂） */
+.acard .acard-act{ display:flex; align-items:center; gap:7px; margin-top:9px; }
+.acard .acard-act .op{ width:26px; height:26px; border-radius:50%; border:0; padding:0; display:grid; place-items:center;
+  font:800 12px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:#fff; background:var(--anno-mine);
+  cursor:pointer; text-decoration:none; box-shadow:0 1px 2px rgba(0,0,0,.12); }
+.acard .acard-act .op:hover{ filter:brightness(1.1); transform:translateY(-1px); }
+.acard .acard-act .op[data-act=del]{ background:var(--muted); }
+.acard .acard-act .op:disabled{ background:var(--line); color:var(--muted); cursor:default; }
+.acard .acard-act .op:hover{ transition:.12s; }
 .acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word;
   border-left:3px solid var(--anno-mine); background:rgba(47,158,94,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
 .acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
-/* 已解决 ⇒ 一行，灰、无引用无正文；点标题展开看回内容 */
-.acard.done{ border-left-color:var(--line); background:var(--surface); padding:6px 10px; }
-.acard.done .acard-w{ margin:0; color:var(--muted); cursor:pointer; }
-.acard.done .acard-act{ opacity:0; transition:.15s; }
-.acard.done:hover .acard-act, .acard.done.show .acard-act{ opacity:1; }
-.acard.done .acard-more{ display:none; padding-top:6px; }
+/* 已解决 ⇒ 折起，只剩头两行与两个小操作；点头两行展开看回内容 */
+.acard.done{ border-left-color:var(--line); background:var(--surface); }
+.acard.done .acard-w, .acard.done .acard-m{ color:var(--muted); cursor:pointer; }
+.acard.done .anno-dot{ background:var(--muted); }
+.acard.done .acard-more{ display:none; }
 .acard.done.show .acard-more{ display:block; }
+.acard.done .acard-act{ margin-top:6px; }
+.acard.done .acard-act .op{ width:22px; height:22px; font-size:11px; background:var(--muted); }
 .apop{ position:fixed; z-index:70; width:330px; max-width:calc(100vw - 16px); }
 .apop[hidden]{ display:none; }
 .apop .acard{ box-shadow:0 10px 30px rgba(0,0,0,.16); }
@@ -407,7 +403,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 10:07）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 10:17）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -417,7 +413,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 10:07）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 10:17）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
@@ -655,6 +651,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
     return marks.reverse();
   }
   function unwrapAll(){
+    document.querySelectorAll('sup.anno-dot.inline').forEach(function(d){ d.parentNode && d.parentNode.removeChild(d); });
     document.querySelectorAll('mark.anno').forEach(function(m){ var p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
   }
 
@@ -751,27 +748,25 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
       + esc(when(a.created)) + (a.edited?' ✎':'') + '</span>';
   }
   function cardHTML(a){
-    // 已解决 ⇒ 折成一行；点标题能展开看回内容
+    var head = '<div class="acard-w"><span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-where">'+esc(a.where)+'</span></div>'
+             + '<div class="acard-m"><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)+'</div>';
+    var body = '<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
+             + '<div class="acard-t">'+esc(a.text)+'</div>';
+    var look = a.remote ? '<a class="op" href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 上那条议题">看</a>' : '';
+    // 操作一律一个字的绿圆圈（260905 老徐：增删改查之类的一个字就行，✎⇧✓✕ 看不懂）
     if(a.resolved){
-      return '<div class="acard done" data-id="'+a.id+'">'
-        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
-        +'<span class="acard-act">'
-        +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 议题">↗</a>':'')
-        +'<button type="button" data-act="res" title="重开">↩</button>'
-        +'<button type="button" data-act="del" title="删除">✕</button></span></div>'
-        +'<div class="acard-more"><blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
-        +'<div class="acard-t">'+esc(a.text)+'</div></div></div>';
+      return '<div class="acard done" data-id="'+a.id+'">'+head
+        +'<div class="acard-more">'+body+'</div>'
+        +'<div class="acard-act">'+look
+        +'<button type="button" class="op" data-act="res" title="重新打开这条">开</button>'
+        +'<button type="button" class="op" data-act="del" title="删掉这条">删</button></div></div>';
     }
-    return '<div class="acard" data-id="'+a.id+'">'
-      +'<div class="acard-w">'+esc(a.where)+'<span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
-      +'<span class="acard-act">'
-      +'<button type="button" data-act="edit" title="改这条批注">✎</button>'
-      +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="已发到 GitHub，点开看议题">↗</a>'
-                :'<button type="button" data-act="gh" title="发到 GitHub">⇧</button>')
-      +'<button type="button" data-act="res" title="标为已解决">✓</button>'
-      +'<button type="button" data-act="del" title="删除">✕</button></span></div>'
-      +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
-      +'<div class="acard-t">'+esc(a.text)+'</div></div>';
+    return '<div class="acard" data-id="'+a.id+'">'+head+body
+      +'<div class="acard-act">'
+      +'<button type="button" class="op" data-act="edit" title="改这条批注的内容">改</button>'
+      +(a.remote ? look : '<button type="button" class="op" data-act="gh" title="发到 GitHub 存起来">传</button>')
+      +'<button type="button" class="op" data-act="res" title="标为已解决，页面上就不显示了">解</button>'
+      +'<button type="button" class="op" data-act="del" title="删掉这条">删</button></div></div>';
   }
   var GAP=14, MIN=150;   // 正文到卡片的间距 · 卡片最窄（再窄中文一行放不下几个字，不如退回点黄线弹出）
   function railRoom(){
@@ -793,7 +788,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   function render(){
     unwrapAll(); rail.innerHTML='';
     var placed=[], room=railRoom();
-    notes.forEach(function(a){
+    notes.forEach(function(a){ try{
       // 🔴 260905 老徐：解决了就从页面上消失 —— 批注本来就是要求改文档，改完原文多半已经没了，
       //    再拿黄线去锚它只会一直标「原文找不到了」。要回看去 💬 列表里翻。
       if(a.resolved){ a._lost=false; return; }
@@ -818,7 +813,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
         el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, room)/zoom()+'px'; rail.appendChild(el);
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
-    });
+    }catch(err){ a._lost=true; if(window.console) console.warn('批注渲染失败', a.id, err); } });
 
     // 💬 列表：未解决在上，已解决收进折叠 —— 它现在是回看已解决批注的唯一地方
     var list=document.querySelector('.note .note-list');
@@ -865,7 +860,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
     }
   }
   rail.addEventListener('click', act); pop.addEventListener('click', act);
-  document.addEventListener('click', function(e){ var w=e.target.closest&&e.target.closest('.acard.done .acard-w'); if(w&&!e.target.closest('button,a')) w.parentNode.classList.toggle('show'); });
+  document.addEventListener('click', function(e){ var w=e.target.closest&&e.target.closest('.acard.done .acard-w, .acard.done .acard-m'); if(w&&!e.target.closest('button,a')) w.parentNode.classList.toggle('show'); });
   document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('.note .note-list')) act(e); });
 
   /* ── 发到 GitHub（🔴 只在点了按钮时；走 /api/note，站上没配钥匙会回明白话） */
@@ -874,8 +869,8 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
     fetch('/api/note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:PAGE, anchor:a.anchor, where:a.where+' · '+a.version, quote:a.exact, text:a.text+'\n\n<!-- anno '+JSON.stringify({id:a.id,version:a.version,anchor:a.anchor,prefix:a.prefix,suffix:a.suffix})+' -->'})})
       .then(function(r){ return r.json(); }).then(function(j){
         if(j.ok){ a.remote=j.url; store.save(notes); render(); }
-        else{ b.disabled=false; b.textContent='⇧'; alert('没发出去：'+(j.error||'未知错误')); }
-      }).catch(function(e){ b.disabled=false; b.textContent='⇧'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
+        else{ b.disabled=false; b.textContent='传'; alert('没发出去：'+(j.error||'未知错误')); }
+      }).catch(function(e){ b.disabled=false; b.textContent='传'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
   }
 
   /* ── 竖条里的 💬：批注列表面板 */

@@ -77,6 +77,7 @@
     return marks.reverse();
   }
   function unwrapAll(){
+    document.querySelectorAll('sup.anno-dot.inline').forEach(function(d){ d.parentNode && d.parentNode.removeChild(d); });
     document.querySelectorAll('mark.anno').forEach(function(m){ var p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
   }
 
@@ -173,27 +174,25 @@
       + esc(when(a.created)) + (a.edited?' ✎':'') + '</span>';
   }
   function cardHTML(a){
-    // 已解决 ⇒ 折成一行；点标题能展开看回内容
+    var head = '<div class="acard-w"><span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-where">'+esc(a.where)+'</span></div>'
+             + '<div class="acard-m"><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)+'</div>';
+    var body = '<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
+             + '<div class="acard-t">'+esc(a.text)+'</div>';
+    var look = a.remote ? '<a class="op" href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 上那条议题">看</a>' : '';
+    // 操作一律一个字的绿圆圈（260905 老徐：增删改查之类的一个字就行，✎⇧✓✕ 看不懂）
     if(a.resolved){
-      return '<div class="acard done" data-id="'+a.id+'">'
-        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
-        +'<span class="acard-act">'
-        +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 议题">↗</a>':'')
-        +'<button type="button" data-act="res" title="重开">↩</button>'
-        +'<button type="button" data-act="del" title="删除">✕</button></span></div>'
-        +'<div class="acard-more"><blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
-        +'<div class="acard-t">'+esc(a.text)+'</div></div></div>';
+      return '<div class="acard done" data-id="'+a.id+'">'+head
+        +'<div class="acard-more">'+body+'</div>'
+        +'<div class="acard-act">'+look
+        +'<button type="button" class="op" data-act="res" title="重新打开这条">开</button>'
+        +'<button type="button" class="op" data-act="del" title="删掉这条">删</button></div></div>';
     }
-    return '<div class="acard" data-id="'+a.id+'">'
-      +'<div class="acard-w">'+esc(a.where)+'<span class="anno-dot">'+esc(seq(a))+'</span><span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
-      +'<span class="acard-act">'
-      +'<button type="button" data-act="edit" title="改这条批注">✎</button>'
-      +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="已发到 GitHub，点开看议题">↗</a>'
-                :'<button type="button" data-act="gh" title="发到 GitHub">⇧</button>')
-      +'<button type="button" data-act="res" title="标为已解决">✓</button>'
-      +'<button type="button" data-act="del" title="删除">✕</button></span></div>'
-      +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
-      +'<div class="acard-t">'+esc(a.text)+'</div></div>';
+    return '<div class="acard" data-id="'+a.id+'">'+head+body
+      +'<div class="acard-act">'
+      +'<button type="button" class="op" data-act="edit" title="改这条批注的内容">改</button>'
+      +(a.remote ? look : '<button type="button" class="op" data-act="gh" title="发到 GitHub 存起来">传</button>')
+      +'<button type="button" class="op" data-act="res" title="标为已解决，页面上就不显示了">解</button>'
+      +'<button type="button" class="op" data-act="del" title="删掉这条">删</button></div></div>';
   }
   var GAP=14, MIN=150;   // 正文到卡片的间距 · 卡片最窄（再窄中文一行放不下几个字，不如退回点黄线弹出）
   function railRoom(){
@@ -215,7 +214,7 @@
   function render(){
     unwrapAll(); rail.innerHTML='';
     var placed=[], room=railRoom();
-    notes.forEach(function(a){
+    notes.forEach(function(a){ try{
       // 🔴 260905 老徐：解决了就从页面上消失 —— 批注本来就是要求改文档，改完原文多半已经没了，
       //    再拿黄线去锚它只会一直标「原文找不到了」。要回看去 💬 列表里翻。
       if(a.resolved){ a._lost=false; return; }
@@ -240,7 +239,7 @@
         el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, room)/zoom()+'px'; rail.appendChild(el);
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
-    });
+    }catch(err){ a._lost=true; if(window.console) console.warn('批注渲染失败', a.id, err); } });
 
     // 💬 列表：未解决在上，已解决收进折叠 —— 它现在是回看已解决批注的唯一地方
     var list=document.querySelector('.note .note-list');
@@ -287,7 +286,7 @@
     }
   }
   rail.addEventListener('click', act); pop.addEventListener('click', act);
-  document.addEventListener('click', function(e){ var w=e.target.closest&&e.target.closest('.acard.done .acard-w'); if(w&&!e.target.closest('button,a')) w.parentNode.classList.toggle('show'); });
+  document.addEventListener('click', function(e){ var w=e.target.closest&&e.target.closest('.acard.done .acard-w, .acard.done .acard-m'); if(w&&!e.target.closest('button,a')) w.parentNode.classList.toggle('show'); });
   document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('.note .note-list')) act(e); });
 
   /* ── 发到 GitHub（🔴 只在点了按钮时；走 /api/note，站上没配钥匙会回明白话） */
@@ -296,8 +295,8 @@
     fetch('/api/note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:PAGE, anchor:a.anchor, where:a.where+' · '+a.version, quote:a.exact, text:a.text+'\n\n<!-- anno '+JSON.stringify({id:a.id,version:a.version,anchor:a.anchor,prefix:a.prefix,suffix:a.suffix})+' -->'})})
       .then(function(r){ return r.json(); }).then(function(j){
         if(j.ok){ a.remote=j.url; store.save(notes); render(); }
-        else{ b.disabled=false; b.textContent='⇧'; alert('没发出去：'+(j.error||'未知错误')); }
-      }).catch(function(e){ b.disabled=false; b.textContent='⇧'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
+        else{ b.disabled=false; b.textContent='传'; alert('没发出去：'+(j.error||'未知错误')); }
+      }).catch(function(e){ b.disabled=false; b.textContent='传'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
   }
 
   /* ── 竖条里的 💬：批注列表面板 */

@@ -236,34 +236,30 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .arail .acard{ position:absolute; width:260px; }
 .acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--anno-mine);
   border-radius:10px; padding:9px 11px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
-.acard .acard-w{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--acc-d); font-weight:700;
-  margin-bottom:6px; white-space:nowrap; overflow:hidden; }
-.acard .acard-w > :first-child{ overflow:hidden; text-overflow:ellipsis; }
-.acard .acard-v{ color:var(--muted); font-weight:600; flex:none; }
-.acard .acard-no{ flex:none; font-size:10px; font-weight:700; color:var(--muted); letter-spacing:.3px; }
-/* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数（`260905` 老徐：标记明显一些） */
-.anno-dot{ flex:none; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%;
-  background:var(--anno-mine); color:#fff; font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
-.anno-dot.inline{ position:relative; top:-.4em; margin-left:3px; width:17px; height:17px; font-size:10px;
-  cursor:pointer; vertical-align:baseline; box-shadow:0 1px 3px rgba(0,0,0,.18); }
-.anno-dot.inline:hover{ filter:brightness(1.1); }
-.acard.done .anno-dot{ background:var(--muted); }
-.acard .acard-when{ color:var(--muted); font-weight:600; font-size:10.5px; flex:none; }
-.acard .acard-act{ margin-left:auto; display:flex; align-items:center; gap:1px; flex:none; }
-.acard .acard-act button, .acard .acard-act a{ font:700 12px/1 inherit; color:var(--muted); background:transparent;
-  border:0; border-radius:6px; width:22px; height:22px; display:grid; place-items:center; cursor:pointer; text-decoration:none; }
-.acard .acard-act button:hover, .acard .acard-act a:hover{ background:var(--acc-bg); color:var(--acc-d); }
-.acard .acard-act button:disabled{ color:var(--line); cursor:default; background:transparent; }
+.acard .acard-w{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--acc-d); font-weight:800; margin-bottom:3px; }
+.acard .acard-where{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.acard .acard-m{ display:flex; align-items:center; gap:8px; margin:0 0 7px 26px; }
+.acard .acard-v, .acard .acard-no{ color:var(--muted); font-weight:700; font-size:10.5px; letter-spacing:.3px; }
+/* 操作一律一个字的绿圆圈，独立一行、永远看得见（260905 老徐：增删改查一个字，✎⇧✓✕ 看不懂） */
+.acard .acard-act{ display:flex; align-items:center; gap:7px; margin-top:9px; }
+.acard .acard-act .op{ width:26px; height:26px; border-radius:50%; border:0; padding:0; display:grid; place-items:center;
+  font:800 12px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:#fff; background:var(--anno-mine);
+  cursor:pointer; text-decoration:none; box-shadow:0 1px 2px rgba(0,0,0,.12); }
+.acard .acard-act .op:hover{ filter:brightness(1.1); transform:translateY(-1px); }
+.acard .acard-act .op[data-act=del]{ background:var(--muted); }
+.acard .acard-act .op:disabled{ background:var(--line); color:var(--muted); cursor:default; }
+.acard .acard-act .op:hover{ transition:.12s; }
 .acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word;
   border-left:3px solid var(--anno-mine); background:rgba(47,158,94,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
 .acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
-/* 已解决 ⇒ 一行，灰、无引用无正文；点标题展开看回内容 */
-.acard.done{ border-left-color:var(--line); background:var(--surface); padding:6px 10px; }
-.acard.done .acard-w{ margin:0; color:var(--muted); cursor:pointer; }
-.acard.done .acard-act{ opacity:0; transition:.15s; }
-.acard.done:hover .acard-act, .acard.done.show .acard-act{ opacity:1; }
-.acard.done .acard-more{ display:none; padding-top:6px; }
+/* 已解决 ⇒ 折起，只剩头两行与两个小操作；点头两行展开看回内容 */
+.acard.done{ border-left-color:var(--line); background:var(--surface); }
+.acard.done .acard-w, .acard.done .acard-m{ color:var(--muted); cursor:pointer; }
+.acard.done .anno-dot{ background:var(--muted); }
+.acard.done .acard-more{ display:none; }
 .acard.done.show .acard-more{ display:block; }
+.acard.done .acard-act{ margin-top:6px; }
+.acard.done .acard-act .op{ width:22px; height:22px; font-size:11px; background:var(--muted); }
 .apop{ position:fixed; z-index:70; width:330px; max-width:calc(100vw - 16px); }
 .apop[hidden]{ display:none; }
 .apop .acard{ box-shadow:0 10px 30px rgba(0,0,0,.16); }
