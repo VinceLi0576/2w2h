@@ -158,12 +158,22 @@
   }
   /* 右边到底还剩多少能摆卡：🔴 必须扣掉右侧竖条（260905 实撞：没扣，卡片被压在竖条下面、文字被切）。
      竖条位置现量，别写死 —— 它自己会因缩放和窄屏变宽窄。 */
+  var GAP=14, MIN=150;   // 正文到卡片的间距 · 卡片最窄（再窄中文一行放不下几个字，不如退回点黄线弹出）
   function railRoom(){
     if(document.body.classList.contains('anno-off')) return 0;
     var ctl=document.querySelector('.ctl');
-    var right = ctl ? ctl.getBoundingClientRect().left - 12 : window.innerWidth - 12;
-    var room = right - main.getBoundingClientRect().right - 40;   // 40 ＝ 离正文那一口气
-    return room>=180 ? room : 0;
+    var right = ctl ? ctl.getBoundingClientRect().left - 8 : window.innerWidth - 12;
+    var room = right - main.getBoundingClientRect().right - GAP;
+    return room>=MIN ? room : 0;
+  }
+  /* 地方够不够摆卡，跟「目录开着没」直接相关 —— 不够时把这句话告诉他，别让卡片默默消失（260905 实撞：
+     他窗口 1382＋缩放 110%，扣掉竖条只剩 149，卡片一声不响就没了） */
+  function roomHint(){
+    if(railRoom()) return '';
+    var ctl=document.querySelector('.ctl');
+    var right=(ctl?ctl.getBoundingClientRect().left-8:window.innerWidth-12)-main.getBoundingClientRect().right-GAP;
+    if(document.body.classList.contains('toc-on')) return '（右边只剩 '+Math.round(right)+'px，收起左边目录就摆得下）';
+    return '（右边只剩 '+Math.round(right)+'px，窗口再宽一点就摆得下）';
   }
   function render(){
     unwrapAll(); rail.innerHTML='';
@@ -180,7 +190,7 @@
         if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
         var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
         // 260905 老徐：卡片要往外一点 —— 离正文 40（原 24），右边至少留 12
-        var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+40;
+        var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+GAP;
         placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
         var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
         el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, room)/zoom()+'px'; rail.appendChild(el);
@@ -189,9 +199,11 @@
     });
     var list=document.querySelector('.note .note-list'); if(list) list.innerHTML=notes.length?notes.map(function(a){ return '<div class="acard'+(a.resolved?' done':'')+' inlist" data-id="'+a.id+'">'+ (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）</div>':'') + cardHTML(a).replace(/^<div class="acard[^>]*">|<\/div>$/g,'')+'</div>'; }).join(''):'<div class="note-empty">还没有批注。选中一段字，点冒出来的「💬 批注」。</div>';
     var off=document.body.classList.contains('anno-off'), n=notes.filter(function(a){return !a._lost;}).length;
-    grip.hidden=!(n && (off || railRoom()));
-    grip.textContent=off?('批注 '+n+' »'):'«';
-    grip.title=off?'展开右侧批注栏':'收起右侧批注栏';
+    var hint=roomHint();
+    if(off){ grip.textContent='批注 '+n+' »'; grip.title='展开右侧批注栏'; }
+    else if(hint){ grip.textContent='批注 '+n+' · 点黄线看'; grip.title='摆不下卡片 '+hint; }
+    else{ grip.textContent='«'; grip.title='收起右侧批注栏'; }
+    grip.hidden=!n;
         var cnt=document.getElementById('notecnt'); if(cnt){ var open=notes.filter(function(a){return !a.resolved;}).length; cnt.textContent=open||''; cnt.hidden=!open; }
   }
   function showPop(a, m){
