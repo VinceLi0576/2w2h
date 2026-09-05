@@ -76,17 +76,23 @@ def three(md_body):
     return '<ol class="three">%s</ol>' % "".join(items) if items else ""
 
 
-def body_html(md_body, first_is_lead=True, warn=True):
-    """普通段正文：复用 render()，把 H3 变成 details.sub，首个 <p> 提成 p.lead2。"""
-    out, sub, done_lead = [], None, not first_is_lead
+def body_html(md_body, first_is_lead=True, warn=True, secnum=None, subline=None):
+    """普通段正文：复用 render()，把 H3 变成 details.sub（自动编号 N.k、带 id=sN-k），首个 <p> 提成 p.lead2。
+    `260905` 老徐：段头只留 序号·档位·标题，副标（subline）下移进正文第一行；小节要像 0.1／0.2 那样有号。"""
+    out, sub, done_lead, k = [], None, not first_is_lead, 0
+    if subline:
+        out.append('<p class="secsub">%s</p>' % inline(subline))
     for b in render("\n" + md_body):
         if b.startswith("§§H2§§"):
             continue
         if b.startswith("§§H3§§"):
             if sub:
                 out.append(sub + "</div></details>")
-            sub = ('<details class="sub" open><summary><span class="nm">%s</span></summary>'
-                   '<div class="body">' % b[6:])
+            k += 1
+            no = ('<span class="no">%s.%d</span>' % (secnum, k)) if secnum is not None else ''
+            sid = (' id="s%s-%d"' % (secnum, k)) if secnum is not None else ''
+            sub = ('<details class="sub" open%s><summary>%s<span class="nm">%s</span></summary>'
+                   '<div class="body">' % (sid, no, b[6:]))
             continue
         if not done_lead:
             done_lead = True
@@ -161,6 +167,7 @@ HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
 /* 第 0 段（`260905` 老徐：抬头跟下面的段长一样 —— 0 [标题] 名字 · 0.1 导语 · 0.2 要点 · 右下角 项目 › 文件夹 · 版本） */
 .tag.title{ background:#2563eb; }
+.secsub{ margin:4px 0 10px; font-size:12.5px; color:var(--muted); line-height:1.7; }   /* 段头下移下来的副标 */
 details.sec.s0 > summary .ti{ font-size:19px; }
 details.sec.s0 .lead2{ font-weight:500; color:var(--ink-soft); font-size:14.5px; }
 details.sec.s0 .three{ margin:2px 0 0; }
@@ -398,7 +405,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
                         '<div class="d">%s</div></button>'
                         % (wcls, sid, TAGTXT.get(tag, tag), n,
                            inline(t.strip()), inline(d.strip())))
-        inner = three(s["md"]) if meta.get("tldr") else body_html(s["md"], warn=(tag in TAGCLS))
+        inner = three(s["md"]) if meta.get("tldr") else body_html(s["md"], warn=(tag in TAGCLS), secnum=n, subline=meta.get("sub"))
         # 🥇 `260824` 修一个真缺陷（`ops-问题对齐` 报，老徐的用法暴露的）：
         #    `id="sN"` 是**位置编号**，插一段后面全漂 ⇒ 他收藏的 #s3 回来是另一段，**而且完全静默**。
         # 🔑 病因不是"编号会漂"，是**同一个 id 担了两个职责**：
@@ -414,7 +421,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             '%s<details class="sec" id="%s"%s%s>\n  <summary><span class="num">%d</span>%s'
             '<span class="ti">%s</span>%s</summary>\n  <div class="body">%s</div>\n</details>'
             % (anchor, sid, (' data-key="%s"' % esc(key)) if key else '',
-               '', n, tagspan, inline(s["title"]), subspan, inner))   # 260905 起默认全收起：抬头三行已把结论给了
+               '', n, tagspan, inline(s["title"]), '', inner))   # 260905：段头只留 序号·档位·标题，副标下移进正文
 
     if nokey:
         print("⚠️ 这些段没有稳定锚（md 里加 `key=xxx`，否则只能靠会漂的 #sN 引用）：\n   "

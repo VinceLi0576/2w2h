@@ -96,7 +96,7 @@
       subs.forEach(function(sd,j){
         if(!sd.id) sd.id=d.id+'-'+(j+1);
         var li2=document.createElement('li'), a2=document.createElement('a'); a2.href='#'+sd.id;
-        var nm=sd.querySelector('summary .nm'); a2.textContent=nm?nm.textContent:sd.id;
+        var nm=sd.querySelector('summary .nm'), no=sd.querySelector('summary .no'); a2.textContent=(no?no.textContent+' ':'')+(nm?nm.textContent:sd.id);
         a2.addEventListener('click', function(e){
           e.preventDefault();
           if(window.__goto) window.__goto(i,false); d.open=true; sd.open=true;
