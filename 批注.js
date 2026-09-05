@@ -126,12 +126,15 @@
 
   /* ── 写批注的小卡 */
   var comp=document.createElement('div'); comp.className='acomp'; comp.hidden=true;
-  comp.innerHTML='<div class="acomp-w"></div><blockquote class="acomp-q"></blockquote><textarea placeholder="这里怎么了、想改成什么"></textarea><div class="acomp-b"><button type="button" class="ok">保存批注</button><button type="button" class="no">取消</button></div>';
+  comp.innerHTML='<div class="acomp-w"></div><div class="acomp-m"></div><blockquote class="acomp-q"></blockquote><textarea placeholder="这里怎么了、想改成什么"></textarea><div class="acomp-b"><button type="button" class="ok">保存批注</button><button type="button" class="no">取消</button></div>';
   document.body.appendChild(comp);
   var cur=null, editing=null;
   function openComposer(p, edit){
     if(!p) return; cur=p; editing=edit||null;
     comp.querySelector('.acomp-w').textContent=p.where; comp.querySelector('.acomp-q').textContent=p.exact;
+    // 写的时候就告诉他这条会编成几号（260905 老徐：没有版本号）；改的时候显示原号
+    comp.querySelector('.acomp-m').innerHTML='<span class="anno-dot">'+esc(edit?seq(edit):nextNo().split('.').pop().replace(/^0/,''))+'</span>'
+      +'<span class="acard-no">'+esc(edit?edit.no:nextNo())+'</span><span class="acomp-tag">'+(edit?'改这条':'新批注 · '+esc(VER))+'</span>';
     comp.querySelector('textarea').value=editing?editing.text:'';
     comp.querySelector('.ok').textContent=editing?'保存修改':'保存批注';
     comp.hidden=false;
