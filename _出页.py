@@ -159,19 +159,22 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 #    字数是作者规矩，超了往 stderr 报，🚫 不截断（截断＝静默改内容）
 HEAD_MAX = {"标题": 16, "一句话": 30, "三行每行": 20}
 HERO_CSS = """
-.hero{ position:relative; padding-bottom:34px; }
-/* [两字] 蓝标签 ＝ 槽位名，页面自己说明每个位置填什么（`260905` 老徐：中括号、蓝色、两个字就是注释） */
-.k2{ color:#2563eb; font-weight:700; letter-spacing:.5px; margin-right:.45em; font-size:.55em; vertical-align:.18em; white-space:nowrap; }
-.k2::before{ content:"["; opacity:.7; } .k2::after{ content:"]"; opacity:.7; }
-.hero .lead .k2{ font-size:12px; vertical-align:.08em; }
-.hero .three-wrap{ max-width:40em; margin:18px auto 0; text-align:left; display:grid; grid-template-columns:auto 1fr; gap:6px 10px; align-items:start; }
-.hero .three-wrap > .k2{ font-size:12px; margin:6px 0 0; }
-.hero .three{ text-align:left; margin:0; }
+/* 抬头 ＝ 表单式：左列 [两字] 蓝标签、右列内容，四行对齐；标签就是槽位名（`260905` 老徐：中括号、蓝色、两个字就是注释） */
+.hero{ text-align:left; padding:34px 22px 22px; }
+.hero .hgrid{ max-width:780px; margin:0 auto; display:grid; grid-template-columns:56px minmax(0,1fr); column-gap:16px; row-gap:12px; align-items:baseline; }
+.k2{ color:#2563eb; font-weight:700; font-size:12px; letter-spacing:.5px; text-align:right; white-space:nowrap; line-height:1.6; }
+.k2::before{ content:"["; opacity:.65; } .k2::after{ content:"]"; opacity:.65; }
+.hero h1{ margin:0; font-size:26px; line-height:1.3; text-align:left; }
+.hero .lead{ margin:0; max-width:none; text-align:left; }
+.hero .three{ margin:2px 0 0; }
 .hero .three li{ font-size:15px; padding-bottom:10px; }
-/* 右下角：项目 › 文件夹 · 版本（小灰字） */
-.hero .loc{ position:absolute; right:22px; bottom:10px; font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
-.hero .loc b{ color:var(--acc-d); font-weight:800; }
-@media (max-width:640px){ .hero .loc{ position:static; margin-top:14px; text-align:right; } .hero{ padding-bottom:26px; } }
+.hero .dims{ grid-column:1 / -1; justify-content:flex-start; margin:0; }
+/* 右下角：值在上（项目 › 文件夹 · 版本），[标签] 在下，小灰字 */
+.hero .loc{ grid-column:1 / -1; display:flex; flex-direction:column; align-items:flex-end; gap:1px; margin-top:4px; }
+.hero .loc .v{ font-size:11.5px; color:var(--muted); letter-spacing:.3px; }
+.hero .loc .v b{ color:var(--acc-d); font-weight:800; }
+.hero .loc .k2.under{ font-size:10.5px; opacity:.8; }
+@media (max-width:640px){ .hero{ padding:28px 16px 18px 16px; } .hero .hgrid{ grid-template-columns:48px minmax(0,1fr); column-gap:10px; } .hero h1{ font-size:22px; } }
 """
 
 # 搜索框已在 控件.html 的 .q 里（`260905` 胶囊化），不再往工具条里插
@@ -361,7 +364,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
     tldr_html = ""
     if secs and secs[0]["meta"].get("tldr"):
         tl = secs.pop(0)
-        tldr_html = '<div class="three-wrap"><span class="k2">要点</span>' + three(tl["md"]) + '</div>'
+        tldr_html = '<span class="k2">要点</span>' + three(tl["md"])   # 两个网格格子：标签 · 三行
         mains = [ln.strip() for ln in tl["md"].split("\n") if re.match(r"^\d+\.\s+", ln.strip())]
         mains = [re.sub(r"^\d+\.\s+", "", m).partition("‖")[0].strip() for m in mains]
         if len(mains) != 3:
@@ -490,11 +493,13 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 %s
 <div id="page">
 <div class="hero">
-  <h1><span class="k2">标题</span>%s</h1>
-  <p class="lead"><span class="k2">导语</span>%s</p>
+ <div class="hgrid">
+  <span class="k2">标题</span><h1>%s</h1>
+  <span class="k2">导语</span><p class="lead">%s</p>
   %s
   %s
-  <div class="loc">%s · <b>%s</b></div>
+  <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2 under">项目 › 文件夹 · 版本</span></div>
+ </div>
 </div>
 
 %s
