@@ -137,7 +137,9 @@
       +'<button type="button" data-act="del">删</button></div>'
       +(a.remote?'<a class="acard-l" href="'+esc(a.remote)+'" target="_blank" rel="noopener">issue ↗</a>':'')+'</div>';
   }
-  function wideRail(){ var m=main.getBoundingClientRect(); return window.innerWidth>=1300 && (window.innerWidth-m.right)>=300; }
+  /* 右侧还剩多少可视像素给卡片：≥200 就摆卡（卡宽随空间收窄到 180–260），不够就退到「点黄线弹卡」。
+     ⚠️ #page 有 zoom 时 getBoundingClientRect 已是视觉像素，直接跟 innerWidth 比即可 */
+  function railRoom(){ var m=main.getBoundingClientRect(); var room=window.innerWidth-m.right-16; return room>=200?room:0; }
   function render(){
     unwrapAll(); rail.innerHTML='';
     var placed=[];
@@ -147,14 +149,15 @@
       a._lost=!marks;
       if(!marks) return;
       marks.forEach(function(m){ m.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, m); }); });
-      if(wideRail()){
+      var room=railRoom();
+      if(room){
         var first=marks[0]; var vis=first.getClientRects().length>0;
         if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
         var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
         var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+24;
         placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
         var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
-        el.style.top=top+'px'; el.style.left=left+'px'; rail.appendChild(el);
+        el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, Math.max(180, room-16))/zoom()+'px'; rail.appendChild(el);
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
     });
