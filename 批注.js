@@ -156,7 +156,15 @@
       +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
       +'<div class="acard-t">'+esc(a.text)+'</div></div>';
   }
-  function railRoom(){ if(document.body.classList.contains('anno-off')) return 0; var m=main.getBoundingClientRect(); var room=window.innerWidth-m.right-16; return room>=220?room:0; }
+  /* 右边到底还剩多少能摆卡：🔴 必须扣掉右侧竖条（260905 实撞：没扣，卡片被压在竖条下面、文字被切）。
+     竖条位置现量，别写死 —— 它自己会因缩放和窄屏变宽窄。 */
+  function railRoom(){
+    if(document.body.classList.contains('anno-off')) return 0;
+    var ctl=document.querySelector('.ctl');
+    var right = ctl ? ctl.getBoundingClientRect().left - 12 : window.innerWidth - 12;
+    var room = right - main.getBoundingClientRect().right - 40;   // 40 ＝ 离正文那一口气
+    return room>=180 ? room : 0;
+  }
   function render(){
     unwrapAll(); rail.innerHTML='';
     var placed=[];
@@ -175,7 +183,7 @@
         var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+40;
         placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
         var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
-        el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, Math.max(180, room-40))/zoom()+'px'; rail.appendChild(el);
+        el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, room)/zoom()+'px'; rail.appendChild(el);
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
     });
