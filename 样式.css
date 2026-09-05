@@ -279,3 +279,10 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .agrip:hover{ background:var(--acc-bg); }
 body.anno-off .arail{ display:none; }
 @media (max-width:640px){ .agrip{ display:none; } }
+/* 列表里的「已解决」折叠（`260905` 老徐：解决了就不显示在页面上，只在这儿回看） */
+.note details.donebox{ margin-top:10px; border-top:1px solid var(--line); padding-top:8px; }
+.note details.donebox > summary{ cursor:pointer; list-style:none; font-size:12px; font-weight:700; color:var(--ok); padding:5px 0; }
+.note details.donebox > summary::-webkit-details-marker{ display:none; }
+.note details.donebox > summary::after{ content:"＋"; color:var(--muted); margin-left:6px; }
+.note details.donebox[open] > summary::after{ content:"－"; }
+.note .acard.inlist{ margin-bottom:8px; }

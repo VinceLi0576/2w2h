@@ -288,6 +288,13 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .agrip:hover{ background:var(--acc-bg); }
 body.anno-off .arail{ display:none; }
 @media (max-width:640px){ .agrip{ display:none; } }
+/* 列表里的「已解决」折叠（`260905` 老徐：解决了就不显示在页面上，只在这儿回看） */
+.note details.donebox{ margin-top:10px; border-top:1px solid var(--line); padding-top:8px; }
+.note details.donebox > summary{ cursor:pointer; list-style:none; font-size:12px; font-weight:700; color:var(--ok); padding:5px 0; }
+.note details.donebox > summary::-webkit-details-marker{ display:none; }
+.note details.donebox > summary::after{ content:"＋"; color:var(--muted); margin-left:6px; }
+.note details.donebox[open] > summary::after{ content:"－"; }
+.note .acard.inlist{ margin-bottom:8px; }
 
 
 mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
@@ -390,7 +397,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 09:44）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 09:49）的快照</b>：全机 skill 调用共 7 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -400,12 +407,12 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 09:44）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 09:49）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>259</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
   <summary><span class="num">4</span><span class="tag good">HOW GOOD</span><span class="ti">怎么判它做得对不对 · 不对怎么改</span><span class="sub">推送该不该来 · 这次该不该调 · 出的页对不对，三问各有判据；改只要一句话</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加，像 Word 批注）</b>：选中那段文字，点冒出来的「💬 批注」（右键菜单里也有），写一句「哪里不对、改成什么」，保存 —— 那几个字底下画黄线，卡片贴在右侧空白跟它对齐；手机上点黄线弹卡。先存在你浏览器里；卡片上「发到 GitHub」你点了才出去（变成仓库 <code>2w2h</code> 的一条 issue，我用 <code>scripts/读留言.sh</code> 读，改完关掉、卡片变灰）。🔴 存哪还没最后定：公开仓库＝留言公开；配钥匙那步要放 Cloudflare Pages 的 <b>Secrets（加密）</b>，不是环境变量（明文）。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
+  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加，像 Word 批注）</b>：选中那段文字，点冒出来的「💬 批注」（右键菜单里也有），写一句「哪里不对、改成什么」，保存 —— 那几个字底下画黄线，卡片贴在右侧空白跟它对齐；手机上点黄线弹卡。✓ 解决之后<b>这条就从页面上消失</b>（批注本来就是要求改文档，改完原文多半已经没了，再拿黄线锚它只会一直报「原文找不到」），回看去竖条 💬 里的「已解决」折叠。先存在你浏览器里；卡片上「发到 GitHub」你点了才出去（变成仓库 <code>2w2h</code> 的一条 issue，我用 <code>scripts/读留言.sh</code> 读，改完关掉、卡片变灰）。🔴 存哪还没最后定：公开仓库＝留言公开；配钥匙那步要放 Cloudflare Pages 的 <b>Secrets（加密）</b>，不是环境变量（明文）。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
 </details>
 <a id="refs" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s5" data-key="refs">
@@ -415,9 +422,9 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 </main>
 
 <div class="foot">
-  <span class="badge">v2.8</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>93c9f3c</code>
+  <span class="badge">v2.9</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>93c9f3c+未提交改动</code>
   <div class="cl-wrap">
-  <details class="cl"><summary>📚 版本迭代<span class="n">19 版</span></summary><div class="body"><code>v2.8</code> 260905：批注可改（✎，改过标 ✎ 并记改于何时）＋ 卡片显示什么时候写的（老徐要）<br><code>v2.7</code> 260905：卡片间距压到 14、最窄 150；摆不下时把手直说「右边只剩 N px，收起目录就摆得下」，不再默默消失<br><code>v2.6</code> 260905：修：批注卡片被右侧竖条压住、文字被切 —— 可用宽度现量竖条位置再算<br><code>v2.5</code> 260905：批注卡片往外挪 40px；右下角把手可整栏收起（跟左侧目录 « 对称）；点解决同步关掉 GitHub 议题<br><code>v2.4</code> 260905：批注卡片按钮改图标不换行；已解决折成一行、鼠标移上去才出操作、点它能展开看回内容（老徐：难看）<br><code>v2.3</code> 260905：页底三栏改成跟正文一样的折叠卡片：一列、白底圆角、＋／－ 靠右（老徐：设计同上）<br><code>v2.2</code> 260905：页底加「⬜ 待办」「✅ 已办」两栏，跟版本迭代并排（老徐要）<br><code>v2.1</code> 260905：右侧卡片按剩余空间摆（缩放后也能显示），不够 200px 才退到点黄线弹卡<br><code>v2.0</code> 260905：批注改成 Word 式：选中冒气泡／右键 → 黄线 ＋ 右侧对齐卡片 → 解决变灰折叠 → 手机点黄线弹卡；先存浏览器，发 GitHub 点了才出去（老徐四条全对）<br><code>v1.9</code> 260905：控件条改竖排、分四组（导航·展收·阅读·留言），为后面加按钮留位（老徐：要竖着）<br><code>v1.8</code> 260905：加 💬 留言：选中文字点它 → 变成 GitHub issue（老徐：基于位置写留言备注，保存了 AI 再读再改）<br><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
+  <details class="cl"><summary>📚 版本迭代<span class="n">20 版</span></summary><div class="body"><code>v2.9</code> 260905：解决即从页面消失（老徐：原文可能已被删，锚不住）；💬 列表分「未解决」与「已解决」两组，锚丢了的在列表里标出来<br><code>v2.8</code> 260905：批注可改（✎，改过标 ✎ 并记改于何时）＋ 卡片显示什么时候写的（老徐要）<br><code>v2.7</code> 260905：卡片间距压到 14、最窄 150；摆不下时把手直说「右边只剩 N px，收起目录就摆得下」，不再默默消失<br><code>v2.6</code> 260905：修：批注卡片被右侧竖条压住、文字被切 —— 可用宽度现量竖条位置再算<br><code>v2.5</code> 260905：批注卡片往外挪 40px；右下角把手可整栏收起（跟左侧目录 « 对称）；点解决同步关掉 GitHub 议题<br><code>v2.4</code> 260905：批注卡片按钮改图标不换行；已解决折成一行、鼠标移上去才出操作、点它能展开看回内容（老徐：难看）<br><code>v2.3</code> 260905：页底三栏改成跟正文一样的折叠卡片：一列、白底圆角、＋／－ 靠右（老徐：设计同上）<br><code>v2.2</code> 260905：页底加「⬜ 待办」「✅ 已办」两栏，跟版本迭代并排（老徐要）<br><code>v2.1</code> 260905：右侧卡片按剩余空间摆（缩放后也能显示），不够 200px 才退到点黄线弹卡<br><code>v2.0</code> 260905：批注改成 Word 式：选中冒气泡／右键 → 黄线 ＋ 右侧对齐卡片 → 解决变灰折叠 → 手机点黄线弹卡；先存浏览器，发 GitHub 点了才出去（老徐四条全对）<br><code>v1.9</code> 260905：控件条改竖排、分四组（导航·展收·阅读·留言），为后面加按钮留位（老徐：要竖着）<br><code>v1.8</code> 260905：加 💬 留言：选中文字点它 → 变成 GitHub issue（老徐：基于位置写留言备注，保存了 AI 再读再改）<br><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
   <details class="cl td"><summary>⬜ 待办<span class="n">5 条</span></summary><div class="body"><ul class="tdlist"><li>把批注从本 skill 抽出来，做成整站 177 页都能用<em>老徐 260905「不是一个资料，是完整的资料」· 等他一句话</em></li><li>页顶显示最新一次更新（现在只在页底）<em>老徐 260905 看 /cdp/ 页提，ops-cdp 转来 · 等他回来聊</em></li><li>批注钥匙 2026-12-04 到期，到期后静默发不出去<em>260905 建的 90 天令牌 · 到期前换一把</em></li><li>没有 md 正本时是否允许手写 HTML<em>我判「判死」，等老徐拍</em></li><li><code>模板.html</code> 缺页内搜索／稳定锚／缩放三样<em>让 _出页.py 反过来生成它 · 等老徐一句话</em></li></ul></div></details>
   <details class="cl dn"><summary>✅ 已办<span class="n">5 条</span></summary><div class="body"><ul class="tdlist done"><li>批注整条路验通：页面写 → 存进站的私有仓库议题 → AI 读回来<em>260905 · issue #1 是通道测试</em></li><li>格式标准整夹从 OPC 搬进 ops/skill/2w2h/，旧路径留软链接<em>260905 · 几十个生成器一个没改</em></li><li>公开到 github.com/VinceLi0576/2w2h，单向同步<em>260905 老徐建库</em></li><li>skill 被调用会自动记一行、往群里推一条<em>260904 · 30 分钟内只推一条</em></li><li>修出页器三个真 bug：徽章印错提交 · 段首代码块渲染坏 · 推送静默失效<em>260905 · 后两个是别的线报的</em></li></ul></div></details>
   </div>
@@ -754,19 +761,20 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   }
   function render(){
     unwrapAll(); rail.innerHTML='';
-    var placed=[];
+    var placed=[], room=railRoom();
     notes.forEach(function(a){
+      // 🔴 260905 老徐：解决了就从页面上消失 —— 批注本来就是要求改文档，改完原文多半已经没了，
+      //    再拿黄线去锚它只会一直标「原文找不到了」。要回看去 💬 列表里翻。
+      if(a.resolved){ a._lost=false; return; }
       var sec=document.getElementById(a.secId)||document.querySelector('details.sec[data-key="'+(a.anchor||'').replace('#','')+'"]');
       var marks=sec?wrap(sec.querySelector('.body'), a):false;
       a._lost=!marks;
       if(!marks) return;
       marks.forEach(function(m){ m.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, m); }); });
-      var room=railRoom();
       if(room){
         var first=marks[0]; var vis=first.getClientRects().length>0;
         if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
         var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
-        // 260905 老徐：卡片要往外一点 —— 离正文 40（原 24），右边至少留 12
         var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+GAP;
         placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
         var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
@@ -774,14 +782,27 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
     });
-    var list=document.querySelector('.note .note-list'); if(list) list.innerHTML=notes.length?notes.map(function(a){ return '<div class="acard'+(a.resolved?' done':'')+' inlist" data-id="'+a.id+'">'+ (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）</div>':'') + cardHTML(a).replace(/^<div class="acard[^>]*">|<\/div>$/g,'')+'</div>'; }).join(''):'<div class="note-empty">还没有批注。选中一段字，点冒出来的「💬 批注」。</div>';
-    var off=document.body.classList.contains('anno-off'), n=notes.filter(function(a){return !a._lost;}).length;
+
+    // 💬 列表：未解决在上，已解决收进折叠 —— 它现在是回看已解决批注的唯一地方
+    var list=document.querySelector('.note .note-list');
+    if(list){
+      var open=notes.filter(function(a){ return !a.resolved; });
+      var done=notes.filter(function(a){ return a.resolved; });
+      var one=function(a){ return '<div class="acard'+(a.resolved?' done show':'')+' inlist" data-id="'+a.id+'">'
+        + (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）—— 页面上没有黄线，只在这儿看得到</div>':'')
+        + cardHTML(a).replace(/^<div class="acard[^"]*"[^>]*>/,'').replace(/<\/div>$/,'') + '</div>'; };
+      var html = open.length ? open.map(one).join('') : '<div class="note-empty">没有未解决的批注。选中一段字，点冒出来的「💬 批注」。</div>';
+      if(done.length) html += '<details class="donebox"><summary>✅ 已解决（'+done.length+'）</summary><div>'+done.map(one).join('')+'</div></details>';
+      list.innerHTML=html;
+    }
+
+    var off=document.body.classList.contains('anno-off'), n=notes.filter(function(a){ return !a.resolved; }).length;
     var hint=roomHint();
     if(off){ grip.textContent='批注 '+n+' »'; grip.title='展开右侧批注栏'; }
     else if(hint){ grip.textContent='批注 '+n+' · 点黄线看'; grip.title='摆不下卡片 '+hint; }
     else{ grip.textContent='«'; grip.title='收起右侧批注栏'; }
     grip.hidden=!n;
-        var cnt=document.getElementById('notecnt'); if(cnt){ var open=notes.filter(function(a){return !a.resolved;}).length; cnt.textContent=open||''; cnt.hidden=!open; }
+    var cnt=document.getElementById('notecnt'); if(cnt){ cnt.textContent=n||''; cnt.hidden=!n; }
   }
   function showPop(a, m){
     pop.innerHTML=cardHTML(a); pop.hidden=false;

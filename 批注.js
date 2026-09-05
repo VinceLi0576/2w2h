@@ -193,19 +193,20 @@
   }
   function render(){
     unwrapAll(); rail.innerHTML='';
-    var placed=[];
+    var placed=[], room=railRoom();
     notes.forEach(function(a){
+      // 🔴 260905 老徐：解决了就从页面上消失 —— 批注本来就是要求改文档，改完原文多半已经没了，
+      //    再拿黄线去锚它只会一直标「原文找不到了」。要回看去 💬 列表里翻。
+      if(a.resolved){ a._lost=false; return; }
       var sec=document.getElementById(a.secId)||document.querySelector('details.sec[data-key="'+(a.anchor||'').replace('#','')+'"]');
       var marks=sec?wrap(sec.querySelector('.body'), a):false;
       a._lost=!marks;
       if(!marks) return;
       marks.forEach(function(m){ m.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, m); }); });
-      var room=railRoom();
       if(room){
         var first=marks[0]; var vis=first.getClientRects().length>0;
         if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
         var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
-        // 260905 老徐：卡片要往外一点 —— 离正文 40（原 24），右边至少留 12
         var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+GAP;
         placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
         var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
@@ -213,14 +214,27 @@
         placed.push({top:top, bottom:top+el.offsetHeight});
       }
     });
-    var list=document.querySelector('.note .note-list'); if(list) list.innerHTML=notes.length?notes.map(function(a){ return '<div class="acard'+(a.resolved?' done':'')+' inlist" data-id="'+a.id+'">'+ (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）</div>':'') + cardHTML(a).replace(/^<div class="acard[^>]*">|<\/div>$/g,'')+'</div>'; }).join(''):'<div class="note-empty">还没有批注。选中一段字，点冒出来的「💬 批注」。</div>';
-    var off=document.body.classList.contains('anno-off'), n=notes.filter(function(a){return !a._lost;}).length;
+
+    // 💬 列表：未解决在上，已解决收进折叠 —— 它现在是回看已解决批注的唯一地方
+    var list=document.querySelector('.note .note-list');
+    if(list){
+      var open=notes.filter(function(a){ return !a.resolved; });
+      var done=notes.filter(function(a){ return a.resolved; });
+      var one=function(a){ return '<div class="acard'+(a.resolved?' done show':'')+' inlist" data-id="'+a.id+'">'
+        + (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）—— 页面上没有黄线，只在这儿看得到</div>':'')
+        + cardHTML(a).replace(/^<div class="acard[^"]*"[^>]*>/,'').replace(/<\/div>$/,'') + '</div>'; };
+      var html = open.length ? open.map(one).join('') : '<div class="note-empty">没有未解决的批注。选中一段字，点冒出来的「💬 批注」。</div>';
+      if(done.length) html += '<details class="donebox"><summary>✅ 已解决（'+done.length+'）</summary><div>'+done.map(one).join('')+'</div></details>';
+      list.innerHTML=html;
+    }
+
+    var off=document.body.classList.contains('anno-off'), n=notes.filter(function(a){ return !a.resolved; }).length;
     var hint=roomHint();
     if(off){ grip.textContent='批注 '+n+' »'; grip.title='展开右侧批注栏'; }
     else if(hint){ grip.textContent='批注 '+n+' · 点黄线看'; grip.title='摆不下卡片 '+hint; }
     else{ grip.textContent='«'; grip.title='收起右侧批注栏'; }
     grip.hidden=!n;
-        var cnt=document.getElementById('notecnt'); if(cnt){ var open=notes.filter(function(a){return !a.resolved;}).length; cnt.textContent=open||''; cnt.hidden=!open; }
+    var cnt=document.getElementById('notecnt'); if(cnt){ cnt.textContent=n||''; cnt.hidden=!n; }
   }
   function showPop(a, m){
     pop.innerHTML=cardHTML(a); pop.hidden=false;
