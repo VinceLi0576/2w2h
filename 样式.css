@@ -214,7 +214,8 @@ body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); w
 
 /* ── 💬 批注（`260905` 老徐定四条：气泡／右键 · 黄线＋右侧对齐卡片 · 解决变灰折叠 · 手机点黄线弹出） */
 #page{ position:relative; }
-mark.anno{ background:transparent; color:inherit; border-bottom:2px solid #f5c400; box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
+:root{ --anno-quote:#f5c400; --anno-mine:#2f9e5e; }   /* 🟡 划中的原文 · 🟢 自己写的（`260905` 老徐定） */
+mark.anno{ background:transparent; color:inherit; border-bottom:2px solid var(--anno-quote); box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
 mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .abub, .amenu{ position:fixed; z-index:70; }
 .abub{ font:700 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:#fff; background:var(--ink); border:0; border-radius:16px; padding:8px 12px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.18); }
@@ -226,29 +227,35 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acomp{ position:fixed; z-index:70; width:340px; max-width:calc(100vw - 16px); box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; box-shadow:0 10px 30px rgba(0,0,0,.16); font-size:13px; }
 .acomp[hidden]{ display:none; }
 .acomp .acomp-w{ font-size:12px; color:var(--acc-d); font-weight:700; margin-bottom:6px; }
-.acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid #f5c400; color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
-.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 11px; outline:none; }
-.acomp textarea:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
+.acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid var(--anno-quote); color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
+.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:rgba(47,158,94,.05); border:1px solid var(--line); border-left:3px solid var(--anno-mine); border-radius:10px; padding:9px 11px; outline:none; }
+.acomp textarea:focus{ border-color:var(--anno-mine); box-shadow:0 0 0 3px rgba(47,158,94,.14); }
 .acomp .acomp-b{ display:flex; gap:8px; margin-top:8px; }
-.acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
+.acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--anno-mine); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
 .acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
 .arail .acard{ position:absolute; width:260px; }
-.acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid #f5c400;
+.acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid var(--anno-mine);
   border-radius:10px; padding:9px 11px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
 .acard .acard-w{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--acc-d); font-weight:700;
   margin-bottom:6px; white-space:nowrap; overflow:hidden; }
 .acard .acard-w > :first-child{ overflow:hidden; text-overflow:ellipsis; }
 .acard .acard-v{ color:var(--muted); font-weight:600; flex:none; }
-.acard .acard-no{ flex:none; font-size:10.5px; font-weight:800; color:#fff; background:var(--acc-d);
-  border-radius:5px; padding:1px 6px; letter-spacing:.3px; }
-.acard.done .acard-no{ background:var(--muted); }
+.acard .acard-no{ flex:none; font-size:10px; font-weight:700; color:var(--muted); letter-spacing:.3px; }
+/* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数（`260905` 老徐：标记明显一些） */
+.anno-dot{ flex:none; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%;
+  background:var(--anno-mine); color:#fff; font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
+.anno-dot.inline{ position:relative; top:-.4em; margin-left:3px; width:17px; height:17px; font-size:10px;
+  cursor:pointer; vertical-align:baseline; box-shadow:0 1px 3px rgba(0,0,0,.18); }
+.anno-dot.inline:hover{ filter:brightness(1.1); }
+.acard.done .anno-dot{ background:var(--muted); }
 .acard .acard-when{ color:var(--muted); font-weight:600; font-size:10.5px; flex:none; }
 .acard .acard-act{ margin-left:auto; display:flex; align-items:center; gap:1px; flex:none; }
 .acard .acard-act button, .acard .acard-act a{ font:700 12px/1 inherit; color:var(--muted); background:transparent;
   border:0; border-radius:6px; width:22px; height:22px; display:grid; place-items:center; cursor:pointer; text-decoration:none; }
 .acard .acard-act button:hover, .acard .acard-act a:hover{ background:var(--acc-bg); color:var(--acc-d); }
 .acard .acard-act button:disabled{ color:var(--line); cursor:default; background:transparent; }
-.acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word; }
+.acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word;
+  border-left:3px solid var(--anno-mine); background:rgba(47,158,94,.06); border-radius:0 8px 8px 0; padding:5px 10px; }
 .acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
 /* 已解决 ⇒ 一行，灰、无引用无正文；点标题展开看回内容 */
 .acard.done{ border-left-color:var(--line); background:var(--surface); padding:6px 10px; }
