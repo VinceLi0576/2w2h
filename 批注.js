@@ -38,6 +38,7 @@
     });
     return base+'.'+(max+1<10?'0':'')+(max+1);
   }
+  (function migrate(){ var dirty=false; notes.forEach(function(a){ if(!a.no){ a.no=nextNo(); dirty=true; } }); if(dirty) store.save(notes); })();
 
   /* ── 工具 */
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -58,6 +59,7 @@
     var out=[], n; while((n=w.nextNode())) out.push(n); return out;
   }
   /* 在 root 的正文文本里找 exact（用 prefix/suffix 消歧），把命中的文字包进 <mark class="anno"> */
+  function shown(el){ var d=el; while(d){ if(d.tagName==='DETAILS' && !d.open) return false; d=d.parentElement; } return true; }
   function wrap(root, a){
     var nodes=textNodes(root), full='', pos=[];
     nodes.forEach(function(n){ pos.push(full.length); full+=n.nodeValue; });
@@ -77,7 +79,7 @@
     return marks.reverse();
   }
   function unwrapAll(){
-    document.querySelectorAll('sup.anno-dot.inline').forEach(function(d){ d.parentNode && d.parentNode.removeChild(d); });
+    document.querySelectorAll('span.anno-dot.inline').forEach(function(d){ d.parentNode && d.parentNode.removeChild(d); });
     document.querySelectorAll('mark.anno').forEach(function(m){ var p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
   }
 
@@ -213,7 +215,7 @@
   }
   function render(){
     unwrapAll(); rail.innerHTML='';
-    var placed=[], room=railRoom();
+    var room=railRoom(), pending=[];
     notes.forEach(function(a){ try{
       // 🔴 260905 老徐：解决了就从页面上消失 —— 批注本来就是要求改文档，改完原文多半已经没了，
       //    再拿黄线去锚它只会一直标「原文找不到了」。要回看去 💬 列表里翻。
@@ -225,21 +227,24 @@
       marks.forEach(function(m){ m.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, m); }); });
       // 黄线末尾挂一个绿圆圈序号 —— 跟右边卡片上那个是同一个数（260905 老徐：标记明显一些）
       var last=marks[marks.length-1];
-      var dot=document.createElement('sup'); dot.className='anno-dot inline'; dot.textContent=seq(a);
+      var dot=document.createElement('span'); dot.className='anno-dot inline'; dot.textContent=seq(a);
       dot.title='第 '+(a.no||seq(a))+' 条批注 · 点看内容';
       dot.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, last); });
       last.appendChild(dot);
-      if(room){
-        var first=marks[0]; var vis=first.getClientRects().length>0;
-        if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
-        var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
-        var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+GAP;
-        placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
-        var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
-        el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, room)/zoom()+'px'; rail.appendChild(el);
-        placed.push({top:top, bottom:top+el.offsetHeight});
+      if(room && shown(marks[0])){
+        var z=zoom(), pr=page.getBoundingClientRect(), mr=marks[0].getBoundingClientRect();
+        pending.push({a:a, top:(mr.top-pr.top)/z});
       }
     }catch(err){ a._lost=true; if(window.console) console.warn('批注渲染失败', a.id, err); } });
+    // 🔴 先按黄线在页面上的高度排序，再依次摆；碰撞只把后面的往下推（260905 实撞：按创建顺序摆，第 4 段那条排第一，s1 的两张被挤到它下面）
+    pending.sort(function(x,y){ return x.top-y.top; });
+    var bottom=-1e9, left=(main.getBoundingClientRect().right-page.getBoundingClientRect().left)/zoom()+GAP;
+    pending.forEach(function(it){
+      var top=Math.max(it.top, bottom+8);
+      var el=document.createElement('div'); el.innerHTML=cardHTML(it.a); el=el.firstChild;
+      el.style.top=top+'px'; el.style.left=left+'px'; el.style.width=Math.min(260, room)/zoom()+'px'; rail.appendChild(el);
+      bottom=top+el.offsetHeight;
+    });
 
     // 💬 列表：未解决在上，已解决收进折叠 —— 它现在是回看已解决批注的唯一地方
     var list=document.querySelector('.note .note-list');
