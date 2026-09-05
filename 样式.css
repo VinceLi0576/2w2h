@@ -70,7 +70,7 @@ details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ backg
 .scene.self .sh .rl{ background:var(--acc); }
 .scene.self .pt{ border-left-color:var(--acc); }
 
-.ring{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); margin:14px 0 6px; }
+.ring{ display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); max-width:780px; margin:14px auto 6px; padding:0 22px; box-sizing:border-box; }  /* 260905 老徐：一行四个太宽，固定两行两列、跟正文同宽 */
 .ring button{ display:block; text-align:left; font-family:inherit; cursor:pointer; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 15px; transition:.15s; width:100%; min-width:0; }
 .ring button:hover{ transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.06); }
 .ring .k{ font-size:10.5px; font-weight:800; letter-spacing:1.5px; }
@@ -156,7 +156,6 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
   .q{ font-size:15.5px; }
   .three li{ font-size:16px; } .three li em{ font-size:14px; }
   .vs{ grid-template-columns:1fr; }
-  .ring{ grid-template-columns:repeat(2,minmax(0,1fr)); }
   details.sec > summary .sub{ display:none; }
   .svgwrap{ display:none; } .svgalt{ display:block; }
 }
