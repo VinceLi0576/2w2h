@@ -4,7 +4,13 @@
    ③ 解决后：卡片变灰折叠、黄线消失；历史在 GitHub 里翻得到（每张卡「发到 GitHub」按钮，🔴 点了才出去）
    ④ 手机没有右边空白：点黄线弹出卡片
    锚定＝段 key ＋ 引用原文 exact ＋ 前后各 32 字 prefix/suffix（W3C Web Annotation 的选择器思路），改了字靠前后文重定位。
-   存储先在浏览器（localStorage，按页分桶）；存哪最后定，换存储只改 store 这一小块。 */
+   存储先在浏览器（localStorage，按页分桶）；存哪最后定，换存储只改 store 这一小块。
+
+   🔴 **编号＝版本＋序号（`260905` 老徐定，本页的核心规矩）**：
+   **版本 ＝ 一轮审阅，不是一次改动。** 一轮里页面改多少次，版本号都锁死不动。
+   这一轮的批注顺着编 `2.9.01` `2.9.02` …… **递增不复用**（解决了也不让位）。
+   他说一句「这轮排查完毕」⇒ AI 收尾 → 把整轮批注归档进版本迭代那一栏 → 清空页面标记 → 才升下一版。
+   ⭐ 这样 changelog 一条 ＝ 一轮，不是流水账；也结构性消掉了「老批注锚不回新版」。 */
 (function(){
   var page=document.getElementById('page'), main=document.querySelector('main'); if(!page||!main) return;
   var PAGE=(location.pathname.split('/').filter(Boolean)[0]||'local');
@@ -17,6 +23,16 @@
     save:function(list){ try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){} }
   };
   var notes=store.load();
+
+  /* 这一轮（当前版本）的下一个编号。递增不复用 —— 已解决的也占着号，🚫 别让新的顶上去 */
+  function nextNo(){
+    var base=(VER||'v?').replace(/^v/,''), max=0;
+    notes.forEach(function(a){
+      var m=(a.no||'').match(new RegExp('^'+base.replace(/\./g,'\\.')+'\\.(\\d+)$'));
+      if(m) max=Math.max(max, parseInt(m[1],10));
+    });
+    return base+'.'+(max+1<10?'0':'')+(max+1);
+  }
 
   /* ── 工具 */
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -124,7 +140,7 @@
       editing.text=text; editing.edited=new Date().toISOString();
       store.save(notes); comp.hidden=true; editing=null; render(); pop.hidden=true; return;
     }
-    var a={id:'a'+Date.now().toString(36), page:PAGE, version:VER, where:cur.where, anchor:cur.anchor, secId:cur.secId,
+    var a={id:'a'+Date.now().toString(36), no:nextNo(), page:PAGE, version:VER, where:cur.where, anchor:cur.anchor, secId:cur.secId,
            exact:cur.exact, prefix:cur.prefix, suffix:cur.suffix, text:text, created:new Date().toISOString(), resolved:false, remote:''};
     notes.push(a); store.save(notes); comp.hidden=true; render();
   });
@@ -155,7 +171,7 @@
     // 已解决 ⇒ 折成一行；点标题能展开看回内容
     if(a.resolved){
       return '<div class="acard done" data-id="'+a.id+'">'
-        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'+meta(a)
+        +'<div class="acard-w">✓ '+esc(a.where)+'<span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
         +'<span class="acard-act">'
         +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="看 GitHub 议题">↗</a>':'')
         +'<button type="button" data-act="res" title="重开">↩</button>'
@@ -164,7 +180,7 @@
         +'<div class="acard-t">'+esc(a.text)+'</div></div></div>';
     }
     return '<div class="acard" data-id="'+a.id+'">'
-      +'<div class="acard-w">'+esc(a.where)+'<span class="acard-v">'+esc(a.version)+'</span>'+meta(a)
+      +'<div class="acard-w">'+esc(a.where)+'<span class="acard-no">'+esc(a.no||a.version)+'</span>'+meta(a)
       +'<span class="acard-act">'
       +'<button type="button" data-act="edit" title="改这条批注">✎</button>'
       +(a.remote?'<a href="'+esc(a.remote)+'" target="_blank" rel="noopener" title="已发到 GitHub，点开看议题">↗</a>'

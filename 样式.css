@@ -239,6 +239,9 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
   margin-bottom:6px; white-space:nowrap; overflow:hidden; }
 .acard .acard-w > :first-child{ overflow:hidden; text-overflow:ellipsis; }
 .acard .acard-v{ color:var(--muted); font-weight:600; flex:none; }
+.acard .acard-no{ flex:none; font-size:10.5px; font-weight:800; color:#fff; background:var(--acc-d);
+  border-radius:5px; padding:1px 6px; letter-spacing:.3px; }
+.acard.done .acard-no{ background:var(--muted); }
 .acard .acard-when{ color:var(--muted); font-weight:600; font-size:10.5px; flex:none; }
 .acard .acard-act{ margin-left:auto; display:flex; align-items:center; gap:1px; flex:none; }
 .acard .acard-act button, .acard .acard-act a{ font:700 12px/1 inherit; color:var(--muted); background:transparent;
