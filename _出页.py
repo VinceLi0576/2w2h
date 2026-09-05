@@ -132,6 +132,16 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 .dims .dim .lab{ color:var(--acc-d); font-weight:700; }
 .dims .dim.mt .v{ color:var(--what); } .dims .dim.im .v{ color:var(--good); }
 
+/* ✅⬜ 底部待办／已办（`260905`） */
+.foot ul.tdlist{ margin:2px 0 0; padding-left:0; list-style:none; }
+.foot ul.tdlist li{ position:relative; padding:5px 0 5px 20px; line-height:1.65; color:var(--ink); }
+.foot ul.tdlist li::before{ content:"⬜"; position:absolute; left:0; top:5px; font-size:11px; }
+.foot ul.tdlist.done li::before{ content:"✅"; }
+.foot ul.tdlist.done li{ color:var(--muted); }
+.foot ul.tdlist li em{ font-style:normal; color:var(--muted); font-size:11.5px; display:block; margin-top:1px; }
+.foot details.cl.td > summary{ color:var(--warn); }
+.foot details.cl.dn > summary{ color:var(--ok); }
+
 /* 📚 底部版本迭代折叠 */
 .foot details.cl{ margin-top:8px; }
 .foot details.cl > summary{ cursor:pointer; list-style:none; font-weight:700; color:var(--acc-d);
@@ -295,8 +305,11 @@ def _src_commit(src_p):
         return "未提交"
 
 def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
-               inject=None, dims=None):
+               inject=None, dims=None, todo=None, done=None):
     """inject: {"名字": "一段 **markdown**"} —— md 里写 `<!-- inject:名字 -->` 占位。
+    todo / done: 底部「待办」「已办」清单（`260905` 老徐要：跟版本迭代并排）。
+      每条 `(一句话, 谁定的／什么时候)`，或直接给字符串。🔴 已办的只留**这一版之后还值得回看的**，
+      🚫 别把 changelog 抄一遍 —— 版本迭代已经在隔壁了。
     🔑 用途：**会变的东西（文件清单／数量／体积）别写死在 md 里，出页时现算注入。**
     ⭐ 判据来自全局 CLAUDE.md：手写的清单抄下来第二天就开始烂，而且烂得没有声音。
 
@@ -392,6 +405,18 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
     commit = _src_commit(src_p)
     cl = "<br>".join("<code>%s</code> %s：%s" % (v, d, esc(t)) for v, d, t in changelog)
 
+    # ✅⬜ 待办／已办（`260905` 老徐要的，跟版本迭代并排）
+    def _lines(rows, mark):
+        out = []
+        for r in (rows or []):
+            t, who = (r if isinstance(r, (tuple, list)) else (r, ""))
+            out.append('<li>%s%s</li>' % (inline(t), ('<em>%s</em>' % inline(who)) if who else ""))
+        return "".join(out)
+    todo_html = ('<details class="cl td"><summary>⬜ 待办（%d 条）</summary><div class="body">'
+                 '<ul class="tdlist">%s</ul></div></details>' % (len(todo), _lines(todo, "⬜"))) if todo else ""
+    done_html = ('<details class="cl dn"><summary>✅ 已办（%d 条）</summary><div class="body">'
+                 '<ul class="tdlist done">%s</ul></div></details>' % (len(done), _lines(done, "✅"))) if done else ""
+
     # 🏷 三维度标签（`260824` 老徐定）：成熟度 1-5（播种→常青）· 重要程度 1-5 星 · 类型
     MT = {1: "播种", 2: "萌芽", 3: "成长", 4: "稳定", 5: "常青"}
     dims_html = ""
@@ -455,7 +480,9 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 
 <div class="foot">
   <span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code>
-  <details class="cl"><summary>版本迭代（%d 版）</summary><div class="body">%s</div></details>
+  <details class="cl"><summary>📚 版本迭代（%d 版）</summary><div class="body">%s</div></details>
+  %s
+  %s
 </div>
 </div>
 
@@ -467,7 +494,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 """ % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl, esc(eyebrow), inline(h1), inline(lead),
        tldr_html, dims_html,
        '\n<div class="ring">\n%s\n</div>\n' % "\n".join(ring) if ring else "",
-       "\n".join(parts), version, src_p.name, gen_rel, commit, len(changelog), cl,
+       "\n".join(parts), version, src_p.name, gen_rel, commit, len(changelog), cl, todo_html, done_html,
        script + SEARCH_JS)
 
     dst_p.write_text(html, encoding="utf-8")
