@@ -52,3 +52,19 @@
   var hi = h ? steps.indexOf(document.getElementById(h)) : -1;
   if(hi !== -1) goto(hi, true); else goto(0, false);
 })();
+/* 缩放（`260905` 老徐要的）：只缩 #page，右上角胶囊不跟着变；记在浏览器里，下次打开还在 */
+(function(){
+  var page=document.getElementById('page'), zi=document.getElementById('zoomin'), zo=document.getElementById('zoomout');
+  if(!page||!zi||!zo) return;
+  var KEY='2w2h-zoom', z=100;
+  try{ z=parseInt(localStorage.getItem(KEY),10)||100; }catch(e){}
+  function apply(){
+    page.style.zoom=(z/100);
+    zi.title='放大（现在 '+z+'%）'; zo.title='缩小（现在 '+z+'%）';
+    try{ localStorage.setItem(KEY, String(z)); }catch(e){}
+  }
+  zi.addEventListener('click', function(){ if(z<160){ z+=10; apply(); } });
+  zo.addEventListener('click', function(){ if(z>80){ z-=10; apply(); } });
+  apply();
+  window.__zoom=function(){ return z; };
+})();

@@ -17,7 +17,7 @@ md 里的机读标记（放在 `## 标题` 的下一行）——细则见同夹 
     <!-- sec tag=WHY sub=副标 ring=按钮标题|一句钩子 -->
     <!-- sec sub=副标 -->
 🔴 四档（WHY/HOW/WHAT/HOW-GOOD）缺哪档就往 stderr 报警 —— 缺档说明那部分没想清楚。
-⭐ 样式与脚本从同夹 `_抽出的*` 读（那几份是从样板 v2.html 原样抽的）⇒ 样板变了重抽即可，不分叉。
+⭐ 样式与脚本从同夹 `样式.css` `脚本.js` `控件.html` 读 —— `260905` 起**本夹就是正本**（老徐「最后你改的才是标准」），不再从 Feynman 样板重抽。
 """
 import io, os, pathlib, re, subprocess, sys
 
@@ -113,37 +113,15 @@ def body_html(md_body, first_is_lead=True, warn=True):
 
 
 # ── 页内搜索（`260824` 老徐要：输入一个词就高亮，多个就逐个跳）
-# 🔴 **不改 `_抽出的*`** —— 那三份是从样板 v2.html 原样抽的，改了就跟样板分叉。
-#    ⇒ 搜索是本出页器**追加**的能力，样式与脚本都在下面这两个常量里。
+# `260905` 起样式与脚本以本夹 样式.css／脚本.js／控件.html 为正本；搜索的高亮样式与核心 JS 仍留在下面两个常量里。
 # 🔑 为什么不靠浏览器的 Ctrl+F：本页大部分内容在折叠的 <details> 里，
 #    **原生查找搜不到没展开的内容** ⇒ 自建搜索的核心价值就是**跳过去时自动把祖先 details 展开**。
 SEARCH_CSS = """
-.bar .q{ display:flex; align-items:center; gap:6px; }
-.bar .q input{ font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
-  color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:20px;
-  padding:9px 13px; min-height:44px; width:150px; outline:none; }
-.bar .q input:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
-.bar .q button{ padding:8px 11px; min-height:44px; }
-.bar .q .n{ font-size:12px; color:var(--muted); font-weight:700; min-width:44px; text-align:center;
-  white-space:nowrap; }
-.bar .q .n.none{ color:var(--bad); }
 mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
 mark.hit.cur{ background:var(--warn); color:#fff; box-shadow:0 0 0 2px var(--warn); }
 
-/* 🥇 稳定锚：不占位、不可见，但跳过去时不会被 sticky 工具条挡住 */
+/* 🥇 稳定锚：不占位、不可见 */
 a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(--bar) + 14px); }
-
-/* 🔧 `260824` 工具条紧凑化 —— 老徐截图：搜索框把它挤成两行、占掉半屏 */
-.bar .in{ gap:6px; padding:7px 22px; }
-.bar button{ padding:7px 12px; font-size:12.5px; }
-.bar .q input{ width:132px; min-width:96px; padding:8px 12px; }
-.bar .q button{ padding:7px 10px; }
-.bar .hint{ font-size:11px; }
-@media (max-width:1000px){ .bar .hint{ display:none; } }
-/* 🔑 宽屏让工具条放宽（正文仍 780px）—— 否则 6 个按钮＋搜索框＋进度在 780 里必换行。
-   ⭐ 实测：780px 下工具条 109px 高（两行）；放宽后一行。--bar 是 JS 实测的，几行都不挡锚点。 */
-@media (min-width:1120px){ .bar .in{ max-width:1080px; } }
-@media (max-width:640px){ .bar .q input{ width:104px; } .bar .pos{ font-size:11.5px; } }
 
 /* 🏷 顶部三维度标签 */
 .dims{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:14px auto 0; }
@@ -172,11 +150,7 @@ HERO_CSS = """
 .hero .three li{ font-size:15px; padding-bottom:10px; }
 """
 
-SEARCH_HTML = ('<span class="q"><input id="q" type="search" placeholder="搜本页…（/ 聚焦）" '
-               'autocomplete="off" spellcheck="false">'
-               '<button type="button" id="qprev" title="上一个（Shift+Enter）">↑</button>'
-               '<button type="button" id="qnext" title="下一个（Enter）">↓</button>'
-               '<span class="n" id="qn">–</span></span>')
+# 搜索框已在 控件.html 的 .q 里（`260905` 胶囊化），不再往工具条里插
 
 SEARCH_JS = """
 (function(){
@@ -245,28 +219,20 @@ SEARCH_JS = """
   });
   q.addEventListener('keydown', function(e){
     if(e.key==='Enter'){ e.preventDefault(); e.shiftKey?jump(cur-1):jump(cur+1); }
-    if(e.key==='Escape'){ q.value=''; clearHits(); qn.textContent='–'; qn.classList.remove('none'); q.blur(); }
+    if(e.key==='Escape'){ q.value=''; clearHits(); qn.textContent='–'; qn.classList.remove('none'); q.blur(); hideQ(); }
   });
+  // 🔍 `260905` 胶囊化：搜索框点开才出来
+  var qbox=document.getElementById('qbox'), qt=document.getElementById('qtoggle');
+  function showQ(){ qbox.hidden=false; q.focus(); q.select(); }
+  function hideQ(){ qbox.hidden=true; }
+  qt.addEventListener('click', function(){ qbox.hidden ? showQ() : hideQ(); });
   document.getElementById('qnext').addEventListener('click', function(){ jump(cur+1); });
   document.getElementById('qprev').addEventListener('click', function(){ jump(cur-1); });
   document.addEventListener('keydown', function(e){
     if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
-    if(e.key==='/'){ e.preventDefault(); q.focus(); q.select(); }
+    if(e.key==='/'){ e.preventDefault(); showQ(); }
   });
-  // 🥇 `260824` 修一个真 bug：`--bar` 在样式里写死 64px，
-  //    但工具条加了搜索框后会**换行变高**（老徐截图里就是两行）⇒
-  //    details 的 scroll-margin-top 按 64px 算 ⇒ **锚点跳过去会被工具条挡住**。
-  //    ⇒ 实测高度写回 CSS 变量，几行都不怕。
-  function syncBar(){
-    var bar=document.querySelector('.bar');
-    if(bar) document.documentElement.style.setProperty('--bar', bar.offsetHeight+'px');
-  }
-  syncBar();
-  window.addEventListener('resize', syncBar);
-  if(window.ResizeObserver){ new ResizeObserver(syncBar).observe(document.querySelector('.bar')); }
-  window.__barHeight=function(){ syncBar();
-    return {bar:document.querySelector('.bar').offsetHeight,
-            cssVar:getComputedStyle(document.documentElement).getPropertyValue('--bar').trim()}; };
+  // （`260905` 撤了吸顶大条，原来实测 --bar 高度那段随之去掉；--bar 现在是 6px 常量）
 
   // 🔴 `260824`：原脚本只认 `#sN`（getElementById 后 steps.indexOf）——
   //    语义锚会让它 `hi=-1` 然后**静默跳到第一段**。⇒ 必须一起加这段，否则锚是个会骗人的东西。
@@ -419,9 +385,9 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
     if missing:
         print("🔴 黄金圈缺档：%s —— 标准要求四档必须齐" % "、".join(missing), file=sys.stderr)
 
-    style = (STD / "_抽出的样式.css").read_text(encoding="utf-8")
-    script = (STD / "_抽出的脚本.js").read_text(encoding="utf-8")
-    bar = (STD / "_抽出的工具条.html").read_text(encoding="utf-8").strip()
+    style = (STD / "样式.css").read_text(encoding="utf-8")
+    script = (STD / "脚本.js").read_text(encoding="utf-8")
+    ctl = (STD / "控件.html").read_text(encoding="utf-8").strip()
     commit = _src_commit(src_p)
     cl = "<br>".join("<code>%s</code> %s：%s" % (v, d, esc(t)) for v, d, t in changelog)
 
@@ -452,11 +418,6 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
         if dim_parts:
             dims_html = '<div class="dims">%s</div>' % "".join(dim_parts)
 
-    # 🔑 搜索框插在进度显示 <span class="pos"> 之前（不改 _抽出的工具条.html 本身）
-    if '<span class="pos">' in bar:
-        bar = bar.replace('<span class="pos">', SEARCH_HTML + '<span class="pos">', 1)
-    else:
-        print("⚠️ 工具条里没找到 .pos，搜索框没插进去", file=sys.stderr)
 
     html = """<!DOCTYPE html>
 <html lang="zh-CN">
@@ -476,7 +437,8 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 </style>
 </head>
 <body>
-
+%s
+<div id="page">
 <div class="hero">
   <span class="eyebrow">%s</span>
   <h1>%s</h1>
@@ -486,7 +448,6 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 </div>
 
 %s
-%s
 <main>
 %s
 </main>
@@ -495,14 +456,15 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
   <span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code>
   <details class="cl"><summary>版本迭代（%d 版）</summary><div class="body">%s</div></details>
 </div>
+</div>
 
 <script>
 %s
 </script>
 </body>
 </html>
-""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, esc(eyebrow), inline(h1), inline(lead),
-       tldr_html, dims_html, bar,
+""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl, esc(eyebrow), inline(h1), inline(lead),
+       tldr_html, dims_html,
        '\n<div class="ring">\n%s\n</div>\n' % "\n".join(ring) if ring else "",
        "\n".join(parts), version, src_p.name, gen_rel, commit, len(changelog), cl,
        script + SEARCH_JS)
