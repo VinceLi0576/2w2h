@@ -221,24 +221,56 @@ body.toc-on #page{ padding-left:240px; }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
 
-/* ── 💬 留言面板（`260905`） */
-.note{ position:fixed; top:72px; right:64px; z-index:58; width:340px; max-width:calc(100vw - 24px); box-sizing:border-box;
+/* ── 💬 批注（`260905` 老徐定四条：气泡／右键 · 黄线＋右侧对齐卡片 · 解决变灰折叠 · 手机点黄线弹出） */
+#page{ position:relative; }
+mark.anno{ background:transparent; color:inherit; border-bottom:2px solid #f5c400; box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
+mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
+.abub, .amenu{ position:fixed; z-index:70; }
+.abub{ font:700 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:#fff; background:var(--ink); border:0; border-radius:16px; padding:8px 12px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.18); }
+.abub[hidden]{ display:none; }
+.amenu{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:4px; box-shadow:0 6px 20px rgba(0,0,0,.14); display:flex; flex-direction:column; min-width:120px; }
+.amenu[hidden]{ display:none; }
+.amenu button{ font:600 13px/1 inherit; color:var(--ink); background:transparent; border:0; text-align:left; padding:9px 12px; border-radius:7px; cursor:pointer; }
+.amenu button:hover{ background:var(--acc-bg); color:var(--acc-d); }
+.acomp{ position:fixed; z-index:70; width:340px; max-width:calc(100vw - 16px); box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; box-shadow:0 10px 30px rgba(0,0,0,.16); font-size:13px; }
+.acomp[hidden]{ display:none; }
+.acomp .acomp-w{ font-size:12px; color:var(--acc-d); font-weight:700; margin-bottom:6px; }
+.acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid #f5c400; color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
+.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 11px; outline:none; }
+.acomp textarea:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
+.acomp .acomp-b{ display:flex; gap:8px; margin-top:8px; }
+.acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
+.acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
+.arail .acard{ position:absolute; width:260px; }
+.acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid #f5c400; border-radius:10px; padding:10px 12px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.acard.done{ border-left-color:var(--line); background:var(--surface); color:var(--muted); }
+.acard.done blockquote, .acard.done .acard-t{ display:none; }
+.acard.done .acard-w::after{ content:"　✓ 已解决"; color:var(--ok); font-weight:700; }
+.acard .acard-w{ font-size:11.5px; color:var(--acc-d); font-weight:700; margin-bottom:5px; }
+.acard .acard-v{ color:var(--muted); font-weight:600; }
+.acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word; }
+.acard .acard-b{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.acard .acard-b button{ font:600 11.5px/1 inherit; color:var(--acc-d); background:var(--acc-bg); border:0; border-radius:12px; padding:6px 10px; cursor:pointer; }
+.acard .acard-b button:disabled{ color:var(--muted); background:var(--surface); cursor:default; }
+.acard .acard-l{ display:inline-block; margin-top:6px; font-size:11.5px; color:var(--acc-d); }
+.acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
+.apop{ position:fixed; z-index:70; width:330px; max-width:calc(100vw - 16px); }
+.apop[hidden]{ display:none; }
+.apop .acard{ box-shadow:0 10px 30px rgba(0,0,0,.16); }
+/* 竖条 💬 的批注列表面板 */
+.ctl button{ position:relative; }
+.ctl-badge{ position:absolute; top:2px; right:2px; min-width:14px; height:14px; border-radius:7px; background:#f5c400; color:#000; font:800 9.5px/14px inherit; padding:0 3px; }
+.ctl-badge[hidden]{ display:none; }
+.note{ position:fixed; top:72px; right:64px; z-index:58; width:340px; max-width:calc(100vw - 80px); max-height:calc(100vh - 100px); overflow:auto; box-sizing:border-box;
   background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px 12px; box-shadow:0 8px 28px rgba(0,0,0,.12); font-size:13px; }
 .note[hidden]{ display:none; }
-.note .note-h{ display:flex; align-items:center; justify-content:space-between; font-weight:800; color:var(--ink); margin-bottom:6px; }
+.note .note-h{ display:flex; align-items:center; justify-content:space-between; font-weight:800; color:var(--ink); margin-bottom:8px; }
 .note .note-x{ font:700 16px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
 .note .note-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
-.note .note-w{ font-size:12px; color:var(--acc-d); font-weight:700; margin-bottom:6px; }
-.note .note-q{ margin:0 0 8px; padding:6px 10px; border-left:3px solid var(--line); color:var(--ink-soft); font-size:12.3px; line-height:1.6;
-  max-height:84px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
-.note textarea{ width:100%; box-sizing:border-box; min-height:110px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink);
-  background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 11px; outline:none; }
-.note textarea:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
-.note .note-b{ display:flex; align-items:center; gap:10px; margin-top:8px; }
-.note .note-send{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
-.note .note-send:hover{ background:var(--acc-d); }
-.note .note-s{ font-size:12px; color:var(--muted); } .note .note-s a{ color:var(--acc-d); font-weight:700; }
-@media (max-width:640px){ .note{ top:64px; right:42px; max-width:calc(100vw - 50px); } }
+.note .note-list .acard{ margin-bottom:8px; }
+.note .note-empty, .note .note-tip{ font-size:12px; color:var(--muted); line-height:1.6; }
+.note .note-tip{ margin-top:8px; border-top:1px solid var(--line); padding-top:8px; }
+@media (max-width:640px){ .note{ top:64px; right:42px; max-width:calc(100vw - 50px); } .arail{ display:none; } }
 
 
 mark.hit{ background:#fde68a; color:inherit; padding:0 1px; border-radius:2px; }
@@ -289,7 +321,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   <button type="button" id="zoomin" title="放大">A＋</button>
   <button type="button" id="zoomout" title="缩小">A－</button>
   <span class="sep"></span>
-  <button type="button" id="notebtn" title="留言给 AI（先选中一段文字再点，会带上引用）">💬</button>
+  <button type="button" id="notebtn" title="批注列表（要加新批注：选中正文里的字，点冒出来的气泡）">💬</button>
   <div class="q" id="qbox" hidden>
     <input id="q" type="search" placeholder="搜本页…" autocomplete="off" spellcheck="false">
     <button type="button" id="qprev" title="上一个（Shift+Enter）">↑</button>
@@ -328,7 +360,7 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 <a id="what" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s3" data-key="what">
   <summary><span class="num">3</span><span class="tag what">WHAT</span><span class="ti">它产出什么 · 推送长什么样</span><span class="sub">一页 HTML · 一行记录 · 一条推送，各自长什么样、去哪看</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 留言给 AI（变成 GitHub issue）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 03:58）的快照</b>：全机 skill 调用共 6 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
+  <div class="body"><p class="lead2">先给结论：<b>三样产物：HTML 页、使用记录、推送消息。推送里 📖 文档 那行指向的就是本页。</b></p><details class="sub" open><summary><span class="nm">一页 HTML 长什么样</span></summary><div class="body"><p class="">顶部 <code>&lt;!-- 产物 · 源在 xxx.md · 生成器 xxx.py · 🚫 别手改本文件 --&gt;</code> 标记 → 标题与一句话 lead → <b>🎯 先看三句话</b> → <b>黄金圈四钮</b>（WHY 橙 · HOW 紫 · WHAT 青 · HOW GOOD 玫红）→ 每段一个折叠块，展开第一句就是结论 → 末段 📎 对照读物 → 底部版本徽章 ＋ changelog。右上角一个小胶囊：☰ 侧边目录（宽屏常驻左侧，像语雀那样看全部框架）· 💬 批注列表（加批注是选中文字冒气泡）· 搜本页（折叠段里的字浏览器自带的 Ctrl+F 搜不到，所以自带一个）· 缩放 · 上下段 · 全收全展 · 段号。</p></div></details><details class="sub" open><summary><span class="nm">使用记录长什么样</span></summary><div class="body"><p class=""><code>~/.claude/.rs-notify/skill-usage.tsv</code>，四列：时间 · skill · 目录 · 参数。看全量：</p><pre data-lang="bash"><code>column -t -s $'\t' ~/.claude/.rs-notify/skill-usage.tsv</code></pre><p class="note">📌 <b>出页时（2026-09-05 04:10）的快照</b>：全机 skill 调用共 6 条，其中 2w2h 4 条。最近 4 条 2w2h：</p><ul><li class=""><code>2026-09-04 22:07:39</code> · 在 <code>ops</code> · 参数「测试」</li><li class=""><code>2026-09-04 20:02:08</code> · 在 <code>ops</code> · 参数「给 2w2h 自己出一页自述：ops/skill/2w2h/自述.md → 自述.html，推送底部 📖 文档 指向它」</li><li class=""><code>2026-09-04 19:50:58</code> · 在 <code>ops</code></li><li class=""><code>2026-09-04 19:22:07</code> · 在 <code>ops</code> · 参数「验通道」</li></ul><p class="warn">⚠️ 这是快照，会过时；活的数据用上面那条 <code>column -t</code> 现采。</p></div></details><details class="sub" open><summary><span class="nm">推送每行怎么读</span></summary><div class="body"><pre data-lang="text"><code>🧰 skill 被调用：2w2h            ← 哪个 skill。本页只讲 2w2h；别的 skill 也会从同一个机器人推
 📂 在：ops                        ← 在哪个项目里调的（cwd 去掉 ~/projects/）
 💬 参数：给这份 md 出页            ← 调用时带的参数，没有就没这行
 📊 这个 skill：今日 2 次 · 累计 5 次 ← 从使用记录现数的
@@ -338,12 +370,12 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 🕐 频率  事件触发 · rule 10 分／skill 30 分 · --test 手动推
 📂 代码  源 cc:~/projects/ops/自动化/ · 跑 cc:~/.claude/hooks/
 📖 文档  ops/skill/2w2h/自述.html                     ← 就是本页。别的 skill 有自述页也指自己那份，没有就指台账
-🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 03:58）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
+🔄 更新  09-04 19:55（脚本 mtime）                     ← 群里一眼看出跑的是不是新版</code></pre></div></details><details class="sub" open><summary><span class="nm">全机现状（出页时现算）</span></summary><div class="body"><p class="note">📌 <b>出页时（2026-09-05 04:10）现算</b>：</p><ul><li class="">import 本夹公共库的生成器：<b>28 个</b>（不含本夹自己）</li><li class="">全机 HTML <b>257</b> 页里带黄金圈骨架的 <b>36</b> 页 —— 存量不回填，老页迭代时才改</li><li class="">已有自述页的 skill：<code>2w2h</code></li></ul><p class="warn">⚠️ 快照会过时；现采命令在 <code>SKILL.md</code> 头部。</p></div></details></div>
 </details>
 <a id="good" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s4" data-key="good">
   <summary><span class="num">4</span><span class="tag good">HOW GOOD</span><span class="ti">怎么判它做得对不对 · 不对怎么改</span><span class="sub">推送该不该来 · 这次该不该调 · 出的页对不对，三问各有判据；改只要一句话</span></summary>
-  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加）</b>：在页面上选中那段文字，点右上角 💬，写一句「哪里不对、改成什么」，发送 —— 它会变成 GitHub 上的一条 issue（仓库 <code>2w2h</code>，标签「留言」），我用 <code>scripts/读留言.sh</code> 读，改完关 issue。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
+  <div class="body"><p class="lead2">先给结论：<b>收到推送觉得不对，先分清是三类里的哪一类，再说一句「改 2w2h：……」。改的永远是三处之一：<code>SKILL.md</code>、本页 md、hook 脚本。</b></p><details class="sub" open><summary><span class="nm">① 推送本身不合适（太频 · 太少 · 内容没用）</span></summary><div class="body"><ul><li class="">判据：<b>30 分钟内最多一条</b>，压下的下条带出、不丢。频繁到烦 ⇒ 说「2w2h 推送窗口改成 60 分钟」；漏了 ⇒ 先看 <code>~/.claude/logs/rules-skills-notify.log</code> 里是 <code>stashed</code>（在窗口里，正常）还是 <code>postfail</code>（发失败）</li><li class="">内容没用 ⇒ 说清少了哪一行。🔴 但「推不出要改什么的东西一律不推」是那脚本的红线，别往里塞装饰</li></ul></div></details><details class="sub" open><summary><span class="nm">② 这次调用不该发生（那页不该出 HTML）</span></summary><div class="body"><ul><li class="">判据（<code>260823</code> 老徐定）：<b>md 正本管日常，HTML 管交付 —— 阶段性沟通完毕才出页</b>；一个软件只有一份笔记别为它出页；<b>别在子夹随手出 HTML</b></li><li class="">看推送里 <code>📂 在：</code> 和 <code>💬 参数：</code> 就能判：是「谈完了出定稿」还是「边查边出」。后者 ⇒ 说「这页不该出，回 md」</li></ul></div></details><details class="sub" open><summary><span class="nm">③ 出来的页不对</span></summary><div class="body"><ul><li class="">验收六样（<code>scripts/验收.sh</code> 一条命令）：字节数没倒退 · 四钮齐 · 每段有稳定锚 · 搜索框在 · 顶部产物标记 · 没有未填占位</li><li class="">反例六条（<code>结构输出标准.md</code>）：同级标题平铺 · 按发现顺序排 · TL;DR 放最后 · 只有三档漏 HOW GOOD · 段落没 id · 展开先铺垫</li><li class="crit">🔴 <b>最常见的错是四档判错</b>：WHY 写成功能清单（那是 WHAT）。判法只有一句：删掉这段，读者还知道「不做会怎样」吗？</li></ul></div></details><details class="sub" open><summary><span class="nm">怎么发起迭代</span></summary><div class="body"><p class=""><b>最省事的路（<code>260905</code> 加，像 Word 批注）</b>：选中那段文字，点冒出来的「💬 批注」（右键菜单里也有），写一句「哪里不对、改成什么」，保存 —— 那几个字底下画黄线，卡片贴在右侧空白跟它对齐；手机上点黄线弹卡。先存在你浏览器里；卡片上「发到 GitHub」你点了才出去（变成仓库 <code>2w2h</code> 的一条 issue，我用 <code>scripts/读留言.sh</code> 读，改完关掉、卡片变灰）。🔴 存哪还没最后定：公开仓库＝留言公开。 或者在 ops 项目开一条对话（或直接对 <code>ops-claude</code> 说），一句话：「<b>改 2w2h：&lt;上面①②③里的哪一条 ＋ 你看到的现象&gt;</b>」。 改完的那条线要重出本页（<code>python3 _生成自述HTML.py</code>），版本号加一、changelog 写一行 —— 🔴 <b>本页就是 2w2h 的一部分，skill 变了页不变就是在骗人</b>。</p><p class="star">⭐ 今晚就能做的最小一步：跑一次上面那条 <code>column -t</code> 看使用记录，对一下跟你印象里「谁在出页」是否一致。</p></div></details></div>
 </details>
 <a id="refs" class="kanchor" aria-hidden="true"></a>
 <details class="sec" id="s5" data-key="refs">
@@ -353,8 +385,8 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
 </main>
 
 <div class="foot">
-  <span class="badge">v1.9</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>bb75bd5</code>
-  <details class="cl"><summary>版本迭代（10 版）</summary><div class="body"><code>v1.9</code> 260905：控件条改竖排、分四组（导航·展收·阅读·留言），为后面加按钮留位（老徐：要竖着）<br><code>v1.8</code> 260905：加 💬 留言：选中文字点它 → 变成 GitHub issue（老徐：基于位置写留言备注，保存了 AI 再读再改）<br><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
+  <span class="badge">v2.0</span>源 <code>自述.md</code> · 生成器 <code>ops/skill/2w2h/_生成自述HTML.py</code> · 提交 <code>bb75bd5+未提交改动</code>
+  <details class="cl"><summary>版本迭代（11 版）</summary><div class="body"><code>v2.0</code> 260905：批注改成 Word 式：选中冒气泡／右键 → 黄线 ＋ 右侧对齐卡片 → 解决变灰折叠 → 手机点黄线弹卡；先存浏览器，发 GitHub 点了才出去（老徐四条全对）<br><code>v1.9</code> 260905：控件条改竖排、分四组（导航·展收·阅读·留言），为后面加按钮留位（老徐：要竖着）<br><code>v1.8</code> 260905：加 💬 留言：选中文字点它 → 变成 GitHub issue（老徐：基于位置写留言备注，保存了 AI 再读再改）<br><code>v1.7</code> 260905：右侧对称留白（≥1300 宽）；目录栏自带 « 收起（老徐：右边也要空一点、侧边可缩进去）<br><code>v1.6</code> 260905：加侧边目录（老徐：参考飞书／语雀，从侧边看全部框架）：宽屏常驻左侧可收起，窄屏抽屉，点哪跳哪、当前段高亮<br><code>v1.5</code> 260905：四钮改两行两列、跟正文同宽（老徐：一行太宽）<br><code>v1.4</code> 260905：功能栏改右上角胶囊（搜 · 缩放 · 上下段 · 全收全展 · 段号），撤吸顶大条；样式脚本改名为正本，不再重抽样板<br><code>v1.3</code> 260905：公开到 github.com/VinceLi0576/2w2h（正本仍在 ops，脚本单向推）；新生成器路径改 ~/.claude/skills/2w2h<br><code>v1.2</code> 260905：抬头改三段式：标题 ≤16 · 一句话 ≤30 · 三行各 ≤20，三行进抬头、功能栏后移；正文默认全收起（老徐一段段聊定的）<br><code>v1.1</code> 260905：上站 yunexcel2026.pages.dev/2w2h/（老徐：发到站上，一段段聊）；生成器两处同出<br><code>v1</code> 260904：开张：老徐要「推送底部指一页，页面自己说明自己，其他 skill 都参考这个模板」</div></details>
 </div>
 </div>
 
@@ -492,55 +524,214 @@ a.kanchor{ display:block; height:0; overflow:hidden; scroll-margin-top:calc(var(
   render();
   window.__toc=function(){ return {items:ol.children.length, on:document.body.classList.contains('toc-on'), drawer:document.body.classList.contains('toc-drawer')}; };
 })();
-/* 💬 留言（`260905` 老徐：基于点的位置写留言备注，保存了 AI 再读再改）
-   页面 → POST /api/note（Pages Function）→ GitHub Issue（仓库 2w2h，标签「留言」）；AI 用公开 API 读，改完关 issue。
-   位置＝当前段／小节（选中文字则带引用）。本地 file:// 打开时发不了，会提示去站上发。 */
+
+/* 批注（`260905` 老徐定的四条，全对）：
+   ① 选中一段字 → 光标旁冒「💬 批注」气泡，右键菜单里也有 → 点开就写
+   ② 写完：被批注的字底下画黄线，卡片贴在右侧空白、跟那段对齐（像 Word）
+   ③ 解决后：卡片变灰折叠、黄线消失；历史在 GitHub 里翻得到（每张卡「发到 GitHub」按钮，🔴 点了才出去）
+   ④ 手机没有右边空白：点黄线弹出卡片
+   锚定＝段 key ＋ 引用原文 exact ＋ 前后各 32 字 prefix/suffix（W3C Web Annotation 的选择器思路），改了字靠前后文重定位。
+   存储先在浏览器（localStorage，按页分桶）；存哪最后定，换存储只改 store 这一小块。 */
 (function(){
-  var btn=document.getElementById('notebtn'), page=document.getElementById('page'); if(!btn||!page) return;
-  var sel={quote:'',where:'',anchor:''};
-  function locate(node){
-    var el=node&&(node.nodeType===1?node:node.parentElement);
-    var sub=el&&el.closest?el.closest('details.sub'):null, sec=el&&el.closest?el.closest('details.sec'):null, w='', a='';
-    if(sec){ var ti=sec.querySelector('summary .ti'), n=sec.querySelector('summary .num');
-      w='第'+(n?n.textContent:'?')+'段 '+(ti?ti.textContent:''); a='#'+(sec.dataset.key||sec.id); }
-    if(sub){ var nm=sub.querySelector('summary .nm'); w+=(w?' · ':'')+(nm?nm.textContent:''); if(sub.id) a='#'+sub.id; }
-    return {where:w, anchor:a};
+  var page=document.getElementById('page'), main=document.querySelector('main'); if(!page||!main) return;
+  var PAGE=(location.pathname.split('/').filter(Boolean)[0]||'local');
+  var VER=(document.querySelector('.foot .badge')||{}).textContent||'';
+  var KEY='2w2h-anno:'+PAGE;
+
+  /* ── store（换存储只改这里） */
+  var store={
+    load:function(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } },
+    save:function(list){ try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){} }
+  };
+  var notes=store.load();
+
+  /* ── 工具 */
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function zoom(){ return parseFloat(page.style.zoom)||1; }
+  function secOf(node){ var el=node&&(node.nodeType===1?node:node.parentElement); return el&&el.closest?el.closest('details.sec'):null; }
+  function whereOf(sec, node){
+    if(!sec) return {where:'整页', anchor:''};
+    var el=node&&(node.nodeType===1?node:node.parentElement), sub=el&&el.closest?el.closest('details.sub'):null;
+    var ti=sec.querySelector('summary .ti'), n=sec.querySelector('summary .num');
+    var w='第'+(n?n.textContent:'?')+'段 '+(ti?ti.textContent:''), a='#'+(sec.dataset.key||sec.id);
+    if(sub){ var nm=sub.querySelector('summary .nm'); w+=' · '+(nm?nm.textContent:''); if(sub.id) a='#'+sub.id; }
+    return {where:w, anchor:a, sec:sec};
   }
-  document.addEventListener('selectionchange', function(){
-    var s=document.getSelection(); if(!s||s.isCollapsed) return;
-    var t=s.toString().trim(); if(!t||!page.contains(s.anchorNode)) return;
-    var l=locate(s.anchorNode); sel={quote:t.slice(0,600), where:l.where, anchor:l.anchor};
-  });
-  var box=document.createElement('div'); box.className='note'; box.hidden=true;
-  box.innerHTML='<div class="note-h">💬 留言给 AI<button type="button" class="note-x" title="关闭">×</button></div>'
-    +'<div class="note-w"></div><blockquote class="note-q" hidden></blockquote>'
-    +'<textarea placeholder="哪里不对、想改成什么。发出去会变成 GitHub 上的一条 issue，AI 读了改，改完关掉。"></textarea>'
-    +'<div class="note-b"><button type="button" class="note-send">发送</button><span class="note-s"></span></div>';
-  document.body.appendChild(box);
-  var W=box.querySelector('.note-w'), Q=box.querySelector('.note-q'), TA=box.querySelector('textarea'), S=box.querySelector('.note-s');
-  function open(){
-    var cur=document.querySelector('details.sec.cur')||document.querySelector('details.sec[open]');
-    var l=sel.quote?{where:sel.where,anchor:sel.anchor}:locate(cur);
-    box.dataset.where=l.where||''; box.dataset.anchor=l.anchor||'';
-    W.textContent='位置：'+(l.where||'整页'); Q.hidden=!sel.quote; Q.textContent=sel.quote;
-    S.textContent=''; box.hidden=false; TA.focus();
+  function textNodes(root){
+    var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:function(n){
+      var p=n.parentNode&&n.parentNode.nodeName; if(p==='SCRIPT'||p==='STYLE'||p==='SUMMARY') return NodeFilter.FILTER_REJECT;
+      return n.nodeValue?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT; }});
+    var out=[], n; while((n=w.nextNode())) out.push(n); return out;
   }
-  btn.addEventListener('click', function(){ if(box.hidden) open(); else box.hidden=true; });
-  box.querySelector('.note-x').addEventListener('click', function(){ box.hidden=true; });
-  box.querySelector('.note-send').addEventListener('click', function(){
-    var text=TA.value.trim(); if(!text){ S.textContent='先写点什么'; return; }
-    S.textContent='发送中…';
-    var pg=location.pathname.split('/').filter(Boolean)[0]||'';
-    fetch('/api/note',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({page:pg, anchor:box.dataset.anchor, where:box.dataset.where, quote:Q.hidden?'':Q.textContent, text:text})})
-      .then(function(r){ return r.json(); })
-      .then(function(j){
-        if(j.ok){ S.innerHTML='已存为 <a href="'+j.url+'" target="_blank" rel="noopener">issue #'+j.number+'</a>'; TA.value=''; sel={quote:'',where:'',anchor:''}; }
-        else{ S.textContent='没存上：'+(j.error||'未知错误'); }
-      })
-      .catch(function(e){ S.textContent='没存上：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message); });
+  /* 在 root 的正文文本里找 exact（用 prefix/suffix 消歧），把命中的文字包进 <mark class="anno"> */
+  function wrap(root, a){
+    var nodes=textNodes(root), full='', pos=[];
+    nodes.forEach(function(n){ pos.push(full.length); full+=n.nodeValue; });
+    var cands=[], i=full.indexOf(a.exact); while(i>=0){ cands.push(i); i=full.indexOf(a.exact, i+1); }
+    if(!cands.length) return false;
+    var best=cands[0], bs=-1;
+    cands.forEach(function(c){ var s=0; if(a.prefix&&full.slice(Math.max(0,c-a.prefix.length),c)===a.prefix) s+=2; if(a.suffix&&full.slice(c+a.exact.length, c+a.exact.length+a.suffix.length)===a.suffix) s+=2; if(s>bs){ bs=s; best=c; } });
+    var start=best, end=best+a.exact.length, marks=[];
+    for(var k=nodes.length-1;k>=0;k--){                 // 从后往前包，前面节点的偏移不受影响
+      var n=nodes[k], ns=pos[k], ne=ns+n.nodeValue.length;
+      if(ne<=start||ns>=end) continue;
+      var s0=Math.max(start,ns)-ns, e0=Math.min(end,ne)-ns;
+      var r=document.createRange(); r.setStart(n,s0); r.setEnd(n,e0);
+      var m=document.createElement('mark'); m.className='anno'+(a.resolved?' done':''); m.dataset.id=a.id; m.title='点击看批注';
+      r.surroundContents(m); marks.push(m);
+    }
+    return marks.reverse();
+  }
+  function unwrapAll(){
+    document.querySelectorAll('mark.anno').forEach(function(m){ var p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
+  }
+
+  /* ── 选中 → 气泡 / 右键菜单 */
+  var bub=document.createElement('button'); bub.type='button'; bub.className='abub'; bub.hidden=true; bub.textContent='💬 批注'; document.body.appendChild(bub);
+  var menu=document.createElement('div'); menu.className='amenu'; menu.hidden=true;
+  menu.innerHTML='<button type="button" data-act="anno">💬 批注</button><button type="button" data-act="copy">复制</button>'; document.body.appendChild(menu);
+  var pending=null;   // 当前选区快照
+  function snap(){
+    var s=document.getSelection(); if(!s||s.isCollapsed||!s.rangeCount) return null;
+    var r=s.getRangeAt(0), t=s.toString().trim(); if(!t) return null;
+    if(!main.contains(r.commonAncestorContainer)) return null;
+    var sec=secOf(r.startContainer); if(!sec) return null;
+    var body=sec.querySelector('.body'); var nodes=textNodes(body), full='', off=-1, acc=0;
+    for(var k=0;k<nodes.length;k++){ if(nodes[k]===r.startContainer){ off=acc+r.startOffset; } acc+=nodes[k].nodeValue.length; full+=nodes[k].nodeValue; }
+    if(off<0){ off=full.indexOf(t); } else { var j=full.indexOf(t, Math.max(0,off-2)); if(j>=0) off=j; }
+    if(off<0) return null;
+    var w=whereOf(sec, r.startContainer);
+    return {exact:t.slice(0,600), prefix:full.slice(Math.max(0,off-32),off), suffix:full.slice(off+t.length, off+t.length+32), where:w.where, anchor:w.anchor, secId:sec.id, rect:r.getBoundingClientRect()};
+  }
+  function showBub(){
+    var p=snap(); if(!p){ bub.hidden=true; return; }
+    pending=p; bub.hidden=false;
+    var x=p.rect.left+p.rect.width/2, y=p.rect.top-10;
+    bub.style.left=Math.max(8, Math.min(window.innerWidth-90, x-40))+'px';
+    bub.style.top=(y<40? p.rect.bottom+8 : y-36)+'px';
+  }
+  document.addEventListener('mouseup', function(e){ if(e.target.closest&&e.target.closest('.abub,.amenu,.acomp,.acard,.ctl,.note')) return; setTimeout(showBub, 10); });
+  document.addEventListener('touchend', function(){ setTimeout(showBub, 200); });
+  document.addEventListener('selectionchange', function(){ var s=document.getSelection(); if(!s||s.isCollapsed){ bub.hidden=true; } });
+  document.addEventListener('contextmenu', function(e){
+    if(!main.contains(e.target)) return;
+    var p=snap(); if(!p) return;
+    e.preventDefault(); pending=p; bub.hidden=true;
+    menu.hidden=false; menu.style.left=Math.min(window.innerWidth-130, e.clientX)+'px'; menu.style.top=Math.min(window.innerHeight-80, e.clientY)+'px';
   });
-  window.__note=function(){ return {open:!box.hidden, where:box.dataset.where, anchor:box.dataset.anchor, quote:Q.hidden?'':Q.textContent}; };
+  document.addEventListener('mousedown', function(e){ if(!menu.hidden&&!menu.contains(e.target)) menu.hidden=true; });
+  menu.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return; menu.hidden=true;
+    if(b.dataset.act==='copy'){ try{ navigator.clipboard.writeText(pending?pending.exact:''); }catch(err){} return; }
+    openComposer(pending);
+  });
+  bub.addEventListener('click', function(){ bub.hidden=true; openComposer(pending); });
+
+  /* ── 写批注的小卡 */
+  var comp=document.createElement('div'); comp.className='acomp'; comp.hidden=true;
+  comp.innerHTML='<div class="acomp-w"></div><blockquote class="acomp-q"></blockquote><textarea placeholder="这里怎么了、想改成什么"></textarea><div class="acomp-b"><button type="button" class="ok">保存批注</button><button type="button" class="no">取消</button></div>';
+  document.body.appendChild(comp);
+  var cur=null;
+  function openComposer(p){
+    if(!p) return; cur=p;
+    comp.querySelector('.acomp-w').textContent=p.where; comp.querySelector('.acomp-q').textContent=p.exact;
+    comp.querySelector('textarea').value='';
+    comp.hidden=false;
+    var x=Math.max(8, Math.min(window.innerWidth-360, p.rect.left)), y=p.rect.bottom+12;
+    if(y+220>window.innerHeight) y=Math.max(8, p.rect.top-230);
+    comp.style.left=x+'px'; comp.style.top=y+'px';
+    comp.querySelector('textarea').focus();
+    try{ document.getSelection().removeAllRanges(); }catch(e){}
+  }
+  comp.querySelector('.no').addEventListener('click', function(){ comp.hidden=true; });
+  comp.querySelector('.ok').addEventListener('click', function(){
+    var text=comp.querySelector('textarea').value.trim(); if(!text) return;
+    var a={id:'a'+Date.now().toString(36), page:PAGE, version:VER, where:cur.where, anchor:cur.anchor, secId:cur.secId,
+           exact:cur.exact, prefix:cur.prefix, suffix:cur.suffix, text:text, created:new Date().toISOString(), resolved:false, remote:''};
+    notes.push(a); store.save(notes); comp.hidden=true; render();
+  });
+
+  /* ── 渲染：黄线 ＋ 右侧卡片（宽屏）／点黄线弹卡（窄屏） */
+  var rail=document.createElement('div'); rail.className='arail'; page.appendChild(rail);
+  var pop=document.createElement('div'); pop.className='apop'; pop.hidden=true; document.body.appendChild(pop);
+  function cardHTML(a){
+    return '<div class="acard'+(a.resolved?' done':'')+'" data-id="'+a.id+'">'
+      +'<div class="acard-w">'+esc(a.where)+' <span class="acard-v">'+esc(a.version)+'</span></div>'
+      +'<blockquote>'+esc(a.exact.slice(0,120))+(a.exact.length>120?'…':'')+'</blockquote>'
+      +'<div class="acard-t">'+esc(a.text)+'</div>'
+      +'<div class="acard-b"><button type="button" data-act="res">'+(a.resolved?'↩ 重开':'✓ 解决')+'</button>'
+      +'<button type="button" data-act="gh" '+(a.remote?'disabled':'')+'>'+(a.remote?'已发到 GitHub':'发到 GitHub')+'</button>'
+      +'<button type="button" data-act="del">删</button></div>'
+      +(a.remote?'<a class="acard-l" href="'+esc(a.remote)+'" target="_blank" rel="noopener">issue ↗</a>':'')+'</div>';
+  }
+  function wideRail(){ var m=main.getBoundingClientRect(); return window.innerWidth>=1300 && (window.innerWidth-m.right)>=300; }
+  function render(){
+    unwrapAll(); rail.innerHTML='';
+    var placed=[];
+    notes.forEach(function(a){
+      var sec=document.getElementById(a.secId)||document.querySelector('details.sec[data-key="'+(a.anchor||'').replace('#','')+'"]');
+      var marks=sec?wrap(sec.querySelector('.body'), a):false;
+      a._lost=!marks;
+      if(!marks) return;
+      marks.forEach(function(m){ m.addEventListener('click', function(e){ e.stopPropagation(); showPop(a, m); }); });
+      if(wideRail()){
+        var first=marks[0]; var vis=first.getClientRects().length>0;
+        if(!vis) return;                                 // 收着的段不摆卡（展开时 toggle 会重排）
+        var z=zoom(), pr=page.getBoundingClientRect(), mr=first.getBoundingClientRect();
+        var top=(mr.top-pr.top)/z, left=(main.getBoundingClientRect().right-pr.left)/z+24;
+        placed.forEach(function(q){ if(top<q.bottom+8) top=q.bottom+8; });
+        var el=document.createElement('div'); el.innerHTML=cardHTML(a); el=el.firstChild;
+        el.style.top=top+'px'; el.style.left=left+'px'; rail.appendChild(el);
+        placed.push({top:top, bottom:top+el.offsetHeight});
+      }
+    });
+    var list=document.querySelector('.note .note-list'); if(list) list.innerHTML=notes.length?notes.map(function(a){ return '<div class="acard'+(a.resolved?' done':'')+' inlist" data-id="'+a.id+'">'+ (a._lost?'<div class="acard-lost">⚠️ 原文找不到了（文档改过）</div>':'') + cardHTML(a).replace(/^<div class="acard[^>]*">|<\/div>$/g,'')+'</div>'; }).join(''):'<div class="note-empty">还没有批注。选中一段字，点冒出来的「💬 批注」。</div>';
+    var cnt=document.getElementById('notecnt'); if(cnt){ var open=notes.filter(function(a){return !a.resolved;}).length; cnt.textContent=open||''; cnt.hidden=!open; }
+  }
+  function showPop(a, m){
+    pop.innerHTML=cardHTML(a); pop.hidden=false;
+    var r=m.getBoundingClientRect(); var x=Math.max(8, Math.min(window.innerWidth-340, r.left)), y=r.bottom+8;
+    if(y+200>window.innerHeight) y=Math.max(8, r.top-210);
+    pop.style.left=x+'px'; pop.style.top=y+'px';
+  }
+  document.addEventListener('mousedown', function(e){ if(!pop.hidden&&!pop.contains(e.target)&&!(e.target.closest&&e.target.closest('mark.anno'))) pop.hidden=true; });
+  function act(e){
+    var b=e.target.closest('button[data-act]'); if(!b) return; var card=b.closest('.acard'); var a=notes.filter(function(x){return x.id===card.dataset.id;})[0]; if(!a) return;
+    if(b.dataset.act==='res'){ a.resolved=!a.resolved; store.save(notes); render(); pop.hidden=true; }
+    if(b.dataset.act==='del'){ if(confirm('删掉这条批注？')){ notes=notes.filter(function(x){return x!==a;}); store.save(notes); render(); pop.hidden=true; } }
+    if(b.dataset.act==='gh'){ sendGH(a, b); }
+  }
+  rail.addEventListener('click', act); pop.addEventListener('click', act);
+  document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('.note .note-list')) act(e); });
+
+  /* ── 发到 GitHub（🔴 只在点了按钮时；走 /api/note，站上没配钥匙会回明白话） */
+  function sendGH(a, b){
+    b.disabled=true; b.textContent='发送中…';
+    fetch('/api/note',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:PAGE, anchor:a.anchor, where:a.where+' · '+a.version, quote:a.exact, text:a.text+'\n\n<!-- anno '+JSON.stringify({id:a.id,version:a.version,anchor:a.anchor,prefix:a.prefix,suffix:a.suffix})+' -->'})})
+      .then(function(r){ return r.json(); }).then(function(j){
+        if(j.ok){ a.remote=j.url; store.save(notes); render(); }
+        else{ b.disabled=false; b.textContent='发到 GitHub'; alert('没发出去：'+(j.error||'未知错误')); }
+      }).catch(function(e){ b.disabled=false; b.textContent='发到 GitHub'; alert('没发出去：'+(location.protocol==='file:'?'本地文件打开的页面发不了，去站上发':e.message)); });
+  }
+
+  /* ── 竖条里的 💬：批注列表面板 */
+  var btn=document.getElementById('notebtn');
+  if(btn){
+    var cnt=document.createElement('span'); cnt.id='notecnt'; cnt.className='ctl-badge'; cnt.hidden=true; btn.appendChild(cnt);
+    var panel=document.createElement('div'); panel.className='note'; panel.hidden=true;
+    panel.innerHTML='<div class="note-h">💬 批注<button type="button" class="note-x" title="关闭">×</button></div><div class="note-list"></div><div class="note-tip">选中正文里的字就能加新批注；「发到 GitHub」点了才出去。</div>';
+    document.body.appendChild(panel);
+    btn.addEventListener('click', function(){ panel.hidden=!panel.hidden; if(!panel.hidden) render(); });
+    panel.querySelector('.note-x').addEventListener('click', function(){ panel.hidden=true; });
+  }
+
+  /* ── 重排时机：段展开/收起、缩放、窗口变化 */
+  document.querySelectorAll('details').forEach(function(d){ d.addEventListener('toggle', function(){ setTimeout(render, 30); }); });
+  window.addEventListener('resize', function(){ clearTimeout(render._t); render._t=setTimeout(render, 120); });
+  var zi=document.getElementById('zoomin'), zo=document.getElementById('zoomout');
+  [zi,zo].forEach(function(b){ if(b) b.addEventListener('click', function(){ setTimeout(render, 30); }); });
+  render();
+  window.__anno={list:function(){ return notes; }, add:function(a){ notes.push(a); store.save(notes); render(); }, render:render, snap:snap};
 })();
 
 (function(){

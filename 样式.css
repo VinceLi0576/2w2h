@@ -212,21 +212,53 @@ body.toc-on #page{ padding-left:240px; }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
 
-/* ── 💬 留言面板（`260905`） */
-.note{ position:fixed; top:72px; right:64px; z-index:58; width:340px; max-width:calc(100vw - 24px); box-sizing:border-box;
+/* ── 💬 批注（`260905` 老徐定四条：气泡／右键 · 黄线＋右侧对齐卡片 · 解决变灰折叠 · 手机点黄线弹出） */
+#page{ position:relative; }
+mark.anno{ background:transparent; color:inherit; border-bottom:2px solid #f5c400; box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
+mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
+.abub, .amenu{ position:fixed; z-index:70; }
+.abub{ font:700 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:#fff; background:var(--ink); border:0; border-radius:16px; padding:8px 12px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.18); }
+.abub[hidden]{ display:none; }
+.amenu{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:4px; box-shadow:0 6px 20px rgba(0,0,0,.14); display:flex; flex-direction:column; min-width:120px; }
+.amenu[hidden]{ display:none; }
+.amenu button{ font:600 13px/1 inherit; color:var(--ink); background:transparent; border:0; text-align:left; padding:9px 12px; border-radius:7px; cursor:pointer; }
+.amenu button:hover{ background:var(--acc-bg); color:var(--acc-d); }
+.acomp{ position:fixed; z-index:70; width:340px; max-width:calc(100vw - 16px); box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; box-shadow:0 10px 30px rgba(0,0,0,.16); font-size:13px; }
+.acomp[hidden]{ display:none; }
+.acomp .acomp-w{ font-size:12px; color:var(--acc-d); font-weight:700; margin-bottom:6px; }
+.acomp .acomp-q, .acard blockquote, .apop blockquote{ margin:0 0 8px; padding:5px 10px; border-left:3px solid #f5c400; color:var(--ink-soft); font-size:12.3px; line-height:1.6; max-height:72px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
+.acomp textarea{ width:100%; box-sizing:border-box; min-height:96px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 11px; outline:none; }
+.acomp textarea:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
+.acomp .acomp-b{ display:flex; gap:8px; margin-top:8px; }
+.acomp .ok{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
+.acomp .no{ font:600 13px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:9px 10px; }
+.arail .acard{ position:absolute; width:260px; }
+.acard{ box-sizing:border-box; background:var(--card); border:1px solid var(--line); border-left:3px solid #f5c400; border-radius:10px; padding:10px 12px; font-size:12.8px; line-height:1.6; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.acard.done{ border-left-color:var(--line); background:var(--surface); color:var(--muted); }
+.acard.done blockquote, .acard.done .acard-t{ display:none; }
+.acard.done .acard-w::after{ content:"　✓ 已解决"; color:var(--ok); font-weight:700; }
+.acard .acard-w{ font-size:11.5px; color:var(--acc-d); font-weight:700; margin-bottom:5px; }
+.acard .acard-v{ color:var(--muted); font-weight:600; }
+.acard .acard-t{ color:var(--ink); white-space:pre-wrap; word-break:break-word; }
+.acard .acard-b{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.acard .acard-b button{ font:600 11.5px/1 inherit; color:var(--acc-d); background:var(--acc-bg); border:0; border-radius:12px; padding:6px 10px; cursor:pointer; }
+.acard .acard-b button:disabled{ color:var(--muted); background:var(--surface); cursor:default; }
+.acard .acard-l{ display:inline-block; margin-top:6px; font-size:11.5px; color:var(--acc-d); }
+.acard .acard-lost{ font-size:11.5px; color:var(--warn); font-weight:700; margin-bottom:4px; }
+.apop{ position:fixed; z-index:70; width:330px; max-width:calc(100vw - 16px); }
+.apop[hidden]{ display:none; }
+.apop .acard{ box-shadow:0 10px 30px rgba(0,0,0,.16); }
+/* 竖条 💬 的批注列表面板 */
+.ctl button{ position:relative; }
+.ctl-badge{ position:absolute; top:2px; right:2px; min-width:14px; height:14px; border-radius:7px; background:#f5c400; color:#000; font:800 9.5px/14px inherit; padding:0 3px; }
+.ctl-badge[hidden]{ display:none; }
+.note{ position:fixed; top:72px; right:64px; z-index:58; width:340px; max-width:calc(100vw - 80px); max-height:calc(100vh - 100px); overflow:auto; box-sizing:border-box;
   background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px 12px; box-shadow:0 8px 28px rgba(0,0,0,.12); font-size:13px; }
 .note[hidden]{ display:none; }
-.note .note-h{ display:flex; align-items:center; justify-content:space-between; font-weight:800; color:var(--ink); margin-bottom:6px; }
+.note .note-h{ display:flex; align-items:center; justify-content:space-between; font-weight:800; color:var(--ink); margin-bottom:8px; }
 .note .note-x{ font:700 16px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
 .note .note-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
-.note .note-w{ font-size:12px; color:var(--acc-d); font-weight:700; margin-bottom:6px; }
-.note .note-q{ margin:0 0 8px; padding:6px 10px; border-left:3px solid var(--line); color:var(--ink-soft); font-size:12.3px; line-height:1.6;
-  max-height:84px; overflow:auto; background:var(--surface); border-radius:0 8px 8px 0; }
-.note textarea{ width:100%; box-sizing:border-box; min-height:110px; resize:vertical; font:500 13.5px/1.6 inherit; color:var(--ink);
-  background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 11px; outline:none; }
-.note textarea:focus{ border-color:var(--acc); box-shadow:0 0 0 3px var(--acc-bg); }
-.note .note-b{ display:flex; align-items:center; gap:10px; margin-top:8px; }
-.note .note-send{ font:700 13px/1 inherit; color:#fff; background:var(--acc); border:0; border-radius:16px; padding:9px 16px; cursor:pointer; }
-.note .note-send:hover{ background:var(--acc-d); }
-.note .note-s{ font-size:12px; color:var(--muted); } .note .note-s a{ color:var(--acc-d); font-weight:700; }
-@media (max-width:640px){ .note{ top:64px; right:42px; max-width:calc(100vw - 50px); } }
+.note .note-list .acard{ margin-bottom:8px; }
+.note .note-empty, .note .note-tip{ font-size:12px; color:var(--muted); line-height:1.6; }
+.note .note-tip{ margin-top:8px; border-top:1px solid var(--line); padding-top:8px; }
+@media (max-width:640px){ .note{ top:64px; right:42px; max-width:calc(100vw - 50px); } .arail{ display:none; } }

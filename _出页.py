@@ -17,7 +17,7 @@ md 里的机读标记（放在 `## 标题` 的下一行）——细则见同夹 
     <!-- sec tag=WHY sub=副标 ring=按钮标题|一句钩子 -->
     <!-- sec sub=副标 -->
 🔴 四档（WHY/HOW/WHAT/HOW-GOOD）缺哪档就往 stderr 报警 —— 缺档说明那部分没想清楚。
-⭐ 样式与脚本从同夹 `样式.css` `脚本.js` `控件.html` 读 —— `260905` 起**本夹就是正本**（老徐「最后你改的才是标准」），不再从 Feynman 样板重抽。
+⭐ 样式与脚本从同夹 `样式.css` `脚本.js` `批注.js` `控件.html` 读 —— `260905` 起**本夹就是正本**（老徐「最后你改的才是标准」），不再从 Feynman 样板重抽。
 """
 import io, os, pathlib, re, subprocess, sys
 
@@ -387,6 +387,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 
     style = (STD / "样式.css").read_text(encoding="utf-8")
     script = (STD / "脚本.js").read_text(encoding="utf-8")
+    script += "\n" + (STD / "批注.js").read_text(encoding="utf-8")   # 260905 批注（气泡／黄线／右侧卡片）
     ctl = (STD / "控件.html").read_text(encoding="utf-8").strip()
     commit = _src_commit(src_p)
     cl = "<br>".join("<code>%s</code> %s：%s" % (v, d, esc(t)) for v, d, t in changelog)
