@@ -575,7 +575,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 <style>
 %s
 %s
-.foot{max-width:780px;margin:26px auto 0;padding:16px 22px 40px;border-top:1px solid var(--line);
+.foot{max-width:780px;margin:4px auto 0;padding:0 22px 40px;
  font-size:13px;color:var(--muted);line-height:1.9;}
 .foot .badge{display:inline-block;background:var(--ink);color:#fff;padding:2px 9px;
  font-weight:700;font-size:12px;letter-spacing:.04em;border-radius:6px;margin-right:8px;}
