@@ -7,6 +7,7 @@ set -u
 f="${1:?用法: 验收.sh <html>}"
 [ -f "$f" ] || { echo "🔴 文件不存在: $f"; exit 1; }
 bad=0
+STD_VER="v3.0"   # 🔴 本脚本按哪版标准硬查；标准升级同一次改这里＋加检查项（见 SKILL.md「改本夹东西之前」）
 ok{ echo "✅ $*"; }; ng{ echo "🔴 $*"; bad=1; }; wn{ echo "⚠️ $*"; }
 
 # ① 字节数：跟 git HEAD 里的上一版比（有就比）
@@ -57,4 +58,22 @@ PY
   [ "$raw" = "0" ] && ok "代码块里没有裸尖括号" || ng "代码块里疑似 $raw 处裸尖括号（会被当标签吃掉）"
 fi
 
-if [ $bad -eq 0 ]; then echo "—— 全过"; else echo "—— 有 🔴，别当出完了"; exit 1; fi
+# ⑧ md 表格糊掉
+tbl=$(grep -c '<table' "$f" 2>/dev/null); bar=$(grep -cE '<p[^>]*>[[:space:]]*\|' "$f" 2>/dev/null)
+{ [ "$tbl" -eq 0 ] && [ "$bar" -eq 0 ]; } && ok "没有表格残留" || ng "疑似 md 表格糊掉（<table>×$tbl · 裸竖线段落×$bar）—— 渲染器不支持表格，改列表或定宽代码块"
+
+# ⑨ 段折叠
+op=$(grep -oE '<details class="sec[^"]*"[^>]*open' "$f" | wc -l | tr -d ' '); s0=$(grep -oE '<details class="sec s0"[^>]*open' "$f" | wc -l | tr -d ' ')
+{ [ "$op" = "1" ] && [ "$s0" = "1" ]; } && ok "段折叠对（只第 0 段展开）" || wn "段折叠异常：共 $op 个展开、第 0 段 open=$s0"
+
+# —— 脚本查不了的语义，列出来让你自己过，🚫 不假装查过
+echo ""
+echo "🖐 下面这几条脚本查不了，按 $STD_VER 标准你自己过一遍："
+echo "   · 每段第一段是不是「能独立成立的结论」—— 段头收起会露它，是铺垫就露出铺垫"
+echo "   · 四档判没判对 —— WHY 别写成功能清单（删掉这段还知道「不做会怎样」吗）"
+echo "   · 副标有没有进正文「要点」块"
+
+ver=$(grep -oE 'v[0-9]+\.[0-9]+' "$f" | head -1)
+echo ""
+echo "📋 本脚本按 $STD_VER 硬查，本页 ${ver:-?}。两个号对不上 ⇒ 中间的新规矩没进这脚本，上面「你自己过」那几条就是缺口"
+if [ $bad -eq 0 ]; then echo "—— 硬检查全过（🔴 但「过」≠「合格」，还有上面人工那几条）"; else echo "—— 有 🔴，别当出完了"; exit 1; fi
