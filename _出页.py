@@ -500,7 +500,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 
     # ── 第 0 段
     sec0 = ('<a id="%s" class="kanchor" aria-hidden="true"></a>\n'
-            '<details class="sec s0" id="s0" data-key="%s">\n'
+            '<details class="sec s0" id="s0" data-key="%s" open>\n'
             '  <summary><span class="num">0</span><span class="tag title">标题</span><span class="ti">%s</span></summary>\n'
             '  <div class="body">\n'
             '    <details class="sub" open id="s0-1"><summary><span class="no">0.1</span><span class="nm">导语</span></summary>'
