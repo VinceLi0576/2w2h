@@ -184,8 +184,7 @@ details.sec.s0 .three li::before{ width:22px; height:22px; font-size:10.5px; }
 details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
 details.sec.s0 .loc .v{ font-size:12px; color:var(--muted); letter-spacing:.3px; }
 details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
-.k2{ color:var(--acc-d); font-weight:800; font-size:10.5px; letter-spacing:1.5px; white-space:nowrap; }
-.k2::before{ content:"["; opacity:.6; letter-spacing:0; } .k2::after{ content:"]"; opacity:.6; letter-spacing:0; }
+.k2{ color:var(--muted); font-weight:500; font-size:9px; letter-spacing:.5px; opacity:.6; white-space:nowrap; }
 /* 每段开头的「要点」块：形状同 N.x 小节，左边青方块替代数字；不带号、不折叠 */
 .keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
   background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:11px 16px 12px; margin:8px 0 9px; }
@@ -507,7 +506,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             '<div class="body"><p class="lead2">%s</p></div></details>\n'
             '%s'
             '%s'
-            '    <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2 under">项目 › 文件夹 · 版本</span></div>\n'
+            '    <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2">项目 · 文件夹 · 版本</span></div>\n'
             '  </div>\n</details>'
             % (esc(tldr_key), esc(tldr_key), inline(h1), inline(lead),
                ('    <details class="sub" open id="s0-2"><summary><span class="no">0.2</span><span class="nm">要点</span></summary>'
