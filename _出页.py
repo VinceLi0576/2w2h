@@ -22,6 +22,7 @@ md 里的机读标记（放在 `## 标题` 的下一行）——细则见同夹 
 import io, os, pathlib, re, subprocess, sys
 
 STD = pathlib.Path(__file__).resolve.parent
+HOME_URL = "<某个站>"   # 🏠 控件条回站首页；公开库发布时清洗器会换成占位，别人 clone 后改这一行
 
 def _load_md2html:
     """复用 ops 项目里的共用 md 渲染器 —— 🚫 别写第二份 md 解析。"""
@@ -461,7 +462,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
     style = (STD / "样式.css").read_text(encoding="utf-8")
     script = (STD / "脚本.js").read_text(encoding="utf-8")
     script += "\n" + (STD / "批注.js").read_text(encoding="utf-8")   #  批注（气泡／黄线／右侧卡片）
-    ctl = (STD / "控件.html").read_text(encoding="utf-8").strip
+    ctl = (STD / "控件.html").read_text(encoding="utf-8").strip.replace("__HOME__", HOME_URL)   # 每页都要有回站首页的口子；写死线上绝对地址（同一份 HTML 活在 ops 夹和站夹两处，相对路径必错一边）
     commit = _src_commit(src_p)
     cl = "<br>".join("<code>%s</code> %s：%s" % (v, d, esc(t)) for v, d, t in changelog)
 
