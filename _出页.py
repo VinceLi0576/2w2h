@@ -184,6 +184,13 @@ details.sec.s0 .three li::before{ width:22px; height:22px; font-size:10.5px; }
 details.sec.s0 .loc{ display:flex; flex-direction:column; align-items:flex-end; margin:4px 0 0; }
 details.sec.s0 .loc .v{ font-size:12px; color:var(--muted); letter-spacing:.3px; }
 details.sec.s0 .loc .v b{ color:var(--acc-d); font-weight:800; }
+/* 第0段封面 */
+details.sec.s0[open] > summary .tag.title, details.sec.s0[open] > summary .ti{ display:none; }
+.s0cover{ text-align:center; padding:6px 4px 2px; }
+.s0h{ font-size:19px; font-weight:800; margin:0; letter-spacing:.5px; }
+.s0lead{ font-size:13px; color:var(--muted); font-weight:500; margin:4px 0 20px; text-align:right; }
+.s0pts{ display:inline-block; text-align:left; }
+.s0cover .loc{ margin-top:14px; }
 .k2{ color:var(--muted); font-weight:500; font-size:9px; letter-spacing:.5px; opacity:.6; white-space:nowrap; }
 /* 每段开头的「要点」块：形状同 N.x 小节，左边青方块替代数字；不带号、不折叠 */
 .keypt{ display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:6px; align-items:center;
@@ -502,16 +509,16 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             '<details class="sec s0" id="s0" data-key="%s" open>\n'
             '  <summary><span class="num">0</span><span class="tag title">标题</span><span class="ti">%s</span></summary>\n'
             '  <div class="body">\n'
-            '    <details class="sub" open id="s0-1"><summary><span class="no">0.1</span><span class="nm">导语</span></summary>'
-            '<div class="body"><p class="lead2">%s</p></div></details>\n'
+            '    <div class="s0cover">\n'
+            '      <h1 class="s0h">%s</h1>\n'
+            '      <p class="s0lead">%s</p>\n'
             '%s'
             '%s'
-            '    <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2">项目 · 文件夹 · 版本</span></div>\n'
-            '  </div>\n</details>'
-            % (esc(tldr_key), esc(tldr_key), inline(h1), inline(lead),
-               ('    <details class="sub" open id="s0-2"><summary><span class="no">0.2</span><span class="nm">要点</span></summary>'
-                '<div class="body">%s</div></details>\n' % tldr_html) if tldr_html else '',
-               ('    %s\n' % dims_html) if dims_html else '',
+            '      <div class="loc"><span class="v">%s · <b>%s</b></span><span class="k2">项目 · 文件夹 · 版本</span></div>\n'
+            '    </div>\n  </div>\n</details>'
+            % (esc(tldr_key), esc(tldr_key), inline(h1), inline(h1), inline(lead),
+               ('      <div class="s0pts">%s</div>\n' % tldr_html) if tldr_html else '',
+               ('      %s\n' % dims_html) if dims_html else '',
                esc(_loc(src_p)), esc(version)))
 
     html = """<!DOCTYPE html>
