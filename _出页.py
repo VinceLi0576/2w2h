@@ -242,6 +242,7 @@ details.sec > summary .ti, .s0h, .ring .t{ color:#1c1c1c; }
 .foot .cl-wrap{ margin-top:0; }
 .foot details.cl{ background:transparent; border:none; border-left:3px solid var(--acc); border-bottom:1px solid var(--line); border-radius:0; margin:0; box-shadow:none; padding-left:14px; }
 .foot details.cl > summary{ padding:16px 6px 14px; font-size:16px; font-weight:800; color:#1c1c1c; gap:11px; background:transparent; border-bottom:none; }
+.foot details.cl > summary::before{ content:""; display:block; flex:none; width:24px; height:24px; }   /* 垫一个跟正文段序号方块同宽的占位，三栏标题跟第 5/6 段对成一条线 */
 .foot details.cl.td > summary, .foot details.cl.dn > summary{ color:#1c1c1c; }
 .foot details.cl > summary .n{ font-size:13px; color:var(--muted); font-weight:600; }
 .foot details.cl > .body{ padding:4px 6px 12px; }
