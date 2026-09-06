@@ -2,12 +2,12 @@
 # 2w2h 出页验收 —— 用法：bash 验收.sh <html>
 # 查六样：字节数没倒退 · ring 四钮齐 · 每段有 data-key · 搜索框在 · 顶部产物标记 · 没有未填占位
 #        （＋ 代码块里有没有裸尖括号 —— 宪法头号大坑）
-# 🔴 为什么要比字节数：出页器里变量撞名会让正文全丢而 Python 不报错（260824，98KB→30KB）
+# 🔴 为什么要比字节数：出页器里变量撞名会让正文全丢而 Python 不报错
 set -u
 f="${1:?用法: 验收.sh <html>}"
 [ -f "$f" ] || { echo "🔴 文件不存在: $f"; exit 1; }
 bad=0
-ok(){ echo "✅ $*"; }; ng(){ echo "🔴 $*"; bad=1; }; wn(){ echo "⚠️ $*"; }
+ok{ echo "✅ $*"; }; ng{ echo "🔴 $*"; bad=1; }; wn{ echo "⚠️ $*"; }
 
 # ① 字节数：跟 git HEAD 里的上一版比（有就比）
 now=$(stat -c %s "$f"); dir=$(dirname "$f"); base=$(basename "$f")
@@ -38,7 +38,7 @@ grep -q 'id="q"' "$f" && ok "页内搜索框在" || ng "没有页内搜索框（
 head -c 8000 "$f" | grep -q '<!-- 产物 · 源在' && ok "顶部有「产物 · 源在」标记" || ng "顶部没有产物标记 —— 是手写页？"
 if grep -q '<!-- inject:' "$f"; then ng "有未填的注入占位：$(grep -o '<!-- inject:[^ ]* -->' "$f" | tr '\n' ' ')"; else ok "没有未填占位"; fi
 
-# ⑥½ <pre> 开闭配对（260904 ops-cdp 实撞：段首代码块被渲染成 <p class="lead2">…</pre>，源码里只有这一处能 grep 出来）
+# ⑥½ <pre> 开闭配对
 po=$(grep -o '<pre[ >]' "$f" | wc -l); pc=$(grep -o '</pre>' "$f" | wc -l)
 [ "$po" -eq "$pc" ] && ok "<pre> 开闭配对 $po/$pc" || ng "<pre> 开 $po 闭 $pc 不配对 —— 有代码块被渲染坏了"
 
@@ -46,7 +46,7 @@ po=$(grep -o '<pre[ >]' "$f" | wc -l); pc=$(grep -o '</pre>' "$f" | wc -l)
 if grep -q '<pre' "$f"; then
   raw=$(python3 - "$f" <<'PY'
 import re, sys
-s = open(sys.argv[1], encoding="utf-8").read()
+s = open(sys.argv[1], encoding="utf-8").read
 n = 0
 for m in re.finditer(r"<pre[^>]*>(.*?)</pre>", s, re.S):
     body = re.sub(r"</?(code|span|b|i|em|strong|br|a|mark)\b[^>]*>", "", m.group(1))

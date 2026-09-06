@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""ops 通用 md → HTML 引擎（260823 立）。
+"""ops 通用 md → HTML 引擎。
 
 **为什么是共享的**：`多AI调用/` 与 `lwr/` 各有一页要出，两份 216 行的生成器
 各自改 CSS 必然漂移 ⇒ 引擎一份、各夹只留三行调用文件。
 🔴 一页可以由**多份 md** 拼出来（各 md 仍是自己那段的唯一正本，🚫 不复制内容）。
 
 用法（各夹的 _生成HTML.py 里）：
-    import sys; sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    import sys; sys.path.insert(0, str(Path(__file__).resolve.parent.parent))
     from _md2html import build
     build(dst="x.html", title="标题", srcs=["a.md","b.md"], version="v3",
-          changelog=[("v3","260823","干了啥")])
+          changelog=[("v3","","干了啥")])
 """
 import io, re, html, datetime, subprocess, os
 from pathlib import Path
@@ -21,7 +21,7 @@ def esc(t):
 def inline(t):
     """行内：先转义，再还原 md 的行内标记。🔴 顺序不能反，否则代码里的尖括号会被吃掉。
 
-    🔴 `260824` 修一个真 bug：原来 `code` 段直接就地替换成 <code>…</code>，
+    🔴  修一个真 bug：原来 `code` 段直接就地替换成 <code>…</code>，
        于是**代码里的 `*` 还留在文本里，会跟别处的 `*` 配成一对斜体**。
        ⭐ 实撞：一行里写 `Browser.*`（窗口）· `Extensions.*`（装扩展），
        渲染成 `Browser.<i></code>（窗口）· <code>Extensions.</i>` —— 中间内容被吞进 <i>。
@@ -47,7 +47,7 @@ TONE = [('🔴','crit'),('⭐','star'),('⚠️','warn'),('🚫','no'),('✅','o
         ('📌','note'),('🔄','upd'),('⬜','todo'),('🥇','star'),('⏱','key'),('🎯','key')]
 def tone_of(t):
     for e, c in TONE:
-        if t.lstrip().startswith(e): return c
+        if t.lstrip.startswith(e): return c
     return ''
 
 def render(md):
@@ -55,7 +55,7 @@ def render(md):
     while i < len(lines):
         L = lines[i]
         if L.startswith('```'):
-            lang = L[3:].strip(); i += 1; buf = []
+            lang = L[3:].strip; i += 1; buf = []
             while i < len(lines) and not lines[i].startswith('```'):
                 buf.append(lines[i]); i += 1
             i += 1
@@ -76,30 +76,30 @@ def render(md):
             out.append('<blockquote>%s</blockquote>' % inline(' '.join(buf))); continue
         if re.match(r'^\s*[-*] ', L):
             items = []
-            while i < len(lines) and (re.match(r'^\s*[-*] ', lines[i]) or (lines[i].startswith('  ') and lines[i].strip() and items)):
+            while i < len(lines) and (re.match(r'^\s*[-*] ', lines[i]) or (lines[i].startswith('  ') and lines[i].strip and items)):
                 if re.match(r'^\s*[-*] ', lines[i]):
                     items.append(re.sub(r'^\s*[-*] ', '', lines[i]))
                 else:
-                    items[-1] += ' ' + lines[i].strip()
+                    items[-1] += ' ' + lines[i].strip
                 i += 1
             out.append('<ul>%s</ul>' % ''.join(
                 '<li class="%s">%s</li>' % (tone_of(x), inline(x)) for x in items))
             continue
         if re.match(r'^\d+\. ', L):
             items = []
-            while i < len(lines) and (re.match(r'^\d+\. ', lines[i]) or (lines[i].startswith('   ') and lines[i].strip() and items)):
+            while i < len(lines) and (re.match(r'^\d+\. ', lines[i]) or (lines[i].startswith('   ') and lines[i].strip and items)):
                 if re.match(r'^\d+\. ', lines[i]):
                     items.append(re.sub(r'^\d+\. ', '', lines[i]))
                 else:
-                    items[-1] += ' ' + lines[i].strip()
+                    items[-1] += ' ' + lines[i].strip
                 i += 1
             out.append('<ol>%s</ol>' % ''.join(
                 '<li class="%s">%s</li>' % (tone_of(x), inline(x)) for x in items))
             continue
-        if L.strip() in ('---', ''):
+        if L.strip in ('---', ''):
             i += 1; continue
         buf = []
-        while i < len(lines) and lines[i].strip() and not re.match(r'^(#{1,4} |```|> |\s*[-*] |\d+\. |---)', lines[i]):
+        while i < len(lines) and lines[i].strip and not re.match(r'^(#{1,4} |```|> |\s*[-*] |\d+\. |---)', lines[i]):
             buf.append(lines[i]); i += 1
         if buf:
             t = ' '.join(buf)
@@ -111,7 +111,7 @@ def sha(paths):
         paths = [p for p in paths if not isinstance(p, (tuple, list))]
         r = subprocess.run(['git', 'log', '-1', '--format=%h', '--'] + list(paths),
                            capture_output=True, text=True)
-        return r.stdout.strip() or 'n/a'
+        return r.stdout.strip or 'n/a'
     except Exception:
         return 'n/a'
 
@@ -177,16 +177,16 @@ width:34px;height:34px;font:600 14px/1 sans-serif;cursor:pointer}
 """
 
 JS = """
-(function(){
+(function{
  var z=1, r=document.documentElement;
- function ap(){r.style.fontSize=(16*z)+'px'}
- document.getElementById('zin').onclick=function(){z=Math.min(1.5,z+0.1);ap()};
- document.getElementById('zout').onclick=function(){z=Math.max(0.8,z-0.1);ap()};
- document.getElementById('zall').onclick=function(){
+ function ap{r.style.fontSize=(16*z)+'px'}
+ document.getElementById('zin').onclick=function{z=Math.min(1.5,z+0.1);ap};
+ document.getElementById('zout').onclick=function{z=Math.max(0.8,z-0.1);ap};
+ document.getElementById('zall').onclick=function{
    var d=document.querySelectorAll('details'), open=[].every.call(d,function(x){return x.open});
    [].forEach.call(d,function(x){x.open=!open});
  };
-})();
+});
 """
 
 def build(dst, title, srcs, version, changelog, gen_rel, subtitle=None):
@@ -198,8 +198,8 @@ def build(dst, title, srcs, version, changelog, gen_rel, subtitle=None):
             label, md = path
             path = label
         else:
-            md = io.open(path, encoding='utf-8').read()
-        h1 = md.split('\n')[0].lstrip('# ').strip()
+            md = io.open(path, encoding='utf-8').read
+        h1 = md.split('\n')[0].lstrip('# ').strip
         parts.append((h1, os.path.basename(path)))
         cur = None
         first_of_file = True
@@ -234,7 +234,7 @@ def build(dst, title, srcs, version, changelog, gen_rel, subtitle=None):
     nfold = sum(len(s['subs']) for s in secs)
     srclist = ' ＋ '.join('<code>%s</code>' % os.path.basename(p[0] if isinstance(p,(tuple,list)) else p) for p in srcs)
     cl = '<br>'.join('<code>%s</code> %s：%s' % (v, d, t) for v, d, t in changelog)
-    today = datetime.date.today().isoformat()
+    today = datetime.date.today.isoformat
 
     out = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

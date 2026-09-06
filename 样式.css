@@ -5,8 +5,6 @@
 *{ box-sizing:border-box; } html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
 body{ margin:0; padding:0 0 80px; font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.78; -webkit-font-smoothing:antialiased; }
 
-
-
 main{ max-width:780px; margin:0 auto; padding:22px 22px 0; }
 p{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
 strong{ color:var(--ink); }
@@ -64,7 +62,7 @@ details.sub.road.rb{ border-left-color:#0891b2; } details.sub.road.rb .no{ backg
 .scene.self .sh .rl{ background:var(--acc); }
 .scene.self .pt{ border-left-color:var(--acc); }
 
-.ring{ display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); max-width:780px; margin:14px auto 6px; padding:0 22px; box-sizing:border-box; }  /* 260905 老徐：一行四个太宽，固定两行两列、跟正文同宽 */
+.ring{ display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); max-width:780px; margin:14px auto 6px; padding:0 22px; box-sizing:border-box; }  /* 一行四个太宽，固定两行两列、跟正文同宽 */
 .ring button{ display:block; text-align:left; font-family:inherit; cursor:pointer; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 15px; transition:.15s; width:100%; min-width:0; }
 .ring button:hover{ transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.06); }
 .ring .k{ font-size:10.5px; font-weight:800; letter-spacing:1.5px; }
@@ -155,7 +153,7 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 }
 @media print{ .ctl{ display:none; } details{ break-inside:avoid; } details>.body{ display:block !important; } }
 
-/* ── 右侧竖排控件条（`260905` 老徐：要竖着，后面还会加按钮）。从上到下四组：导航（目录·上下段）· 展收 · 阅读（搜·缩放）· 互动（留言） */
+/* ── 右侧竖排控件条。从上到下四组：导航（目录·上下段）· 展收 · 阅读（搜·缩放）· 互动（留言） */
 .ctl{ position:fixed; top:72px; right:12px; z-index:60; display:flex; flex-direction:column; align-items:center; gap:2px;
   background:rgba(255,254,250,.94); backdrop-filter:saturate(180%) blur(10px); border:1px solid var(--line);
   border-radius:16px; padding:6px 4px; box-shadow:0 2px 8px rgba(0,0,0,.07); }
@@ -180,10 +178,10 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 @media (max-width:640px){
   .ctl{ top:64px; right:4px; padding:4px 2px; } .ctl button{ width:30px; height:30px; font-size:13px; }
   .ctl .q{ right:calc(100% + 4px); } .ctl .q input{ width:118px; }
-  main{ padding-right:48px; }   /* 260905 子 agent 实测：36px 竖条会盖住卡片右缘的 ＋/－，正文让开 */
+  main{ padding-right:48px; }   /*  子 agent 实测：36px 竖条会盖住卡片右缘的 ＋/－，正文让开 */
 }
 
-/* ── 侧边目录（`260905` 老徐：参考飞书／语雀，从侧边看到全部框架） */
+/* ── 侧边目录 */
 .toc{ display:none; position:fixed; top:0; left:0; bottom:0; width:240px; overflow:auto; box-sizing:border-box;
   padding:18px 12px 30px 16px; background:var(--surface); border-right:1px solid var(--line); z-index:55; font-size:13px; }
 .toc .toc-h{ font-size:10.5px; letter-spacing:1.5px; color:var(--muted); font-weight:800; margin:0 0 10px 8px; }
@@ -199,16 +197,16 @@ footer{ text-align:center; padding:24px; color:var(--muted); font-size:12px; bor
 .toc ol ol a{ font-size:12px; font-weight:500; color:var(--ink-soft); padding:4px 8px; }
 body.toc-on .toc{ display:block; }
 body.toc-on #page{ padding-left:240px; }
-@media (min-width:1300px){ body.toc-on #page{ padding-right:240px; } }   /* 260905 老徐：右边也要空一点，正文居中在目录与右边之间 */
+@media (min-width:1300px){ body.toc-on #page{ padding-right:240px; } }   /* 右边也要空一点，正文居中在目录与右边之间 */
 .toc .toc-h{ display:flex; align-items:center; justify-content:space-between; }
 .toc .toc-x{ font:700 14.5px/1 inherit; color:var(--muted); background:transparent; border:0; cursor:pointer; padding:2px 6px; border-radius:6px; }
 .toc .toc-x:hover{ background:var(--acc-bg); color:var(--acc-d); }
 body.toc-drawer .toc{ display:block; box-shadow:0 0 0 100vmax rgba(0,0,0,.28); width:min(280px, 84vw); }
 @media (max-width:1179px){ body.toc-on .toc{ display:none; } body.toc-on #page{ padding-left:0; } }
 
-/* ── 💬 批注（`260905` 老徐定四条：气泡／右键 · 黄线＋右侧对齐卡片 · 解决变灰折叠 · 手机点黄线弹出） */
+/* ── 💬 批注 */
 #page{ position:relative; }
-:root{ --anno-quote:#f5c400; --anno-mine:#15803d; }   /* 260905 子 agent 实算：#2f9e5e 白字 3.40:1 不过 AA，#15803d 5.02:1 */   /* 🟡 划中的原文 · 🟢 自己写的（`260905` 老徐定） */
+:root{ --anno-quote:#f5c400; --anno-mine:#15803d; }   /*  子 agent 实算：#2f9e5e 白字 3.40:1 不过 AA，#15803d 5.02:1 */   /* 🟡 划中的原文 · 🟢 自己写的 */
 mark.anno{ background:transparent; color:inherit; border-bottom:2px solid var(--anno-quote); box-shadow:inset 0 -6px 0 rgba(245,196,0,.28); cursor:pointer; padding:0; }
 mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .abub, .amenu{ position:fixed; z-index:70; }
@@ -237,7 +235,7 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .acard .acard-where{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .acard .acard-m{ display:flex; align-items:center; gap:8px; margin:0 0 7px 26px; }
 .acard .acard-v, .acard .acard-no{ color:var(--muted); font-weight:700; font-size:10.5px; letter-spacing:.3px; }
-/* 操作一律一个字的绿圆圈，独立一行、永远看得见（260905 老徐：增删改查一个字，✎⇧✓✕ 看不懂） */
+/* 操作一律一个字的绿圆圈，独立一行、永远看得见 */
 .acard .acard-act{ display:flex; align-items:center; gap:7px; margin-top:9px; }
 .acard .acard-act .op{ width:26px; height:26px; border-radius:50%; border:0; padding:0; display:grid; place-items:center;
   font:800 12px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; color:#fff; background:var(--anno-mine);
@@ -274,7 +272,7 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .note .note-empty, .note .note-tip{ font-size:12px; color:var(--muted); line-height:1.6; }
 .note .note-tip{ margin-top:8px; border-top:1px solid var(--line); padding-top:8px; }
 @media (max-width:640px){ .note{ top:64px; right:42px; max-width:calc(100vw - 50px); } .arail{ display:none; } }
-/* 右侧批注栏的收起把手（`260905`）—— 跟左侧目录的 « 对称 */
+/* 右侧批注栏的收起把手—— 跟左侧目录的 « 对称 */
 .agrip{ position:fixed; right:56px; bottom:18px; z-index:59; font:700 12px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
   color:var(--acc-d); background:rgba(255,254,250,.94); backdrop-filter:saturate(180%) blur(10px);
   border:1px solid var(--line); border-radius:16px; padding:8px 12px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
@@ -282,7 +280,7 @@ mark.anno.done{ border-bottom-color:transparent; box-shadow:none; }
 .agrip:hover{ background:var(--acc-bg); }
 body.anno-off .arail{ display:none; }
 @media (max-width:640px){ .agrip{ display:none; } }
-/* 列表里的「已解决」折叠（`260905` 老徐：解决了就不显示在页面上，只在这儿回看） */
+/* 列表里的「已解决」折叠 */
 .note details.donebox{ margin-top:10px; border-top:1px solid var(--line); padding-top:8px; }
 .note details.donebox > summary{ cursor:pointer; list-style:none; font-size:12px; font-weight:700; color:var(--ok); padding:5px 0; }
 .note details.donebox > summary::-webkit-details-marker{ display:none; }
@@ -290,14 +288,14 @@ body.anno-off .arail{ display:none; }
 .note details.donebox[open] > summary::after{ content:"－"; }
 .note .acard.inlist{ margin-bottom:8px; }
 
-/* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数（`260905` 老徐：标记明显一些） */
+/* ⓵ 圆圈序号：正文黄线末尾一个、卡片左上角一个，同一个数 */
 .anno-dot{ flex:none; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%;
   background:var(--anno-mine); color:#fff; font:800 10.5px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
 .acard.done .anno-dot{ background:var(--muted); }
 .anno-dot.inline{ display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; font-size:10.5px; font-weight:800;
   margin:0 1px 0 3px; vertical-align:-3px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.2); line-height:1; }
 
-/* 代码块（260905 子 agent 实测：原先没有任何样式，段与小节又 overflow:hidden ⇒ 宽行被裁、滚不动，390px 全裁） */
+/* 代码块 */
 pre{ margin:10px 0; padding:10px 12px; background:#f4f3ee; border:1px solid var(--line); border-radius:6px;
   overflow-x:auto; max-width:100%; font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:var(--ink); }
 pre code{ white-space:pre; background:transparent; padding:0; font:inherit; }
