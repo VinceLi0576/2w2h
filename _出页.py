@@ -242,7 +242,7 @@ details.sec > summary .ti, .s0h, .ring .t{ color:#1c1c1c; }
 .foot .cl-wrap{ margin-top:0; }
 .foot details.cl{ background:transparent; border:none; border-left:3px solid var(--acc); border-bottom:1px solid var(--line); border-radius:0; margin:0; box-shadow:none; padding-left:14px; }
 .foot details.cl > summary{ padding:16px 6px 14px; font-size:16px; font-weight:800; color:#1c1c1c; gap:11px; background:transparent; border-bottom:none; }
-.foot details.cl > summary::before{ content:""; display:block; flex:none; width:24px; height:24px; }   /* 垫一个跟正文段序号方块同宽的占位，三栏标题跟第 5/6 段对成一条线 */
+.foot details.cl > summary .num{ flex:none; width:24px; height:24px; border-radius:6px; background:var(--acc-bg); color:var(--acc-d); font-size:12px; font-weight:800; display:grid; place-items:center; }   /* 三栏也编号 7 8 9，跟正文段一样 */
 .foot details.cl.td > summary, .foot details.cl.dn > summary{ color:#1c1c1c; }
 .foot details.cl > summary .n{ font-size:13px; color:var(--muted); font-weight:600; }
 .foot details.cl > .body{ padding:4px 6px 12px; }
@@ -515,10 +515,11 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
             t, who = (r if isinstance(r, (tuple, list)) else (r, ""))
             out.append('<li>%s%s</li>' % (inline(t), ('<em>%s</em>' % inline(who)) if who else ""))
         return "".join(out)
-    todo_html = ('<details class="cl td"><summary>⬜ 待办<span class="n">%d 条</span></summary><div class="body">'
-                 '<ul class="tdlist">%s</ul></div></details>' % (len(todo), _lines(todo, "⬜"))) if todo else ""
-    done_html = ('<details class="cl dn"><summary>✅ 已办<span class="n">%d 条</span></summary><div class="body">'
-                 '<ul class="tdlist done">%s</ul></div></details>' % (len(done), _lines(done, "✅"))) if done else ""
+    n0 = len(secs) + 1   # 页底三栏顺着正文段编号（自述页正文到 6，三栏就是 7 8 9）
+    todo_html = ('<details class="cl td"><summary><span class="num">%d</span>⬜ 待办<span class="n">%d 条</span></summary><div class="body">'
+                 '<ul class="tdlist">%s</ul></div></details>' % (n0 + 1, len(todo), _lines(todo, "⬜"))) if todo else ""
+    done_html = ('<details class="cl dn"><summary><span class="num">%d</span>✅ 已办<span class="n">%d 条</span></summary><div class="body">'
+                 '<ul class="tdlist done">%s</ul></div></details>' % (n0 + 2, len(done), _lines(done, "✅"))) if done else ""
 
     # 🏷 三维度标签：成熟度 1-5（播种→常青）· 重要程度 1-5 星 · 类型
     MT = {1: "播种", 2: "萌芽", 3: "成长", 4: "稳定", 5: "常青"}
@@ -592,7 +593,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 
 <div class="foot">
   <div class="cl-wrap">
-  <details class="cl"><summary>📚 版本迭代<span class="n">%d 版</span></summary><div class="body"><div class="verline"><span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code></div>%s</div></details>
+  <details class="cl"><summary><span class="num">%d</span>📚 版本迭代<span class="n">%d 版</span></summary><div class="body"><div class="verline"><span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code></div>%s</div></details>
   %s
   %s
   </div>
@@ -607,7 +608,7 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 """ % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS + DOC_CSS, ctl,
        sec0,
        '\n<div class="ring">\n%s\n</div>\n' % "\n".join(ring) if ring else "",
-       "\n".join(parts), len(changelog), version, src_p.name, gen_rel, commit, cl, todo_html, done_html,
+       "\n".join(parts), n0, len(changelog), version, src_p.name, gen_rel, commit, cl, todo_html, done_html,
        script + SEARCH_JS)
 
     dst_p.write_text(html, encoding="utf-8")
