@@ -210,6 +210,47 @@ main{ padding-top:22px; }
   details.sec > summary .brief{ white-space:normal; } }
 """
 
+DOC_CSS = """
+/* ═══ 文档版骨架—— 接在所有样式之后覆盖 ═══ */
+details.sec{ background:transparent; border:none; border-radius:0; box-shadow:none; border-bottom:1px solid var(--line); margin:0; padding:2px 0 8px; }
+details.sec > summary{ padding:16px 6px 14px; background:transparent; }
+details.sec[open]{ background:transparent; box-shadow:none; }
+details.sec[open] > summary{ background:transparent; border-bottom:none; }
+details.sec:not(.s0){ border-left:3px solid var(--acc); padding-left:14px; }   /* 无档位的段（资料库／概念库）左线用主色青 */
+details.sec:has(> summary .tag.why){ border-left-color:var(--why); }
+details.sec:has(> summary .tag.how){ border-left-color:var(--how); }
+details.sec:has(> summary .tag.what){ border-left-color:var(--what); }
+details.sec:has(> summary .tag.good){ border-left-color:var(--good); }
+details.sec > .body{ padding:0 6px 6px; }
+details.sec.s0{ border:none; background:transparent; box-shadow:none; padding-bottom:16px; }
+.keypt{ background:var(--acc-bg); border:none; border-left:3px solid var(--acc); border-radius:0; padding:10px 14px; margin:8px 0 12px; }
+details.sub{ background:transparent; border:none; border-left:2px solid var(--line); border-radius:0; margin:0 0 6px; padding-left:12px; }
+details.sub > summary{ padding:8px 4px; background:transparent; }
+details.sub[open] > summary{ background:transparent; }
+details.sub > .body{ padding:4px 4px 8px; }
+details.sec > summary::after, details.sub > summary::after, .foot details.cl > summary::after{ content:"▸"; font-size:13px; color:var(--muted); font-weight:400; }
+details.sec[open] > summary::after, details.sub[open] > summary::after, .foot details.cl[open] > summary::after{ content:"▾"; }
+details.sec > summary .ti, .s0h, .ring .t{ color:#1c1c1c; }
+.ring{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:10px auto 18px; }
+.ring button{ padding:10px 10px 9px; border-radius:6px; }
+.ring .d{ display:none; }
+.ring .t{ margin:2px 0 0; font-size:13px; }
+.ctl{ top:auto; bottom:18px; right:18px; flex-direction:row; align-items:center; gap:2px; padding:5px 8px; border-radius:22px; }
+.ctl .sep{ width:1px; height:18px; margin:0 3px; }
+.ctl .pos{ flex-direction:row; gap:3px; }
+.foot{ border-top:none; padding:0 22px 40px; margin-top:4px; }
+.foot .cl-wrap{ margin-top:0; }
+.foot details.cl{ background:transparent; border:none; border-left:3px solid var(--acc); border-bottom:1px solid var(--line); border-radius:0; margin:0; box-shadow:none; padding-left:14px; }
+.foot details.cl > summary{ padding:16px 6px 14px; font-size:16px; font-weight:800; color:#1c1c1c; gap:11px; background:transparent; border-bottom:none; }
+.foot details.cl.td > summary, .foot details.cl.dn > summary{ color:#1c1c1c; }
+.foot details.cl > summary .n{ font-size:13px; color:var(--muted); font-weight:600; }
+.foot details.cl > .body{ padding:4px 6px 12px; }
+.foot .verline{ margin:4px 0 12px; padding-bottom:10px; border-bottom:1px dashed var(--line); font-size:13px; color:var(--muted); }
+#s6 > .body > ul{ columns:2; column-gap:32px; }
+#s6 > .body > ul > li{ break-inside:avoid; }
+main{ padding-top:24px; }
+"""
+
 # 搜索框已在 控件.html 的 .q 里，不再往工具条里插
 
 SEARCH_JS = """
@@ -549,9 +590,8 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 </main>
 
 <div class="foot">
-  <span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code>
   <div class="cl-wrap">
-  <details class="cl"><summary>📚 版本迭代<span class="n">%d 版</span></summary><div class="body">%s</div></details>
+  <details class="cl"><summary>📚 版本迭代<span class="n">%d 版</span></summary><div class="body"><div class="verline"><span class="badge">%s</span>源 <code>%s</code> · 生成器 <code>%s</code> · 提交 <code>%s</code></div>%s</div></details>
   %s
   %s
   </div>
@@ -563,10 +603,10 @@ def build_ring(src, dst, eyebrow, lead, version, changelog, gen_rel, title=None,
 </script>
 </body>
 </html>
-""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS, ctl,
+""" % (esc(h1), src_p.name, gen_rel, style, SEARCH_CSS + HERO_CSS + DOC_CSS, ctl,
        sec0,
        '\n<div class="ring">\n%s\n</div>\n' % "\n".join(ring) if ring else "",
-       "\n".join(parts), version, src_p.name, gen_rel, commit, len(changelog), cl, todo_html, done_html,
+       "\n".join(parts), len(changelog), version, src_p.name, gen_rel, commit, cl, todo_html, done_html,
        script + SEARCH_JS)
 
     dst_p.write_text(html, encoding="utf-8")

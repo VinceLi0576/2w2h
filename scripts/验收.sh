@@ -7,7 +7,7 @@ set -u
 f="${1:?用法: 验收.sh <html>}"
 [ -f "$f" ] || { echo "🔴 文件不存在: $f"; exit 1; }
 bad=0
-STD_VER="v3.0"   # 🔴 本脚本按哪版标准硬查；标准升级同一次改这里＋加检查项（见 SKILL.md「改本夹东西之前」）
+STD_VER="v3.1"   # 🔴 本脚本按哪版标准硬查；标准升级同一次改这里＋加检查项（见 SKILL.md「改本夹东西之前」）
 ok{ echo "✅ $*"; }; ng{ echo "🔴 $*"; bad=1; }; wn{ echo "⚠️ $*"; }
 
 # ① 字节数：跟 git HEAD 里的上一版比（有就比）
@@ -65,6 +65,18 @@ tbl=$(grep -c '<table' "$f" 2>/dev/null); bar=$(grep -cE '<p[^>]*>[[:space:]]*\|
 # ⑨ 段折叠
 op=$(grep -oE '<details class="sec[^"]*"[^>]*open' "$f" | wc -l | tr -d ' '); s0=$(grep -oE '<details class="sec s0"[^>]*open' "$f" | wc -l | tr -d ' ')
 { [ "$op" = "1" ] && [ "$s0" = "1" ]; } && ok "段折叠对（只第 0 段展开）" || wn "段折叠异常：共 $op 个展开、第 0 段 open=$s0"
+
+# ⑩ 概念库 ≤ 20 条
+if grep -q 'data-key="terms"' "$f"; then
+  tn=$(python3 - "$f" <<'PYX'
+import re,sys
+s=open(sys.argv[1],encoding="utf-8").read
+m=re.search(r'data-key="terms".*?</details>', s, re.S)
+print(len(re.findall(r"<li\b", m.group(0))) if m else 0)
+PYX
+)
+  [ "$tn" -le 20 ] && ok "概念库 $tn 条（≤20）" || ng "概念库 $tn 条，超过 20 —— 合并或删，别让词典比正文长"
+fi
 
 # —— 脚本查不了的语义，列出来让你自己过，🚫 不假装查过
 echo ""
