@@ -78,6 +78,26 @@ PYX
   [ "$tn" -le 20 ] && ok "概念库 $tn 条（≤20）" || ng "概念库 $tn 条，超过 20 —— 合并或删，别让词典比正文长"
 fi
 
+# ⑪ 段正文别平铺—— 小节之外的顶层块 >4 就报 ⚠️
+flat=$(python3 - "$f" <<'PYX'
+import re,sys
+s=open(sys.argv[1],encoding="utf-8").read
+parts=re.split(r'(?=<details class="sec" id="s\d+")', s)
+out=[]
+for p in parts[1:]:
+    m=re.match(r'<details class="sec" id="(s\d+)"', p)
+    if not m or m.group(1)=="s0": continue
+    body=p.split('<div class="body">',1)[1] if '<div class="body">' in p else ""
+    body=body.split('<div class="foot"',1)[0]
+    body=re.sub(r'<details class="sub".*?</details>', '', body, flags=re.S)
+    body=re.sub(r'<div class="keypt".*?</div>\s*</div>', '', body, flags=re.S)
+    n=len(re.findall(r'<(p|ul|ol|pre|table|blockquote)\b', body))
+    if n>4: out.append("%s 平铺 %d 块" % (m.group(1), n))
+print(" · ".join(out))
+PYX
+)
+[ -z "$flat" ] && ok "各段正文没平铺（明细都在小节里）" || wn "段正文平铺过多：$flat —— 作者点开一段要能一眼看完，清单／引文／现采表收进 ### 小节"
+
 # —— 脚本查不了的语义，列出来让你自己过，🚫 不假装查过
 echo ""
 echo "🖐 下面这几条脚本查不了，按 $STD_VER 标准你自己过一遍："
